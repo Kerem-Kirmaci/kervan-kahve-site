@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Ana Sayfa -->
+  <url>
+    <loc>https://kervankahve.com/</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Ürünler Sayfası -->
+  <url>
+    <loc>https://kervankahve.com/shop.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Hakkımızda Sayfası -->
+  <url>
+    <loc>https://kervankahve.com/hakkimizda.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- İş Ortaklığı Sayfası -->
+  <url>
+    <loc>https://kervankahve.com/ortaklik.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- İletişim Sayfası -->
+  <url>
+    <loc>https://kervankahve.com/iletisim.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Gizlilik Politikası -->
+  <url>
+    <loc>https://kervankahve.com/gizlilik-politikasi.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Çerez Politikası -->
+  <url>
+    <loc>https://kervankahve.com/cerez-politikasi.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Kullanım Şartları -->
+  <url>
+    <loc>https://kervankahve.com/kullanim-sartlari.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

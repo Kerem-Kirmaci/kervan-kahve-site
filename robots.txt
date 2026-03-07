@@ -1,0 +1,17 @@
+# Kervan Kahve - robots.txt
+# https://kervankahve.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://kervankahve.com/sitemap.xml
+
+# Disallow development and system files
+Disallow: /debug.js
+Disallow: /TODO.md
+Disallow: /.DS_Store
+
+# Allow CSS and images for better rendering
+Allow: /*.css$
+Allow: /images/

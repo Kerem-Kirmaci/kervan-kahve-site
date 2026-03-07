@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kervan Kahve Ürünlerimiz - Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlıları keşfedin. Türk kahvesi, filtre kahve ve espresso çeşitleri.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kervankahve.com/shop.html">
+    <meta property="og:title" content="Ürünlerimiz - Kervan Kahve">
+    <meta property="og:description" content="Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlıları keşfedin. Türk kahvesi, filtre kahve ve espresso çeşitleri.">
+    <meta property="og:image" content="https://kervankahve.com/images/logo.png">
+    <meta property="og:site_name" content="Kervan Kahve">
+    <meta property="og:locale" content="tr_TR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://kervankahve.com/shop.html">
+    <meta name="twitter:title" content="Ürünlerimiz - Kervan Kahve">
+    <meta name="twitter:description" content="Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlıları keşfedin.">
+    <meta name="twitter:image" content="https://kervankahve.com/images/logo.png">
+    <title>Ürünlerimiz - Kervan Kahve</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="apple-touch-icon" href="images/logo.png" />
+    <link rel="canonical" href="https://kervankahve.com/shop.html" />
+
+    <!-- Structured Data: Ürün Kataloğu -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Kervan Kahve Ürünleri",
+      "url": "https://kervankahve.com/shop.html",
+      "description": "Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlılar",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "name": "Kervan Kahve Etiyopya",
+            "description": "Narenciye ve çiçeksi notalar, özel kavrum",
+            "image": "https://kervankahve.com/images/coffees/etiyopya.png",
+            "brand": { "@type": "Brand", "name": "Kervan Kahve" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "name": "Kervan Kahve Kolombiya",
+            "description": "Çikolata ve karamel tatları, mükemmel denge",
+            "image": "https://kervankahve.com/images/coffees/kolombiya.png",
+            "brand": { "@type": "Brand", "name": "Kervan Kahve" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Product",
+            "name": "Kervan Kahve Guatemala",
+            "description": "Dumanlı ve baharatlı karakter, zengin gövde",
+            "image": "https://kervankahve.com/images/coffees/guatemala.png",
+            "brand": { "@type": "Brand", "name": "Kervan Kahve" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Product",
+            "name": "Kervan Kahve Brezilya",
+            "description": "Yumuşak ve dengeli profil, klasik tat",
+            "image": "https://kervankahve.com/images/coffees/brezilya.png",
+            "brand": { "@type": "Brand", "name": "Kervan Kahve" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Product",
+            "name": "Kervan Kahve Kenya",
+            "description": "Asitli ve parlak karakter, wine-like tatlar",
+            "image": "https://kervankahve.com/images/coffees/kenya.png",
+            "brand": { "@type": "Brand", "name": "Kervan Kahve" }
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <style>
+          :root {
+             --brand-color: #6F4E37; /* Coffee */
+             --brand-color-light: #BC987E; /* Latte */
+             --text-dark: #3B2A22; /* Espresso */
+              --text-light: #6e5e51;
+             --bg-light: #F9F6F2; /* Cream */
+              --bg-white: #ffffff;
+          }
+        html {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .brand-text { color: var(--brand-color); }
+        .brand-bg { background-color: var(--brand-color); }
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--brand-color);
+            transition: width .3s;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+        }
+        /* Subtle Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+
+        /* Mobile Menu Styles - Ana sayfayla uyumlu */
+        .mobile-menu {
+            position: fixed !important;
+            top: 0 !important;
+            right: 0 !important;
+            width: 300px !important;
+            height: 100vh !important;
+            background: white !important;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1) !important;
+            transform: translateX(100%) !important;
+            transition: transform 0.3s ease !important;
+            z-index: 9999 !important;
+            display: block !important;
+            visibility: visible !important;
+        }
+        .mobile-menu.active {
+            transform: translateX(0) !important;
+        }
+        .mobile-menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Tailwind override - lg:hidden sınıfını etkisiz hale getir */
+        @media (min-width: 1024px) {
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+        
+        /* Mobil header ayarlamaları */
+        @media (max-width: 768px) {
+            .mobile-search-container {
+                max-width: none;
+                margin: 0;
+            }
+            
+            .mobile-search-bar {
+                height: 2.5rem;
+                font-size: 0.875rem;
+                padding-left: 2.5rem;
+            }
+            
+            .mobile-search-icon {
+                left: 0.75rem;
+                font-size: 1.125rem;
+            }
+            
+            /* Mobil için header basitleştirmesi */
+            .mobile-simplified-header .desktop-nav,
+            .mobile-simplified-header .header-search-container {
+                display: none !important;
+            }
+            
+            /* Mobil için sayfa altında boşluk bırak (bottom nav için) */
+            body {
+                padding-bottom: 80px;
+            }
+        }
+        
+        /* Mobil Bottom Navigation Stilleri */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            z-index: 50;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: block;
+            }
+        }
+        
+        /* Mobil filtre sidebar */
+        .mobile-filter-visible {
+            display: block !important;
+            position: fixed;
+            top: auto;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 50;
+            overflow-y: auto;
+            background: white;
+            padding: 1.5rem;
+            animation: slideUp 0.3s ease-out;
+            max-height: 85vh;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .mobile-filter-overlay-visible {
+            display: block !important;
+        }
+
+        /* Modern Ürün Kartları - Ana sayfadan uyarlandı */
+        .modern-product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .modern-product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .modern-product-card .card-image {
+            height: 200px;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modern-product-card .card-image img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            padding: 0.5rem;
+        }
+        
+        .modern-product-card .card-content {
+            padding: 0.75rem 1rem;
+            text-align: center;
+        }
+        
+        .modern-product-card .card-brand {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #b45309;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.125rem;
+        }
+        
+        .modern-product-card .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.375rem;
+            line-height: 1.3;
+        }
+        
+        .modern-product-card .card-description {
+            display: none;
+        }
+        
+        .modern-product-card .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.375rem;
+        }
+        
+        .modern-product-card .card-tag {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            font-size: 0.65rem;
+            font-weight: 500;
+            padding: 0.2rem 0.5rem;
+            border-radius: 9999px;
+        }
+        
+        /* Mobil için kompakt kart boyutları - 2 sütun görünümü */
+        @media (max-width: 640px) {
+            .modern-product-card {
+                border-radius: 10px;
+            }
+            
+            .modern-product-card .card-image {
+                height: 140px;
+            }
+            
+            .modern-product-card .card-image img {
+                padding: 0.5rem;
+            }
+            
+            .modern-product-card .card-content {
+                padding: 0.5rem 0.5rem 0.625rem;
+            }
+            
+            .modern-product-card .card-brand {
+                font-size: 0.6rem;
+                letter-spacing: 0.03em;
+                margin-bottom: 0.125rem;
+            }
+            
+            .modern-product-card .card-title {
+                font-size: 0.75rem;
+                margin-bottom: 0.375rem;
+                line-height: 1.25;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .modern-product-card .card-description {
+                display: none;
+            }
+            
+            .modern-product-card .card-tags {
+                display: flex;
+                gap: 0.25rem;
+            }
+            
+            .modern-product-card .card-tag {
+                font-size: 0.6rem;
+                padding: 0.125rem 0.375rem;
+            }
+            
+            /* Yükleme animasyonu kartları da küçült */
+            #product-grid .animate-pulse {
+                height: auto !important;
+            }
+            
+            #product-grid .animate-pulse .h-64 {
+                height: 140px !important;
+            }
+            
+            #product-grid .animate-pulse .p-6 {
+                padding: 0.5rem !important;
+            }
+        }
+
+        /* Lightbox/Modal Stilleri */
+        .image-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+        
+        .image-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: -10px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .lightbox-product-info {
+            position: absolute;
+            bottom: -70px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .lightbox-product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .lightbox-product-brand {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Zoom cursor for zoomable images */
+        .zoomable-image {
+            cursor: zoom-in;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .zoomable-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Zoom ikonu için */
+        .zoom-icon-wrapper {
+            position: relative;
+        }
+        
+        .zoom-icon {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .zoom-icon-wrapper:hover .zoom-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .zoom-icon .material-icons {
+            font-size: 18px;
+            color: var(--brand-color);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+    <!-- Image Lightbox Modal -->
+    <div id="image-lightbox" class="image-lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Kapat">
+                <span class="material-icons">close</span>
+            </button>
+            <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            <div class="lightbox-product-info">
+                <div class="lightbox-product-brand" id="lightbox-brand"></div>
+                <div class="lightbox-product-name" id="lightbox-name"></div>
+            </div>
+        </div>
+    </div>
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-amber-100/60 mobile-simplified-header">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center gap-3">
+            <a href="index.html" class="flex items-center gap-3 shrink-0 md:pr-6 md:border-r md:border-amber-300">
+                <img src="images/logo.png" alt="Kervan Kahve Logo" class="h-14 md:h-16 w-auto object-contain" />
+                <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-800">Kervan Kahve</h2>
+            </a>
+            <nav class="hidden lg:flex items-center gap-2 desktop-nav">
+                <a href="shop.html" class="nav-link inline-flex items-center h-11 px-3 text-base font-semibold text-gray-700 hover:brand-text rounded-lg hover:bg-amber-50 transition-colors active">Ürünlerimiz</a>
+                <a href="ortaklik.html" class="nav-link inline-flex items-center h-11 px-3 text-base font-semibold text-gray-700 hover:brand-text rounded-lg hover:bg-amber-50 transition-colors">İş Ortaklığı</a>
+                <a href="hakkimizda.html" class="nav-link inline-flex items-center h-11 px-3 text-base font-semibold text-gray-700 hover:brand-text rounded-lg hover:bg-amber-50 transition-colors">Hakkımızda</a>
+            </nav>
+            <!-- Modern Search Bar ve İletişim Butonu -->
+            <div class="flex items-center gap-2 md:gap-4 flex-1 max-w-2xl mx-2 md:mx-4 header-search-container">
+              <!-- Modern Search Bar -->
+              <div class="relative flex-grow mobile-search-container">
+                <span class="material-icons absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg md:text-xl mobile-search-icon">search</span>
+                <form action="shop.html" method="GET" class="w-full">
+                  <label for="global-search" class="sr-only">Ürün ara</label>
+                  <input 
+                    id="global-search" 
+                    name="search" 
+                    type="search" 
+                    placeholder="Ürün ara..." 
+                    class="w-full h-10 md:h-12 pl-10 md:pl-12 pr-3 md:pr-4 rounded-full border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300 shadow-sm hover:shadow-md text-sm md:text-base mobile-search-bar"
+                    style="-webkit-appearance: none; appearance: none;" 
+                  />
+                </form>
+              </div>
+              
+              <!-- Modern İletişim Butonu -->
+              <a href="iletisim.html" class="hidden md:flex items-center justify-center gap-2 px-4 lg:px-6 h-12 rounded-full bg-amber-700 text-white font-medium shadow-md hover:bg-amber-800 hover:shadow-lg transition-all duration-300">
+                <span class="material-icons text-lg">email</span>
+                <span class="hidden lg:inline">İletişim</span>
+              </a>
+            </div>
+            <!-- Mobil İletişim Butonu - Sağ üstte -->
+            <a href="iletisim.html" class="md:hidden flex items-center justify-center gap-2 px-4 h-10 rounded-full brand-bg text-white shadow-md hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+                <span class="material-icons text-lg">email</span>
+                <span class="text-sm font-medium">İletişim</span>
+            </a>
+                <!-- Hamburger menu butonu - Sadece tablet ve üstünde göster -->
+                <button id="mobile-menu-btn" class="hidden md:block lg:hidden p-2 text-gray-700 hover:text-gray-900 transition-colors">
+                    <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="40" y1="64" x2="216" y2="64" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="40" y1="192" x2="216" y2="192" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
+                    <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black/75 z-40 lg:hidden"></div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-50" style="position: fixed !important; top: 0 !important; right: 0 !important; width: 320px !important; height: 100vh !important; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important; box-shadow: -5px 0 25px rgba(0,0,0,0.15) !important; transform: translateX(100%) !important; transition: transform 0.3s ease !important; z-index: 9999 !important; border-left: 1px solid #e2e8f0 !important; display: block !important;">
+            <div class="h-full overflow-y-auto">
+                <!-- Header -->
+                <div class="bg-white p-6 border-b border-gray-100">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-gray-800">Menü</h3>
+                        <button id="mobile-menu-close" class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+                                <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                                <line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="p-6" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
+                    <div class="space-y-3">
+                        <!-- Ana Sayfa -->
+                        <a href="index.html" class="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200" style="display: flex !important; text-decoration: none !important; visibility: visible !important; opacity: 1 !important;">
+                            <span class="text-lg font-medium text-gray-700 group-hover:text-amber-700">Ana Sayfa</span>
+                        </a>
+                        
+                        <!-- Ürünlerimiz -->
+                        <a href="shop.html" class="group flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-all duration-200" style="display: flex !important; text-decoration: none !important; visibility: visible !important; opacity: 1 !important;">
+                            <span class="text-lg font-medium text-amber-800">Ürünlerimiz</span>
+                        </a>
+                        
+                        <!-- İş Ortaklığı -->
+                        <a href="ortaklik.html" class="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200" style="display: flex !important; text-decoration: none !important; visibility: visible !important; opacity: 1 !important;">
+                            <span class="text-lg font-medium text-gray-700 group-hover:text-amber-700">İş Ortaklığı</span>
+                        </a>
+                        
+                        <!-- Hakkımızda -->
+                        <a href="hakkimizda.html" class="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200" style="display: flex !important; text-decoration: none !important; visibility: visible !important; opacity: 1 !important;">
+                            <span class="text-lg font-medium text-gray-700 group-hover:text-amber-700">Hakkımızda</span>
+                        </a>
+                    </div>
+                    
+                    <!-- İletişim Butonu -->
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <a href="iletisim.html" class="group flex items-center justify-center gap-3 p-4 rounded-lg bg-gradient-to-r from-amber-100 to-orange-100 hover:from-amber-200 hover:to-orange-200 transition-all duration-300 border border-amber-200" style="display: flex !important; text-decoration: none !important; visibility: visible !important; opacity: 1 !important;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#6F4E37" viewBox="0 0 256 256">
+                                <path d="M224,48H32a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H224a8,8,0,0,0,8-8V56A8,8,0,0,0,224,48Zm-8,136H40V64H216Z"></path>
+                                <path d="M224,40H32A16,16,0,0,0,16,56V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V56A16,16,0,0,0,224,40Zm0,16V72L138.5,123.4a16.08,16.08,0,0,1-21,0L32,72V56ZM32,192V88l64,40,24,15,24-15,64-40v104Z"></path>
+                            </svg>
+                            <span class="text-lg font-semibold text-amber-800">İletişim</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12" style="z-index: 1; position: relative;">
+            <!-- Mobil Filtre Overlay -->
+            <div id="mobile-filter-overlay" class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"></div>
+            
+            <div class="grid lg:grid-cols-4 gap-8">
+          <!-- Sidebar -->
+          <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm h-fit hidden lg:block">
+               <!-- Mobil için kapatma butonu -->
+               <div class="lg:hidden flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
+                   <h3 class="text-xl font-bold text-gray-800">Filtreler</h3>
+                   <button id="mobile-filter-close" class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all rounded-full">
+                       <span class="material-icons">close</span>
+                   </button>
+               </div>
+               
+               <!-- Arama -->
+               <div class="mb-6">
+                   <h3 class="text-lg font-semibold mb-4 text-gray-800">Ürün Ara</h3>
+                   <input type="text" id="product-search" 
+                          placeholder="Ürün ara..." 
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-color focus:border-transparent">
+               </div>
+               
+               <!-- Kategoriler -->
+               <div>
+                    <h3 class="text-3xl font-bold mb-6 brand-text">Ürünlerimiz</h3>
+                    <h4 class="text-lg font-semibold mb-4 text-gray-800">Kategori Filtreleri</h4>
+                    <ul class="space-y-3">
+                        <li><label class="flex items-center">
+                            <input type="checkbox" class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color" data-category="surup"> 
+                            <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">Şuruplar</span>
+                        </label></li>
+                        <li><label class="flex items-center">
+                            <input type="checkbox" class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color" data-category="pure-tatlandirici"> 
+                            <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">Püre ve Tatlandırıcılar</span>
+                        </label></li>
+                        <li><label class="flex items-center">
+                            <input type="checkbox" class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color" data-category="tatli"> 
+                            <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">Tatlılar</span>
+                        </label></li>
+                        <li><label class="flex items-center">
+                            <input type="checkbox" class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color" data-category="espresso"> 
+                            <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">Kahveler</span>
+                        </label></li>
+                        <li><label class="flex items-center">
+                            <input type="checkbox" class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color" data-category="cay"> 
+                            <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">Bitki Çayları</span>
+                        </label></li>
+                        <li><label class="flex items-center">
+                            <input type="checkbox" class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color" data-category="aksesuar"> 
+                            <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">Ekipmanlar</span>
+                        </label></li>
+                    </ul>
+                    
+                    <!-- Temizle Butonu -->
+                    <div class="mt-4">
+                        <button id="clear-filters" class="text-sm brand-text hover:underline">Tüm Filtreleri Temizle</button>
+                    </div>
+                </div>
+                 
+                 <!-- Ürün Sayısı -->
+                 <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                     <p id="product-count" class="text-sm text-gray-600">Yükleniyor...</p>
+                 </div>
+          </aside>
+
+         <!-- Product Grid -->
+         <div class="lg:col-span-3">
+             <!-- Mobil Filtre Butonu -->
+             <div class="lg:hidden mb-6">
+                 <button id="mobile-filter-toggle" class="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition-colors">
+                     <span class="material-icons">filter_list</span>
+                     <span>Filtrele</span>
+                 </button>
+             </div>
+             
+<!-- Dinamik Ürün Grid -->
+            <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+                 <!-- Yükleme animasyonu -->
+                 <div class="bg-gray-100 rounded-xl h-96 animate-pulse">
+                     <div class="h-64 bg-gray-300 rounded-t-xl"></div>
+                     <div class="p-6">
+                         <div class="h-4 bg-gray-300 rounded mb-2"></div>
+                         <div class="h-4 bg-gray-300 rounded mb-4 w-3/4"></div>
+                         <div class="h-8 bg-gray-300 rounded w-1/2"></div>
+                     </div>
+                 </div>
+                 <div class="bg-gray-100 rounded-xl h-96 animate-pulse">
+                     <div class="h-64 bg-gray-300 rounded-t-xl"></div>
+                     <div class="p-6">
+                         <div class="h-4 bg-gray-300 rounded mb-2"></div>
+                         <div class="h-4 bg-gray-300 rounded mb-4 w-3/4"></div>
+                         <div class="h-8 bg-gray-300 rounded w-1/2"></div>
+                     </div>
+                 </div>
+                 <div class="bg-gray-100 rounded-xl h-96 animate-pulse">
+                     <div class="h-64 bg-gray-300 rounded-t-xl"></div>
+                     <div class="p-6">
+                         <div class="h-4 bg-gray-300 rounded mb-2"></div>
+                         <div class="h-4 bg-gray-300 rounded mb-4 w-3/4"></div>
+                         <div class="h-8 bg-gray-300 rounded w-1/2"></div>
+                     </div>
+                 </div>
+                 <div class="bg-gray-100 rounded-xl h-96 animate-pulse">
+                     <div class="h-64 bg-gray-300 rounded-t-xl"></div>
+                     <div class="p-6">
+                         <div class="h-4 bg-gray-300 rounded mb-2"></div>
+                         <div class="h-4 bg-gray-300 rounded mb-4 w-3/4"></div>
+                         <div class="h-8 bg-gray-300 rounded w-1/2"></div>
+                     </div>
+                 </div>
+                 <div class="bg-gray-100 rounded-xl h-96 animate-pulse">
+                     <div class="h-64 bg-gray-300 rounded-t-xl"></div>
+                     <div class="p-6">
+                         <div class="h-4 bg-gray-300 rounded mb-2"></div>
+                         <div class="h-4 bg-gray-300 rounded mb-4 w-3/4"></div>
+                         <div class="h-8 bg-gray-300 rounded w-1/2"></div>
+                     </div>
+                 </div>
+                 <div class="bg-gray-100 rounded-xl h-96 animate-pulse">
+                     <div class="h-64 bg-gray-300 rounded-t-xl"></div>
+                     <div class="p-6">
+                         <div class="h-4 bg-gray-300 rounded mb-2"></div>
+                         <div class="h-4 bg-gray-300 rounded mb-4 w-3/4"></div>
+                         <div class="h-8 bg-gray-300 rounded w-1/2"></div>
+                     </div>
+                 </div>
+             </div>
+             
+             <!-- Infinite Scroll Loading Indicator -->
+             <div id="infinite-scroll-loader" class="mt-12 flex flex-col items-center justify-center py-8 hidden">
+                 <div class="flex items-center gap-3">
+                     <div class="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin"></div>
+                     <span class="text-gray-600 font-medium">Daha fazla ürün yükleniyor...</span>
+                 </div>
+             </div>
+             <!-- End of Products Message -->
+             <div id="end-of-products" class="mt-12 text-center py-8 hidden">
+                 <p class="text-gray-500 font-medium">Tüm ürünler yüklendi</p>
+             </div>
+         </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation - Sadece Mobilde Görünür -->
+    <nav class="bottom-nav max-w-md mx-auto">
+        <div class="flex justify-around p-2">
+          <a href="index.html" class="flex flex-col items-center text-gray-600 py-2 hover:text-amber-700 transition-colors">
+            <span class="material-icons text-2xl">home</span>
+            <span class="text-xs font-medium mt-1">Ana Sayfa</span>
+          </a>
+          <a href="shop.html" class="flex flex-col items-center text-amber-700 py-2">
+            <span class="material-icons text-2xl">shopping_bag</span>
+            <span class="text-xs font-medium mt-1">Ürünler</span>
+          </a>
+          <a href="ortaklik.html" class="flex flex-col items-center text-gray-600 py-2 hover:text-amber-700 transition-colors">
+            <span class="material-icons text-2xl">work</span>
+            <span class="text-xs font-medium mt-1">İş Ortaklığı</span>
+          </a>
+          <a href="hakkimizda.html" class="flex flex-col items-center text-gray-600 py-2 hover:text-amber-700 transition-colors">
+            <span class="material-icons text-2xl">info</span>
+            <span class="text-xs font-medium mt-1">Hakkımızda</span>
+          </a>
+        </div>
+    </nav>
+
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-12">
+          <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-bold">Kervan Kahve</h3>
+              <p class="mt-4 text-sm text-gray-400">Nitelikli kahve çekirdeklerini tutkuyla kavuruyor, işletmelere ve kahve severlere ulaştırıyoruz.</p>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">Hızlı Erişim</h3>
+              <ul class="mt-4 space-y-2 text-sm">
+                <li><a href="index.html" class="text-gray-400 hover:text-white">Ana Sayfa</a></li>
+                <li><a href="shop.html" class="text-gray-400 hover:text-white">Ürünlerimiz</a></li>
+                <li><a href="ortaklik.html" class="text-gray-400 hover:text-white">İş Ortaklığı</a></li>
+                <li><a href="hakkimizda.html" class="text-gray-400 hover:text-white">Hakkımızda</a></li>
+                <li><a href="iletisim.html" class="text-gray-400 hover:text-white">İletişim</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">Yasal</h3>
+               <ul class="mt-4 space-y-2 text-sm">
+                <li><a href="gizlilik-politikasi.html" class="text-gray-400 hover:text-white">Gizlilik Politikası</a></li>
+                <li><a href="cerez-politikasi.html" class="text-gray-400 hover:text-white">Çerez Politikası</a></li>
+                <li><a href="kullanim-sartlari.html" class="text-gray-400 hover:text-white">Kullanım Şartları</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">Bize Ulaşın</h3>
+              <ul class="mt-4 space-y-2 text-sm">
+                <li><a href="mailto:info@kervankahve.com" class="text-gray-400 hover:text-white">info@kervankahve.com</a></li>
+                <li><a href="tel:+905453207713" class="text-gray-400 hover:text-white">+90 545 320 77 13</a></li>
+                <li>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="https://www.instagram.com/kervankahve_toptan__perakende/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm48-136H80a56.06,56.06,0,0,0-56,56v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"></path></svg>
+                        </a>
+                    </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-12 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+            <p>&copy; 2025 Kervan Kahve. Tüm hakları saklıdır.</p>
+          </div>
+        </div>
+    </main>
+      </footer>
+      
+    <!-- JavaScript Dosyaları -->
+    <script src="products.js"></script>
+    <script src="app.js"></script>
+    
+
+</body>
+</html> 

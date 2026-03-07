@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kervan Kahve Kullanım Şartları - Web sitemizi kullanırken uyulması gereken kurallar ve koşullar.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kervankahve.com/kullanim-sartlari.html">
+    <meta property="og:title" content="Kullanım Şartları - Kervan Kahve">
+    <meta property="og:description" content="Web sitemizi kullanırken uyulması gereken kurallar ve koşullar.">
+    <meta property="og:image" content="https://kervankahve.com/images/logo.png">
+    <meta property="og:site_name" content="Kervan Kahve">
+    <meta property="og:locale" content="tr_TR">
+    <title>Kullanım Şartları - Kervan Kahve</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <style>
+        :root {
+            --brand-color: #6F4E37;
+            --brand-color-light: #BC987E;
+            --text-dark: #3B2A22;
+            --text-light: #6e5e51;
+            --bg-light: #F9F6F2;
+            --bg-white: #ffffff;
+        }
+        html {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .brand-text { color: var(--brand-color); }
+        .brand-bg { background-color: var(--brand-color); }
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--brand-color);
+            transition: width .3s;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .mobile-menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-simplified-header .desktop-nav,
+            .mobile-simplified-header .header-search-container {
+                display: none !important;
+            }
+            body {
+                padding-bottom: 80px;
+            }
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            z-index: 50;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-amber-100/60 mobile-simplified-header">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center gap-3">
+            <a href="index.html" class="flex items-center gap-3 shrink-0 md:pr-6 md:border-r md:border-amber-300">
+                <img src="images/logo.png" alt="Kervan Kahve Logo" class="h-14 md:h-16 w-auto object-contain">
+                <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-800">Kervan Kahve</h2>
+            </a>
+            <nav class="hidden lg:flex items-center gap-2 desktop-nav">
+                <a href="shop.html" class="nav-link inline-flex items-center h-11 px-3 text-base font-semibold text-gray-700 hover:brand-text rounded-lg hover:bg-amber-50 transition-colors">Ürünlerimiz</a>
+                <a href="ortaklik.html" class="nav-link inline-flex items-center h-11 px-3 text-base font-semibold text-gray-700 hover:brand-text rounded-lg hover:bg-amber-50 transition-colors">İş Ortaklığı</a>
+                <a href="hakkimizda.html" class="nav-link inline-flex items-center h-11 px-3 text-base font-semibold text-gray-700 hover:brand-text rounded-lg hover:bg-amber-50 transition-colors">Hakkımızda</a>
+            </nav>
+            <div class="flex items-center gap-2 md:gap-4 flex-1 max-w-2xl mx-2 md:mx-4 header-search-container">
+              <div class="relative flex-grow mobile-search-container">
+                <span class="material-icons absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg md:text-xl mobile-search-icon">search</span>
+                <form action="shop.html" method="GET" class="w-full">
+                  <label for="global-search" class="sr-only">Ürün ara</label>
+                  <input 
+                    id="global-search" 
+                    name="search" 
+                    type="search" 
+                    placeholder="Ürün ara..." 
+                    class="w-full h-10 md:h-12 pl-10 md:pl-12 pr-3 md:pr-4 rounded-full border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300 shadow-sm hover:shadow-md text-sm md:text-base mobile-search-bar"
+                    style="-webkit-appearance: none; appearance: none;" 
+                  />
+                </form>
+              </div>
+              <a href="iletisim.html" class="hidden md:flex items-center justify-center gap-2 px-4 lg:px-6 h-12 rounded-full bg-amber-700 text-white font-medium shadow-md hover:bg-amber-800 hover:shadow-lg transition-all duration-300">
+                <span class="material-icons text-lg">email</span>
+                <span class="hidden lg:inline">İletişim</span>
+              </a>
+            </div>
+            <a href="iletisim.html" class="md:hidden flex items-center justify-center gap-2 px-4 h-10 rounded-full brand-bg text-white shadow-md hover:shadow-lg transition-all duration-300 whitespace-nowrap">
+                <span class="material-icons text-lg">email</span>
+                <span class="text-sm font-medium">İletişim</span>
+            </a>
+            <button id="mobile-menu-btn" class="hidden md:block lg:hidden p-2 text-gray-700 hover:text-gray-900 transition-colors">
+                <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="40" y1="64" x2="216" y2="64" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="40" y1="192" x2="216" y2="192" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black/75 z-40 lg:hidden"></div>
+        
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 lg:hidden" style="position: fixed !important; top: 0 !important; right: 0 !important; width: 320px !important; height: 100vh !important; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important; box-shadow: -5px 0 25px rgba(0,0,0,0.15) !important; transform: translateX(100%) !important; transition: transform 0.3s ease !important; z-index: 9999 !important; border-left: 1px solid #e2e8f0 !important;">
+            <div class="h-full overflow-y-auto">
+                <div class="bg-white p-6 border-b border-gray-100">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-gray-800">Menü</h3>
+                        <button id="mobile-menu-close" class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+                                <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                                <line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <nav class="p-6">
+                    <div class="space-y-3">
+                        <a href="index.html" class="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200">
+                            <span class="text-lg font-medium text-gray-700 group-hover:text-amber-700">Ana Sayfa</span>
+                        </a>
+                        <a href="shop.html" class="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200">
+                            <span class="text-lg font-medium text-gray-700 group-hover:text-amber-700">Ürünlerimiz</span>
+                        </a>
+                        <a href="ortaklik.html" class="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200">
+                            <span class="text-lg font-medium text-gray-700 group-hover:text-amber-700">İş Ortaklığı</span>
+                        </a>
+                        <a href="hakkimizda.html" class="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200">
+                            <span class="text-lg font-medium text-gray-700 group-hover:text-amber-700">Hakkımızda</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <a href="iletisim.html" class="group flex items-center justify-center gap-3 p-4 rounded-lg bg-gradient-to-r from-amber-100 to-orange-100 hover:from-amber-200 hover:to-orange-200 transition-all duration-300 border border-amber-200">
+                            <span class="text-lg font-semibold text-amber-800">İletişim</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main style="z-index: 1; position: relative;">
+        <section class="py-12 md:py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Kullanım Şartları</h1>
+                <p class="text-sm text-gray-500 mb-8">Son güncelleme: Ocak 2026</p>
+                
+                <div class="prose prose-lg max-w-none text-gray-700 space-y-8">
+                    
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Genel Hükümler</h2>
+                        <p>Bu web sitesini (kervankahve.com) kullanarak aşağıdaki kullanım şartlarını kabul etmiş sayılırsınız. Bu şartları kabul etmiyorsanız, lütfen siteyi kullanmayınız.</p>
+                        <p>Kervan Kahve, bu kullanım şartlarını önceden haber vermeksizin değiştirme hakkını saklı tutar. Güncel şartları düzenli olarak kontrol etmenizi öneririz.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">2. Hizmet Tanımı</h2>
+                        <p>Kervan Kahve web sitesi, aşağıdaki hizmetleri sunmaktadır:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Ürün ve hizmetlerimiz hakkında bilgilendirme</li>
+                            <li>İş ortaklığı başvuru formu</li>
+                            <li>İletişim bilgileri ve konum</li>
+                            <li>Şirket hakkında bilgiler</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">3. Fikri Mülkiyet Hakları</h2>
+                        <p>Bu web sitesindeki tüm içerikler (metin, görseller, logolar, grafikler, videolar, tasarım vb.) Kervan Kahve'nin mülkiyetindedir veya lisanslı olarak kullanılmaktadır.</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>İçeriklerin izinsiz kopyalanması, dağıtılması veya değiştirilmesi yasaktır</li>
+                            <li>Kişisel ve ticari olmayan amaçlarla sınırlı görüntüleme hakkınız bulunmaktadır</li>
+                            <li>Logo ve marka öğelerinin izinsiz kullanımı yasaktır</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">4. Kullanıcı Sorumlulukları</h2>
+                        <p>Web sitemizi kullanırken aşağıdaki kurallara uymanız gerekmektedir:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Yasalara ve bu kullanım şartlarına uygun davranmak</li>
+                            <li>Doğru ve güncel bilgiler vermek (form doldururken)</li>
+                            <li>Sitenin işleyişini bozmaya çalışmamak</li>
+                            <li>Zararlı yazılım veya kod paylaşmamak</li>
+                            <li>Başkalarının haklarına saygı göstermek</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">5. Ürün Bilgileri ve Fiyatlandırma</h2>
+                        <p>Web sitemizde yer alan ürün bilgileri hakkında:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Ürün görselleri temsili olabilir, gerçek ürünler farklılık gösterebilir</li>
+                            <li>Ürün özellikleri ve açıklamaları bilgilendirme amaçlıdır</li>
+                            <li>Fiyatlar ve stok durumu önceden haber verilmeksizin değişebilir</li>
+                            <li>Güncel fiyat ve sipariş bilgileri için doğrudan iletişime geçmenizi öneririz</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">6. İş Ortaklığı Başvuruları</h2>
+                        <p>İş ortaklığı başvuru formu aracılığıyla yapılan başvurular için:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Başvuru yapmak herhangi bir taahhüt oluşturmaz</li>
+                            <li>Başvurular değerlendirilerek tarafınıza dönüş yapılacaktır</li>
+                            <li>Yanlış veya yanıltıcı bilgi veren başvurular değerlendirme dışı bırakılabilir</li>
+                            <li>İş ortaklığı koşulları ayrı bir sözleşme ile belirlenir</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">7. Üçüncü Taraf Bağlantıları</h2>
+                        <p>Web sitemiz, üçüncü taraf web sitelerine bağlantılar içerebilir (sosyal medya vb.). Bu siteler için:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Üçüncü taraf sitelerin içeriklerinden sorumlu değiliz</li>
+                            <li>Bu sitelerin gizlilik politikaları farklı olabilir</li>
+                            <li>Bağlantılar, söz konusu siteleri onayladığımız anlamına gelmez</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">8. Sorumluluk Sınırlandırması</h2>
+                        <p>Kervan Kahve, aşağıdaki durumlarda sorumluluk kabul etmez:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Web sitesinin kesintisiz veya hatasız çalışacağı garantisi verilmez</li>
+                            <li>Teknik arızalar veya bakım çalışmaları nedeniyle oluşabilecek erişim sorunları</li>
+                            <li>Site kullanımından kaynaklanan dolaylı zararlar</li>
+                            <li>Kullanıcı kaynaklı hatalar veya yanlış kullanım</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">9. Gizlilik</h2>
+                        <p>Kişisel verilerinizin işlenmesi hakkında detaylı bilgi için <a href="gizlilik-politikasi.html" class="text-amber-700 hover:underline">Gizlilik Politikamızı</a> inceleyiniz.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">10. Uygulanacak Hukuk ve Yetki</h2>
+                        <p>Bu kullanım şartları Türkiye Cumhuriyeti kanunlarına tabidir. Herhangi bir uyuşmazlık durumunda Mersin Mahkemeleri ve İcra Daireleri yetkilidir.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">11. Şartların Değiştirilmesi</h2>
+                        <p>Kervan Kahve, bu kullanım şartlarını herhangi bir zamanda değiştirme hakkını saklı tutar. Değişiklikler bu sayfada yayınlandığı andan itibaren geçerli olacaktır.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">12. İletişim</h2>
+                        <p>Bu kullanım şartları hakkında sorularınız için bizimle iletişime geçebilirsiniz:</p>
+                        <div class="bg-gray-50 p-6 rounded-lg mt-4">
+                            <p><strong>Kervan Kahve</strong></p>
+                            <p>E-posta: <a href="mailto:info@kervankahve.com" class="text-amber-700 hover:underline">info@kervankahve.com</a></p>
+                            <p>Telefon: <a href="tel:+905453207713" class="text-amber-700 hover:underline">+90 545 320 77 13</a></p>
+                            <p>Adres: Cami Şerif, İstiklal Cd. 26-1, 33060 Akdeniz/Mersin</p>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav max-w-md mx-auto">
+        <div class="flex justify-around p-2">
+          <a href="index.html" class="flex flex-col items-center text-gray-600 py-2 hover:text-amber-700 transition-colors">
+            <span class="material-icons text-2xl">home</span>
+            <span class="text-xs font-medium mt-1">Ana Sayfa</span>
+          </a>
+          <a href="shop.html" class="flex flex-col items-center text-gray-600 py-2 hover:text-amber-700 transition-colors">
+            <span class="material-icons text-2xl">shopping_bag</span>
+            <span class="text-xs font-medium mt-1">Ürünler</span>
+          </a>
+          <a href="ortaklik.html" class="flex flex-col items-center text-gray-600 py-2 hover:text-amber-700 transition-colors">
+            <span class="material-icons text-2xl">work</span>
+            <span class="text-xs font-medium mt-1">İş Ortaklığı</span>
+          </a>
+          <a href="hakkimizda.html" class="flex flex-col items-center text-gray-600 py-2 hover:text-amber-700 transition-colors">
+            <span class="material-icons text-2xl">info</span>
+            <span class="text-xs font-medium mt-1">Hakkımızda</span>
+          </a>
+        </div>
+    </nav>
+
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-12">
+          <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-bold">Kervan Kahve</h3>
+              <p class="mt-4 text-sm text-gray-400">Nitelikli kahve çekirdeklerini tutkuyla kavuruyor, işletmelere ve kahve severlere ulaştırıyoruz.</p>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">Hızlı Erişim</h3>
+              <ul class="mt-4 space-y-2 text-sm">
+                <li><a href="index.html" class="text-gray-400 hover:text-white">Ana Sayfa</a></li>
+                <li><a href="shop.html" class="text-gray-400 hover:text-white">Ürünlerimiz</a></li>
+                <li><a href="ortaklik.html" class="text-gray-400 hover:text-white">İş Ortaklığı</a></li>
+                <li><a href="hakkimizda.html" class="text-gray-400 hover:text-white">Hakkımızda</a></li>
+                <li><a href="iletisim.html" class="text-gray-400 hover:text-white">İletişim</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">Yasal</h3>
+               <ul class="mt-4 space-y-2 text-sm">
+                <li><a href="gizlilik-politikasi.html" class="text-gray-400 hover:text-white">Gizlilik Politikası</a></li>
+                <li><a href="cerez-politikasi.html" class="text-gray-400 hover:text-white">Çerez Politikası</a></li>
+                <li><a href="kullanim-sartlari.html" class="text-gray-400 hover:text-white">Kullanım Şartları</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">Bize Ulaşın</h3>
+              <ul class="mt-4 space-y-2 text-sm">
+                <li><a href="mailto:info@kervankahve.com" class="text-gray-400 hover:text-white">info@kervankahve.com</a></li>
+                <li><a href="tel:+905453207713" class="text-gray-400 hover:text-white">+90 545 320 77 13</a></li>
+                <li>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="https://www.instagram.com/kervankahve_toptan__perakende/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm48-136H80a56.06,56.06,0,0,0-56,56v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"></path></svg>
+                        </a>
+                    </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-12 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+            <p>&copy; 2025 Kervan Kahve. Tüm hakları saklıdır.</p>
+          </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
