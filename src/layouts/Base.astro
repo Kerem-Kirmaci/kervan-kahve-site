@@ -1,0 +1,88 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BottomNav from '../components/BottomNav.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Aktif sayfanın anahtarı: index | shop | ortaklik | hakkimizda | iletisim */
+  activePage?: string;
+  /** Sayfaya özel Open Graph görseli (varsayılan: logo) */
+  ogImage?: string;
+  /** <main> etiketine eklenecek sınıflar (sayfadan sayfaya değişiyor) */
+  mainClass?: string;
+  /** Arama motorlarının dizine almaması gereken geçici sayfalar için */
+  noindex?: boolean;
+}
+
+const { title, description, activePage, ogImage, mainClass, noindex = false } = Astro.props;
+
+// Ana sayfanın kanonik adresi /index.html değil kök adres olmalı
+const path = Astro.url.pathname === '/index.html' ? '/' : Astro.url.pathname;
+const canonical = new URL(path, Astro.site).href;
+const socialImage = new URL(ogImage ?? '/og-image.jpg', Astro.site).href;
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <title>{title}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:site_name" content="Kervan Kahve" />
+    <meta property="og:locale" content="tr_TR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Yazı tipleri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Sayfaya özel head içeriği (yapılandırılmış veri vb.) -->
+    <slot name="head" />
+  </head>
+
+  <body class="bg-gray-50">
+    <Header activePage={activePage} />
+
+    <main class={mainClass} style="z-index: 1; position: relative;">
+      <slot />
+    </main>
+
+    <BottomNav activePage={activePage} />
+    <Footer />
+
+    <script>
+      import '../scripts/mobile-menu.js';
+    </script>
+  </body>
+</html>

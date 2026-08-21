@@ -1,0 +1,231 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/logo.png';
+
+interface Props {
+  /** Aktif sayfanın anahtarı: index | shop | ortaklik | hakkimizda | iletisim */
+  activePage?: string;
+}
+
+const { activePage } = Astro.props;
+
+const navItems = [
+  { key: 'shop', href: '/shop.html', label: 'Ürünlerimiz' },
+  { key: 'ortaklik', href: '/ortaklik.html', label: 'İş Ortaklığı' },
+  { key: 'hakkimizda', href: '/hakkimizda.html', label: 'Hakkımızda' },
+];
+
+const mobileNavItems = [
+  { key: 'index', href: '/index.html', label: 'Ana Sayfa' },
+  ...navItems,
+];
+
+const isContactActive = activePage === 'iletisim';
+---
+
+<header
+  class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-amber-100/60 mobile-simplified-header"
+>
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <a
+      href="/index.html"
+      class="flex items-center gap-3 shrink-0 md:pr-6 md:border-r md:border-amber-300"
+    >
+      <Image
+        src={logo}
+        alt="Kervan Kahve Logo"
+        width={128}
+        height={128}
+        class="h-14 md:h-16 w-auto object-contain"
+        loading="eager"
+      />
+      <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-800">Kervan Kahve</h2>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-2 desktop-nav" aria-label="Ana menü">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'nav-link inline-flex items-center h-11 px-3 text-base font-semibold text-gray-700 hover:brand-text rounded-lg hover:bg-amber-50 transition-colors',
+              { active: activePage === item.key },
+            ]}
+            aria-current={activePage === item.key ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Arama çubuğu ve iletişim butonu -->
+    <div
+      class="flex items-center gap-2 md:gap-4 flex-1 max-w-2xl mx-2 md:mx-4 header-search-container"
+    >
+      <div class="relative flex-grow mobile-search-container">
+        <span
+          class="material-icons absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg md:text-xl mobile-search-icon"
+          aria-hidden="true">search</span
+        >
+        <form action="/shop.html" method="GET" class="w-full" role="search">
+          <label for="global-search" class="sr-only">Ürün ara</label>
+          <input
+            id="global-search"
+            name="search"
+            type="search"
+            placeholder="Ürün ara..."
+            class="w-full h-10 md:h-12 pl-10 md:pl-12 pr-3 md:pr-4 rounded-full border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition duration-300 shadow-sm hover:shadow-md text-sm md:text-base mobile-search-bar"
+            style="-webkit-appearance: none; appearance: none;"
+          />
+        </form>
+      </div>
+
+      <a
+        href="/iletisim.html"
+        class:list={[
+          'hidden md:flex items-center justify-center gap-2 px-4 lg:px-6 h-12 rounded-full text-white font-medium',
+          isContactActive
+            ? 'bg-amber-800 shadow-lg'
+            : 'bg-amber-700 shadow-md hover:bg-amber-800 hover:shadow-lg transition-all duration-300',
+        ]}
+        aria-current={isContactActive ? 'page' : undefined}
+      >
+        <span class="material-icons text-lg" aria-hidden="true">email</span>
+        <span class="hidden lg:inline">İletişim</span>
+      </a>
+    </div>
+
+    <!-- Mobil iletişim butonu -->
+    <a
+      href="/iletisim.html"
+      class:list={[
+        'md:hidden flex items-center justify-center gap-2 px-4 h-10 rounded-full brand-bg text-white whitespace-nowrap',
+        isContactActive ? 'shadow-lg' : 'shadow-md hover:shadow-lg transition-all duration-300',
+      ]}
+      aria-current={isContactActive ? 'page' : undefined}
+    >
+      <span class="material-icons text-lg" aria-hidden="true">email</span>
+      <span class="text-sm font-medium">İletişim</span>
+    </a>
+
+    <!-- Hamburger menü butonu (tablet ve üstü) -->
+    <button
+      id="mobile-menu-btn"
+      type="button"
+      class="hidden md:block lg:hidden p-2 text-gray-700 hover:text-gray-900 transition-colors"
+      aria-label="Menüyü aç"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg
+        id="hamburger-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        viewBox="0 0 256 256"
+        aria-hidden="true"
+      >
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+        <line x1="40" y1="64" x2="216" y2="64" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+        <line x1="40" y1="192" x2="216" y2="192" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+      </svg>
+      <svg
+        id="close-icon"
+        class="hidden"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        viewBox="0 0 256 256"
+        aria-hidden="true"
+      >
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+        <line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobil menü arka planı -->
+  <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black/75 z-40 lg:hidden"></div>
+
+  <!-- Mobil menü.
+       Dıştaki kabuk viewport'u tam kaplar ve overflow:hidden ile paneli kırpar.
+       Panel kapalıyken ekranın 320px sağında durur; kabuk olmadan bu, sayfada
+       yatay kaydırma yaratıyordu (eskiden html/body'ye overflow-x:hidden
+       konarak bastırılmıştı). -->
+  <div class="mobile-menu-shell lg:hidden">
+    <div
+      id="mobile-menu"
+      class="mobile-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobil menü"
+    >
+    <div class="h-full overflow-y-auto">
+      <div class="bg-white p-6 border-b border-gray-100">
+        <div class="flex justify-between items-center">
+          <h3 class="text-2xl font-bold text-gray-800">Menü</h3>
+          <button
+            id="mobile-menu-close"
+            type="button"
+            class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all rounded-full"
+            aria-label="Menüyü kapat"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+              <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+              <line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <nav class="p-6" aria-label="Mobil menü">
+        <div class="space-y-3">
+          {
+            mobileNavItems.map((item) => {
+              const isActive = activePage === item.key;
+              return (
+                <a
+                  href={item.href}
+                  class:list={[
+                    'group flex items-center gap-3 p-3 rounded-lg transition-all duration-200',
+                    isActive ? 'bg-amber-50 hover:bg-amber-100' : 'hover:bg-gray-50',
+                  ]}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <span
+                    class:list={[
+                      'text-lg font-medium',
+                      isActive ? 'text-amber-800' : 'text-gray-700 group-hover:text-amber-700',
+                    ]}
+                  >
+                    {item.label}
+                  </span>
+                </a>
+              );
+            })
+          }
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <a
+            href="/iletisim.html"
+            class="group flex items-center justify-center gap-3 p-4 rounded-lg bg-gradient-to-r from-amber-100 to-orange-100 hover:from-amber-200 hover:to-orange-200 transition-all duration-300 border border-amber-200"
+            aria-current={isContactActive ? 'page' : undefined}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#6F4E37" viewBox="0 0 256 256" aria-hidden="true">
+              <path d="M224,48H32a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H224a8,8,0,0,0,8-8V56A8,8,0,0,0,224,48Zm-8,136H40V64H216Z"></path>
+              <path d="M224,40H32A16,16,0,0,0,16,56V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V56A16,16,0,0,0,224,40Zm0,16V72L138.5,123.4a16.08,16.08,0,0,1-21,0L32,72V56ZM32,192V88l64,40,24,15,24-15,64-40v104Z"></path>
+            </svg>
+            <span class="text-lg font-semibold text-amber-800">İletişim</span>
+          </a>
+        </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>

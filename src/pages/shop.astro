@@ -1,0 +1,224 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { products } from '../data/products.js';
+
+// Mağaza sıralaması: Şurup → Püre → Tatlı → Kahve → Çay → Aksesuar,
+// aynı kategoride önce öne çıkanlar, sonra ada göre Türkçe alfabetik.
+// Eskiden bu sıralama her sayfa açılışında tarayıcıda yapılıyordu; artık
+// build sırasında bir kez yapılıp HTML'e sabitleniyor.
+const categoryOrder = ['surup', 'pure-tatlandirici', 'tatli', 'espresso', 'cay', 'aksesuar'];
+const orderIndex = (key: string) => {
+  const i = categoryOrder.indexOf(key);
+  return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+};
+
+const sorted = [...products].sort((a, b) => {
+  const byCategory = orderIndex(a.category) - orderIndex(b.category);
+  if (byCategory !== 0) return byCategory;
+  const byFeatured = (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+  if (byFeatured !== 0) return byFeatured;
+  return a.name.localeCompare(b.name, 'tr', { sensitivity: 'base' });
+});
+
+// İlk parti kaç ürün görünür başlasın (kalanı kaydırdıkça açılır)
+const INITIAL_VISIBLE = 24;
+
+const filterCategories = [
+  { key: 'surup', label: 'Şuruplar' },
+  { key: 'pure-tatlandirici', label: 'Püre ve Tatlandırıcılar' },
+  { key: 'tatli', label: 'Tatlılar' },
+  { key: 'espresso', label: 'Kahveler' },
+  { key: 'cay', label: 'Bitki Çayları' },
+  { key: 'aksesuar', label: 'Ekipmanlar' },
+];
+
+// Ürün kataloğu yapılandırılmış verisi (arama motorları için)
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Kervan Kahve Ürünleri',
+  url: 'https://kervankahve.com/shop.html',
+  description: 'Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlılar',
+  numberOfItems: sorted.length,
+  itemListElement: sorted.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Product',
+      name: p.name,
+      description: p.description,
+      brand: { '@type': 'Brand', name: p.brand },
+    },
+  })),
+};
+---
+
+<Base
+  title="Ürünlerimiz - Kervan Kahve"
+  description="Kervan Kahve Ürünlerimiz - Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlıları keşfedin."
+  activePage="shop"
+  mainClass="container mx-auto px-6 py-12"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(itemList)} />
+
+  <Lightbox />
+
+  <!-- Mobil filtre arka planı -->
+  <div id="mobile-filter-overlay" class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"></div>
+
+  <div class="grid lg:grid-cols-4 gap-8">
+    <!-- Kenar çubuğu -->
+    <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm h-fit hidden lg:block">
+      <div class="lg:hidden flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800">Filtreler</h3>
+        <button
+          id="mobile-filter-close"
+          type="button"
+          class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all rounded-full"
+          aria-label="Filtreleri kapat"
+        >
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </div>
+
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800">Ürün Ara</h3>
+        <label for="product-search" class="sr-only">Ürün ara</label>
+        <input
+          type="text"
+          id="product-search"
+          placeholder="Ürün ara..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-color focus:border-transparent"
+        />
+      </div>
+
+      <div>
+        {/* Sayfanın tek h1'i. Eskiden h3'tü ve sayfada hiç h1 yoktu. */}
+        <h1 class="text-3xl font-bold mb-6 brand-text">Ürünlerimiz</h1>
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">Kategori Filtreleri</h2>
+        <ul class="space-y-3">
+          {
+            filterCategories.map((c) => (
+              <li>
+                <label class="flex items-center">
+                  <input
+                    type="checkbox"
+                    class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color"
+                    data-category={c.key}
+                  />
+                  <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">{c.label}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-4">
+          <button id="clear-filters" type="button" class="text-sm brand-text hover:underline">
+            Tüm Filtreleri Temizle
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+        <p id="product-count" class="text-sm text-gray-600" aria-live="polite">
+          {sorted.length} ürün bulundu
+        </p>
+      </div>
+    </aside>
+
+    <!-- Ürün listesi -->
+    <div class="lg:col-span-3">
+      <div class="lg:hidden mb-6">
+        <button
+          id="mobile-filter-toggle"
+          type="button"
+          class="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+        >
+          <span class="material-icons" aria-hidden="true">filter_list</span>
+          <span>Filtrele</span>
+        </button>
+      </div>
+
+      <div
+        id="product-grid"
+        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8"
+        data-initial-visible={INITIAL_VISIBLE}
+      >
+        {
+          sorted.map((product, i) => (
+            <ProductCard product={product} eager={i < 6} hidden={i >= INITIAL_VISIBLE} index={i} />
+          ))
+        }
+      </div>
+
+      <div
+        id="infinite-scroll-loader"
+        class="mt-12 flex flex-col items-center justify-center py-8 hidden"
+      >
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin"></div>
+          <span class="text-gray-600 font-medium">Daha fazla ürün yükleniyor...</span>
+        </div>
+      </div>
+
+      <div id="end-of-products" class="mt-12 text-center py-8 hidden">
+        <p class="text-gray-500 font-medium">Tüm ürünler yüklendi</p>
+      </div>
+
+      <div id="no-results" class="mt-12 text-center py-8 hidden">
+        <p class="text-gray-500 font-medium">Aramanıza uygun ürün bulunamadı.</p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  /* Mağaza sayfasına özgü stiller */
+
+  /* Mobil filtre paneli */
+  .mobile-filter-visible {
+    display: block !important;
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    overflow-y: auto;
+    background: white;
+    padding: 1.5rem;
+    animation: slideUp 0.3s ease-out;
+    max-height: 85vh;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .mobile-filter-overlay-visible {
+    display: block !important;
+  }
+
+  /* Filtreye uymayan / henüz açılmamış kartlar */
+  :global(.product-hidden) {
+    display: none;
+  }
+</style>
+
+<script>
+  import '../scripts/lightbox.js';
+  import '../scripts/shop.js';
+</script>

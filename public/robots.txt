@@ -1,0 +1,7 @@
+# Kervan Kahve
+# https://kervankahve.com
+
+User-agent: *
+Allow: /
+
+Sitemap: https://kervankahve.com/sitemap-index.xml

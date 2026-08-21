@@ -1,0 +1,18 @@
+# bağımlılıklar
+node_modules/
+
+# build çıktısı
+dist/
+.astro/
+
+# referans ekran görüntüleri (yerel karşılaştırma için, repoya girmez)
+docs/before/
+docs/after/
+
+# ortam
+.env
+.env.production
+
+# işletim sistemi
+.DS_Store
+docs/diff/
