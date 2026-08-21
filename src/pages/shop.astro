@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import ProductCard from '../components/ProductCard.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { products } from '../data/products.js';
+import { getImage } from 'astro:assets';
+import { productImage } from '../data/product-images.js';
 
 // Mağaza sıralaması: Şurup → Püre → Tatlı → Kahve → Çay → Aksesuar,
 // aynı kategoride önce öne çıkanlar, sonra ada göre Türkçe alfabetik.
@@ -34,7 +36,22 @@ const filterCategories = [
   { key: 'aksesuar', label: 'Ekipmanlar' },
 ];
 
-// Ürün kataloğu yapılandırılmış verisi (arama motorları için)
+// Ürün kataloğu yapılandırılmış verisi (arama motorları için).
+// Görsel yolları ProductCard'ın lightbox sürümüyle birebir aynı parametrelerle
+// üretiliyor (900px webp, kalite 78); Astro aynı dosyayı yeniden üretmiyor.
+const yapisalGorseller = await Promise.all(
+  sorted.map(async (p) => {
+    const img = await getImage({
+      src: productImage(p.image),
+      width: 900,
+      format: 'webp',
+      quality: 78,
+    });
+    // Yapısal veri mutlak adres ister
+    return new URL(img.src, Astro.site).href;
+  })
+);
+
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -49,6 +66,7 @@ const itemList = {
       '@type': 'Product',
       name: p.name,
       description: p.description,
+      image: yapisalGorseller[i],
       brand: { '@type': 'Brand', name: p.brand },
     },
   })),
