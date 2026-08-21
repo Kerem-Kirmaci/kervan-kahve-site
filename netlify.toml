@@ -14,6 +14,14 @@
   status = 301
   force = true
 
+# Sitemap adresi Astro'ya geçişte /sitemap.xml'den /sitemap-index.xml'e taşındı.
+# robots.txt yenisini gösteriyor, ama eski adrese dışarıdan referans kalmışsa
+# boşa düşmesin.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
 # Astro, işlediği dosyaların adına içerik özeti basıyor
 # (anasayfa.B6bm1AUo_1Faovd.webp). İçerik değişirse ad da değişir, bu yüzden
 # bu dosyalar süresiz önbelleklenebilir. Netlify varsayılanı her ziyarette
