@@ -54,19 +54,37 @@ import Base from '../layouts/Base.astro';
               </div>
           </div>
           <div class="w-full h-80 md:h-96 lg:h-full rounded-xl overflow-hidden shadow-lg fade-in fade-in-delay-1">
-              <iframe
-      title="Kervan Kahve konumu — Cami Şerif, İstiklal Cd. 26-1, Akdeniz/Mersin"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3192.343493921354!2d34.629388315281!3d36.8581679799365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1527f4d1c9031737%3A0x133a84944f378946!2zQ2FtaSDFn2VyaWYsIMSwc3Rpa2xhbCBDZC4gMjYtMSwgMzMwNjAgQWtkZW5pei9NZXJzaW4!5e0!3m2!1str!2str!4v1672521600001"
-                  width="100%"
-                  height="100%"
-                  style="border:0;"
-                  allowfullscreen=""
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade">
-              </iframe>
+              <!-- Harita tıklanınca yükleniyor. Gömülü Google Maps çerçevesi tek
+                   başına ~1,7 MB JavaScript getiriyor ve sayfayı açan herkese
+                   iniyordu; loading="lazy" masaüstünde görüş alanında kaldığı
+                   için işe yaramıyordu. -->
+              <div id="map-embed" class="map-facade">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="map-facade-pin" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <p class="map-facade-adres">Cami Şerif, İstiklal Cd. 26-1<br>33060 Akdeniz/Mersin</p>
+                  <button type="button" id="map-load" class="map-facade-cta">Haritayı göster</button>
+                  <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=36.8581680%2C34.6293883"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="map-facade-link">Yol tarifi al</a>
+                  <p class="map-facade-not">Haritayı açtığınızda Google Haritalar yüklenir.</p>
+              </div>
+              <template id="map-template">
+                  <iframe
+                      title="Kervan Kahve konumu — Cami Şerif, İstiklal Cd. 26-1, Akdeniz/Mersin"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3192.343493921354!2d34.629388315281!3d36.8581679799365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1527f4d1c9031737%3A0x133a84944f378946!2zQ2FtaSDFn2VyaWYsIMSwc3Rpa2xhbCBDZC4gMjYtMSwgMzMwNjAgQWtkZW5pei9NZXJzaW4!5e0!3m2!1str!2str!4v1672521600001"
+                      width="100%"
+                      height="100%"
+                      style="border:0;"
+                      allowfullscreen=""
+                      referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </template>
           </div>
       </div>
   </section>
+  <script>
+    import '../scripts/map-embed.js';
+  </script>
 </Base>
 
 <style>
@@ -77,5 +95,74 @@ import Base from '../layouts/Base.astro';
     height: 24px;
     stroke: var(--brand-color);
     margin-top: 5px;
+  }
+
+  /* Harita cephesi — gerçek harita yüklenene kadar duran yer tutucu */
+  .map-facade {
+    width: 100%;
+    height: 100%;
+    min-height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background-color: #f3f4f6;
+    background-image: linear-gradient(#e5e7eb 1px, transparent 1px),
+      linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+    background-size: 2.5rem 2.5rem;
+  }
+
+  .map-facade-pin {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--brand-color);
+  }
+
+  .map-facade-adres {
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .map-facade-cta {
+    background: var(--brand-color);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+
+  .map-facade-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+  .map-facade-cta:focus-visible,
+  .map-facade-link:focus-visible {
+    outline: 2px solid var(--brand-color);
+    outline-offset: 3px;
+  }
+
+  .map-facade-link {
+    font-size: 0.9rem;
+    color: #4b5563;
+    text-decoration: underline;
+  }
+
+  .map-facade-link:hover { color: var(--brand-color); }
+
+  .map-facade-not {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map-facade-cta { transition: none; }
+    .map-facade-cta:hover { transform: none; }
   }
 </style>

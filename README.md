@@ -74,9 +74,10 @@ npm run serve:dist        # ayrı bir terminalde
 npm test
 ```
 
-64 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
+71 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
 filtreleri ve arama, sonsuz kaydırma, lightbox, slider okları, ortaklık formu
-ve KVKK onayı, görsel öznitelikleri, yatay taşma ve konsol hataları.
+ve KVKK onayı, iletişim haritasının tıklanınca yüklenmesi, görsel öznitelikleri,
+yatay taşma ve konsol hataları.
 
 Sistemdeki Chrome'u kullanır; ayrıca tarayıcı indirmez.
 
