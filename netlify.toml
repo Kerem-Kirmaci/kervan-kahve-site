@@ -13,3 +13,12 @@
   to = "/menu.html"
   status = 301
   force = true
+
+# Astro, işlediği dosyaların adına içerik özeti basıyor
+# (anasayfa.B6bm1AUo_1Faovd.webp). İçerik değişirse ad da değişir, bu yüzden
+# bu dosyalar süresiz önbelleklenebilir. Netlify varsayılanı her ziyarette
+# yeniden doğrulama yaptırıyordu; tekrar ziyaretler artık ağa çıkmıyor.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
