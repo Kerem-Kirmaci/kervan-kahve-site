@@ -1,0 +1,1191 @@
+---
+import Base from '../layouts/Base.astro';
+import SliderCard from '../components/SliderCard.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { Image } from 'astro:assets';
+import { assetImage } from '../data/product-images.js';
+import { homeSliders } from '../data/home-sliders.js';
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Kervan Kuru Kahvecisi',
+  url: 'https://kervankahve.com',
+  logo: 'https://kervankahve.com/og-image.jpg',
+  image: 'https://kervankahve.com/og-image.jpg',
+  description:
+    'Nitelikli kahve çekirdeklerini ustalıkla kavuruyor, işletmelere ve kahve severlere ulaştırıyoruz. İş ortaklığı, barista eğitimi ve özel karışımlar.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Cami Şerif, İstiklal Cd. 26-1',
+    addressLocality: 'Akdeniz',
+    addressRegion: 'Mersin',
+    postalCode: '33060',
+    addressCountry: 'TR',
+  },
+  telephone: '+905453207713',
+  email: 'info@kervankahve.com',
+  foundingDate: '2015',
+  sameAs: ['https://www.instagram.com/kervankahve_toptan__perakende/'],
+};
+---
+
+<Base
+  title="Kervan Kahve - Nitelikli Kahve Çözümleri"
+  description="Kervan Kahve - Nitelikli kahve çekirdeklerini ustalıkla kavuruyor, işletmelere ve kahve severlere ulaştırıyoruz. İş ortaklığı, barista eğitimi ve özel karışımlar."
+  activePage="index"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(localBusiness)} />
+
+  <Lightbox />
+
+  <!-- Kategori Marquee (Header'ın hemen altında) - Sadece desktop/tablet -->
+  <section class="hidden md:block bg-white border-b border-amber-100/60 overflow-x-hidden">
+    <div class="category-marquee">
+      <div class="marquee-track">
+        <!-- Tek set (tüm kategoriler) -->
+        <div class="category-row flex gap-0">
+          <a href="#kategori-surup" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/syrup-banner.webp')} alt="Şuruplar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🍯 Şuruplar</div>
+              <div class="text-white/80 text-xs">Tatlandıran aromalar</div>
+            </div>
+          </a>
+          <a href="#kategori-pure-tatlandirici" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/pure-tatlandirici-banner.webp')} alt="Püre ve Tatlandırıcılar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🥤 Püre & Tatlandırıcılar</div>
+              <div class="text-white/80 text-xs">Özel formüller ve soslar</div>
+            </div>
+          </a>
+          <a href="#kategori-tatli" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/sweet-banner.webp')} alt="Tatlılar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🍰 Tatlılar</div>
+              <div class="text-white/80 text-xs">Günlük taze lezzetler</div>
+            </div>
+          </a>
+          <a href="#kategori-kahve" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/espresso-banner.webp')} alt="Kahveler" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">☕ Kahveler</div>
+              <div class="text-white/80 text-xs">Tüm kahve çeşitleri</div>
+            </div>
+          </a>
+          <a href="#kategori-cay" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/cay-banner.webp')} alt="Bitki Çayları" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🍵 Bitki Çayları</div>
+              <div class="text-white/80 text-xs">Doğal ve aromalı</div>
+            </div>
+          </a>
+          <a href="#kategori-aksesuar" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/aksesuar-banner.webp')} alt="Aksesuarlar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">⚙️ Aksesuarlar</div>
+              <div class="text-white/80 text-xs">Demleme ekipmanları</div>
+            </div>
+          </a>
+        </div>
+        <!-- Tekrar set (sonsuzluk etkisi için aynı içerik) -->
+        <div class="category-row flex gap-0" aria-hidden="true">
+          <a href="#kategori-surup" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/syrup-banner.webp')} alt="Şuruplar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🍯 Şuruplar</div>
+              <div class="text-white/80 text-xs">Tatlandıran aromalar</div>
+            </div>
+          </a>
+          <a href="#kategori-pure-tatlandirici" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/pure-tatlandirici-banner.webp')} alt="Püre ve Tatlandırıcılar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🥤 Püre & Tatlandırıcılar</div>
+              <div class="text-white/80 text-xs">Özel formüller ve soslar</div>
+            </div>
+          </a>
+          <a href="#kategori-tatli" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/sweet-banner.webp')} alt="Tatlılar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🍰 Tatlılar</div>
+              <div class="text-white/80 text-xs">Günlük taze lezzetler</div>
+            </div>
+          </a>
+          <a href="#kategori-kahve" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/espresso-banner.webp')} alt="Kahveler" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">☕ Kahveler</div>
+              <div class="text-white/80 text-xs">Tüm kahve çeşitleri</div>
+            </div>
+          </a>
+          <a href="#kategori-cay" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/cay-banner.webp')} alt="Bitki Çayları" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">🍵 Bitki Çayları</div>
+              <div class="text-white/80 text-xs">Doğal ve aromalı</div>
+            </div>
+          </a>
+          <a href="#kategori-aksesuar" class="category-card overflow-hidden">
+            <Image src={assetImage('images/category-cards/aksesuar-banner.webp')} alt="Aksesuarlar" width={400} />
+            <div class="overlay"></div>
+            <div class="label">
+              <div class="text-white text-xl font-extrabold tracking-tight">⚙️ Aksesuarlar</div>
+              <div class="text-white/80 text-xs">Demleme ekipmanları</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Hero Section - Mobil Optimize -->
+  <section class="container mx-auto px-4 md:px-6 py-4 md:py-12">
+    <!-- Mobil Görünüm -->
+    <div class="md:hidden space-y-6">
+      <!-- Büyük Başlık -->
+      <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">
+        Kahveden Bitki Çayına, Tatlıdan Şuruba: <span class="brand-text">Tüm Lezzetler</span> Bir Arada
+      </h1>
+
+      <!-- Kategoriler -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900">Kategoriler</h2>
+        <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar">
+          <a href="#kategori-surup-mobile" class="flex-shrink-0 w-28 text-center">
+            <Image src={assetImage('images/category-cards/syrup-banner.webp')} alt="Syrups" class="w-28 h-36 object-cover rounded-lg shadow-md" width={400} />
+            <p class="mt-2 text-sm font-medium text-gray-900">Şuruplar</p>
+          </a>
+          <a href="#kategori-pure-tatlandirici-mobile" class="flex-shrink-0 w-28 text-center">
+            <Image src={assetImage('images/category-cards/pure-tatlandirici-banner.webp')} alt="Püre ve Tatlandırıcılar" class="w-28 h-36 object-cover rounded-lg shadow-md" width={400} />
+            <p class="mt-2 text-sm font-medium text-gray-900">Püre & Tatl.</p>
+          </a>
+          <a href="#kategori-tatli-mobile" class="flex-shrink-0 w-28 text-center">
+            <Image src={assetImage('images/category-cards/sweet-banner.webp')} alt="Desserts" class="w-28 h-36 object-cover rounded-lg shadow-md" width={400} />
+            <p class="mt-2 text-sm font-medium text-gray-900">Tatlılar</p>
+          </a>
+          <a href="#kategori-kahve-mobile" class="flex-shrink-0 w-28 text-center">
+            <Image src={assetImage('images/category-cards/espresso-banner.webp')} alt="Coffee" class="w-28 h-36 object-cover rounded-lg shadow-md" width={400} />
+            <p class="mt-2 text-sm font-medium text-gray-900">Kahveler</p>
+          </a>
+          <a href="#kategori-cay-mobile" class="flex-shrink-0 w-28 text-center">
+            <Image src={assetImage('images/category-cards/cay-banner.webp')} alt="Teas" class="w-28 h-36 object-cover rounded-lg shadow-md" width={400} />
+            <p class="mt-2 text-sm font-medium text-gray-900">Bitki Çayları</p>
+          </a>
+          <a href="#kategori-aksesuar-mobile" class="flex-shrink-0 w-28 text-center">
+            <Image src={assetImage('images/category-cards/aksesuar-banner.webp')} alt="Accessories" class="w-28 h-36 object-cover rounded-lg shadow-md" width={400} />
+            <p class="mt-2 text-sm font-medium text-gray-900">Ekipmanlar</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- İş Ortakları -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900">İş Ortaklarımız</h2>
+        <div class="flex overflow-x-auto space-x-6 items-center pb-4 no-scrollbar">
+          <div class="flex-shrink-0">
+            <Image src={assetImage('images/partnerships/doro.png')} alt="D'oro Cake logo" class="h-10" width={240} />
+          </div>
+          <div class="flex-shrink-0">
+            <Image src={assetImage('images/partnerships/hario.png')} alt="Hario logo" class="h-6" width={240} />
+          </div>
+          <div class="flex-shrink-0">
+            <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali logo" class="h-10" width={240} />
+          </div>
+          <div class="flex-shrink-0">
+            <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci logo" class="h-6" width={240} />
+          </div>
+          <div class="flex-shrink-0">
+            <Image src={assetImage('images/partnerships/gusse.png')} alt="Gussse logo" class="h-10" width={240} />
+          </div>
+          <div class="flex-shrink-0">
+            <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products logo" class="h-6" width={240} />
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Butonları -->
+      <div class="flex gap-4">
+        <a href="/shop.html" class="flex-1 py-3 brand-bg text-white rounded-lg font-semibold text-center shadow-md hover:shadow-lg transition-all">
+          Ürünleri Keşfet
+        </a>
+        <a href="/ortaklik.html" class="flex-1 py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold text-center shadow-md hover:shadow-lg transition-all">
+          İş Ortağı Ol
+        </a>
+      </div>
+    </div>
+
+    <!-- Desktop/Tablet Görünüm -->
+    <div class="hidden md:grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+      {/* min-w-0: grid öğesinin varsayılan min-width:auto değeri, içindeki
+          marquee şeridinin max-content genişliğine (1440px) kilitleniyordu ve
+          tablet boyutunda içerik ekranın dışına taşıyordu. */}
+      <div class="fade-in min-w-0">
+        <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-extrabold text-gray-900 leading-tight">Kahveden Bitki Çayına, Tatlıdan Şuruba: <span class="brand-text">Tüm Lezzetler</span> Bir Arada</h2>
+        <!-- Ortaklık logoları marquee - sadece tablet ve üstünde göster -->
+        <div class="mt-4 md:mt-6 partner-marquee overflow-hidden">
+          <div class="marquee-track">
+            <div class="flex items-center gap-2 md:gap-0">
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/hario.png')} alt="Hario" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci Gourmet" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/gusse.png')} alt="Gussse" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/doro.png')} alt="D'ORO Cake" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+            </div>
+            <!-- Sonsuzluk etkisi için tekrar -->
+            <div class="flex items-center gap-2 md:gap-0" aria-hidden="true">
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/hario.png')} alt="Hario" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci Gourmet" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/gusse.png')} alt="Gussse" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+              <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
+                <Image src={assetImage('images/partnerships/doro.png')} alt="D'ORO Cake" class="max-h-full max-w-full object-contain" width={240} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 md:mt-8 flex flex-row gap-2 sm:gap-3 md:gap-4">
+          <a href="/shop.html" class="brand-bg text-white px-3 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg font-semibold text-xs sm:text-sm md:text-base lg:text-lg hover:bg-opacity-90 transition-transform hover:scale-105 text-center flex-1">Ürünleri Keşfet</a>
+          <a href="/ortaklik.html" class="bg-gray-200 text-gray-800 px-3 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg font-semibold text-xs sm:text-sm md:text-base lg:text-lg hover:bg-gray-300 transition-transform hover:scale-105 text-center flex-1">İş Ortağı Ol</a>
+        </div>
+      </div>
+      <div class="fade-in fade-in-delay-1 hidden lg:block">
+        <div class="rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-500">
+          <Image src={assetImage('images/anasayfa.jpeg')} alt="Kervan Kahve - Artisanal Coffee" class="w-full h-auto object-cover" width={1200} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Çok Satan Ürünlerimiz Section -->
+  <section class="bestseller-section py-16 md:py-24">
+    <div class="container mx-auto px-4 md:px-6">
+      <!-- Section Header -->
+      <div class="text-center mb-12 md:mb-16 fade-in">
+        <div class="inline-flex items-center gap-2 bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+          <span class="material-icons text-lg">local_fire_department</span>
+          <span>Popüler Seçimler</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          Çok Satan <span class="brand-text">Ürünlerimiz</span>
+        </h2>
+        <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+          Müşterilerimizin en çok tercih ettiği, kalite ve lezzeti bir arada sunan kahve çeşitlerimiz
+        </p>
+      </div>
+
+      <!-- Bestseller Cards Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+        <!-- Espresso Card -->
+        <a href="/shop.html?category=espresso" class="bestseller-card fade-in">
+          <div class="bestseller-card-image">
+            <Image src={assetImage('images/coffees/espresso.webp')} alt="Espresso Kahve - Yoğun ve kremsi espresso içecekleri" width={800} loading="lazy" />
+          </div>
+          <div class="bestseller-card-overlay"></div>
+          <div class="bestseller-card-content">
+            <div class="bestseller-card-badge">
+              <span class="material-icons text-sm">star</span>
+              <span>En Çok Satan</span>
+            </div>
+            <h3 class="bestseller-card-title">Espresso</h3>
+            <p class="bestseller-card-description">
+              Yoğun aroması ve kremsi dokusuyla mükemmel espresso deneyimi. Profesyonel barista kalitesi.
+            </p>
+            <span class="bestseller-card-button">
+              <span>Keşfet</span>
+              <span class="material-icons text-lg">arrow_forward</span>
+            </span>
+          </div>
+        </a>
+
+        <!-- Filtre Kahve Card -->
+        <a href="/shop.html?category=espresso" class="bestseller-card fade-in fade-in-delay-1">
+          <div class="bestseller-card-image">
+            <Image src={assetImage('images/coffees/filtre-kahve.webp')} alt="Filtre Kahve - Dengeli ve aromatik filtre kahve deneyimi" width={800} loading="lazy" />
+          </div>
+          <div class="bestseller-card-overlay"></div>
+          <div class="bestseller-card-content">
+            <div class="bestseller-card-badge">
+              <span class="material-icons text-sm">favorite</span>
+              <span>Favori</span>
+            </div>
+            <h3 class="bestseller-card-title">Filtre Kahve</h3>
+            <p class="bestseller-card-description">
+              Dengeli ve aromatik profiliyle sabah kahvenizin vazgeçilmezi. Yumuşak ve tatmin edici.
+            </p>
+            <span class="bestseller-card-button">
+              <span>Keşfet</span>
+              <span class="material-icons text-lg">arrow_forward</span>
+            </span>
+          </div>
+        </a>
+
+        <!-- Türk Kahvesi Card -->
+        <a href="/shop.html?category=espresso" class="bestseller-card fade-in fade-in-delay-2 md:col-span-2 lg:col-span-1">
+          <div class="bestseller-card-image">
+            <Image src={assetImage('images/coffees/turk-kahvesi.webp')} alt="Türk Kahvesi - Geleneksel Türk kahvesi keyfi" width={800} loading="lazy" />
+          </div>
+          <div class="bestseller-card-overlay"></div>
+          <div class="bestseller-card-content">
+            <div class="bestseller-card-badge">
+              <span class="material-icons text-sm">local_cafe</span>
+              <span>Geleneksel</span>
+            </div>
+            <h3 class="bestseller-card-title">Türk Kahvesi</h3>
+            <p class="bestseller-card-description">
+              Geleneksel Türk kahvesi kültürünün en özel hali. Zengin tat ve koku ile damağınızda iz bırakır.
+            </p>
+            <span class="bestseller-card-button">
+              <span>Keşfet</span>
+              <span class="material-icons text-lg">arrow_forward</span>
+            </span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Bottom CTA -->
+      <div class="text-center mt-12 md:mt-16 fade-in">
+        <a href="/shop.html?category=espresso" class="inline-flex items-center gap-2 brand-bg text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-opacity-90 transition-all hover:scale-105 shadow-lg">
+          <span>Tüm Kahveleri İncele</span>
+          <span class="material-icons">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection Section - Mobil -->
+  <section class="py-8 md:hidden">
+    <div class="container mx-auto px-4">
+      <!-- Kategori Sliders -->
+      <div class="space-y-8">
+
+        <!-- Şurup kategorisi -->
+        <div id="kategori-surup-mobile" class="space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Şuruplarımız</h3>
+              <p class="text-sm text-gray-600">Kahvenize lezzet katın.</p>
+            </div>
+            <a href="/shop.html?category=surup" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar" id="syrups-container-mobile">
+            {homeSliders.syrups.map((p, i) => (
+              <SliderCard product={p} variant="mobil" index={i} />
+            ))}
+          </div>
+        </div>
+
+        <!-- Püre ve Tatlandırıcılar kategorisi -->
+        <div id="kategori-pure-tatlandirici-mobile" class="space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Püre ve Tatlandırıcılar</h3>
+              <p class="text-sm text-gray-600">Özel formüller ve soslar.</p>
+            </div>
+            <a href="/shop.html?category=pure-tatlandirici" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar" id="pure-container-mobile">
+            {homeSliders.pure.map((p, i) => (
+              <SliderCard product={p} variant="mobil" index={i} />
+            ))}
+          </div>
+        </div>
+
+        <!-- Tatlı kategorisi -->
+        <div id="kategori-tatli-mobile" class="space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Tatlılarımız</h3>
+              <p class="text-sm text-gray-600">Kahvenizin yanına en iyi eşlikçi.</p>
+            </div>
+            <a href="/shop.html?category=tatli" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar" id="sweets-container-mobile">
+            {homeSliders.sweets.map((p, i) => (
+              <SliderCard product={p} variant="mobil" index={i} />
+            ))}
+          </div>
+        </div>
+
+        <!-- Kahve kategorisi -->
+        <div id="kategori-kahve-mobile" class="space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Kahvelerimiz</h3>
+              <p class="text-sm text-gray-600">Özenle seçilmiş çekirdekler.</p>
+            </div>
+            <a href="/shop.html?category=espresso" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar" id="coffees-container-mobile">
+            {homeSliders.coffees.map((p, i) => (
+              <SliderCard product={p} variant="mobil" index={i} />
+            ))}
+          </div>
+        </div>
+
+        <!-- Bitki Çayı kategorisi -->
+        <div id="kategori-cay-mobile" class="space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Bitki Çaylarımız</h3>
+              <p class="text-sm text-gray-600">Doğal ve aromalı bitki çayları.</p>
+            </div>
+            <a href="/shop.html?category=cay" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar" id="teas-container-mobile">
+            {homeSliders.teas.map((p, i) => (
+              <SliderCard product={p} variant="mobil" index={i} />
+            ))}
+          </div>
+        </div>
+
+        <!-- Aksesuar kategorisi -->
+        <div id="kategori-aksesuar-mobile" class="space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">Ekipmanlarımız</h3>
+              <p class="text-sm text-gray-600">Profesyonel ekipmanlar.</p>
+            </div>
+            <a href="/shop.html?category=aksesuar" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar" id="accessories-container-mobile">
+            {homeSliders.accessories.map((p, i) => (
+              <SliderCard product={p} variant="mobil" index={i} />
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="/shop.html" class="brand-bg text-white px-8 py-3 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-transform hover:scale-105 shadow-lg inline-block">
+          Tüm Ürünleri Keşfet →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection Section - Desktop -->
+  <section class="py-16 md:py-24 hidden md:block">
+    <div class="container mx-auto px-6">
+      <!-- Kategori Sliders -->
+      <div class="space-y-12">
+
+        <!-- Şurup kategorisi -->
+        <div id="kategori-surup" class="category-slider scroll-mt-28">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-4xl text-amber-600">local_bar</span>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900">Şuruplarımız</h3>
+                <p class="text-sm text-gray-600">Kahvenize lezzet katın.</p>
+              </div>
+            </div>
+            <a href="/shop.html?category=surup" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="slider-wrapper">
+            <button id="scroll-left-syrups" class="slider-nav-btn-left">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar scroll-smooth" id="syrups-container">
+            {homeSliders.syrups.map((p, i) => (
+              <SliderCard product={p} variant="masaustu" index={i} />
+            ))}
+          </div>
+            <button id="scroll-right-syrups" class="slider-nav-btn-right">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Püre ve Tatlandırıcılar kategorisi -->
+        <div id="kategori-pure-tatlandirici" class="category-slider scroll-mt-28">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-4xl text-amber-600">blender</span>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900">Püre ve Tatlandırıcılar</h3>
+                <p class="text-sm text-gray-600">Özel formüller ve soslar.</p>
+              </div>
+            </div>
+            <a href="/shop.html?category=pure-tatlandirici" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="slider-wrapper">
+            <button id="scroll-left-pure" class="slider-nav-btn-left">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar scroll-smooth" id="pure-container">
+            {homeSliders.pure.map((p, i) => (
+              <SliderCard product={p} variant="masaustu" index={i} />
+            ))}
+          </div>
+            <button id="scroll-right-pure" class="slider-nav-btn-right">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tatlı kategorisi -->
+        <div id="kategori-tatli" class="category-slider scroll-mt-28">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-4xl text-amber-600">cake</span>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900">Tatlılarımız</h3>
+                <p class="text-sm text-gray-600">Kahvenizin yanına en iyi eşlikçi.</p>
+              </div>
+            </div>
+            <a href="/shop.html?category=tatli" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="slider-wrapper">
+            <button id="scroll-left-sweets" class="slider-nav-btn-left">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar scroll-smooth" id="sweets-container">
+            {homeSliders.sweets.map((p, i) => (
+              <SliderCard product={p} variant="masaustu" index={i} />
+            ))}
+          </div>
+            <button id="scroll-right-sweets" class="slider-nav-btn-right">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Kahve kategorisi -->
+        <div id="kategori-kahve" class="category-slider scroll-mt-28">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-4xl text-amber-600">coffee</span>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900">Kahvelerimiz</h3>
+                <p class="text-sm text-gray-600">Özenle seçilmiş çekirdekler.</p>
+              </div>
+            </div>
+            <a href="/shop.html?category=espresso" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="slider-wrapper">
+            <button id="scroll-left-coffees" class="slider-nav-btn-left">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar scroll-smooth" id="coffees-container">
+            {homeSliders.coffees.map((p, i) => (
+              <SliderCard product={p} variant="masaustu" index={i} />
+            ))}
+          </div>
+            <button id="scroll-right-coffees" class="slider-nav-btn-right">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bitki Çayı kategorisi -->
+        <div id="kategori-cay" class="category-slider scroll-mt-28">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-4xl text-amber-600">emoji_food_beverage</span>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900">Bitki Çaylarımız</h3>
+                <p class="text-sm text-gray-600">Doğal ve aromalı bitki çayları.</p>
+              </div>
+            </div>
+            <a href="/shop.html?category=cay" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="slider-wrapper">
+            <button id="scroll-left-teas" class="slider-nav-btn-left">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar scroll-smooth" id="teas-container">
+            {homeSliders.teas.map((p, i) => (
+              <SliderCard product={p} variant="masaustu" index={i} />
+            ))}
+          </div>
+            <button id="scroll-right-teas" class="slider-nav-btn-right">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Aksesuar kategorisi -->
+        <div id="kategori-aksesuar" class="category-slider scroll-mt-28">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-3">
+              <span class="material-icons text-4xl text-amber-600">kitchen</span>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900">Ekipmanlarımız</h3>
+                <p class="text-sm text-gray-600">Profesyonel ekipmanlar.</p>
+              </div>
+            </div>
+            <a href="/shop.html?category=aksesuar" class="text-sm font-medium text-amber-600 hover:text-amber-700">Hepsini Gör</a>
+          </div>
+          <div class="slider-wrapper">
+            <button id="scroll-left-accessories" class="slider-nav-btn-left">
+              <span class="material-icons">chevron_left</span>
+            </button>
+            <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar scroll-smooth" id="accessories-container">
+            {homeSliders.accessories.map((p, i) => (
+              <SliderCard product={p} variant="masaustu" index={i} />
+            ))}
+          </div>
+            <button id="scroll-right-accessories" class="slider-nav-btn-right">
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-20">
+        <a href="/shop.html" class="brand-bg text-white px-8 py-4 rounded-lg font-semibold text-xl hover:bg-opacity-90 transition-transform hover:scale-105 shadow-lg">
+          Tüm Ürünleri Keşfet →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Section -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div class="fade-in">
+          <div class="rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-500">
+            <Image src={assetImage('images/tedarikci.jpeg')} alt="İş Ortaklığı ve Tedarikçi İlişkileri" class="w-full h-full object-cover" width={800} />
+          </div>
+        </div>
+        <div class="fade-in fade-in-delay-1">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Tedarikçiden Daha Fazlası, <span class="brand-text">Çözüm Ortağınız</span>.</h2>
+          <p class="mt-4 md:mt-6 text-base md:text-lg text-gray-600">
+            İşletmenizin kahve operasyonlarını mükemmelleştirmek için yanınızdayız. Size özel kahve karışımlarından barista eğitimlerine, ekipman danışmanlığından menü geliştirmeye kadar geniş bir yelpazede destek sunuyoruz.
+          </p>
+          <a href="/ortaklik.html" class="mt-8 inline-block brand-bg text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-opacity-90 transition-transform hover:scale-105">Teklif Alın</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold text-gray-900">Neden Kervan Kahve?</h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Kahveye olan tutkumuz, kalite ve sürdürülebilirlik ilkelerimizle birleşiyor.</p>
+      <div class="mt-8 md:mt-12 grid md:grid-cols-3 gap-6 md:gap-10">
+        <div class="fade-in">
+          <div class="bg-gradient-to-br from-white to-amber-50 rounded-3xl p-8 shadow-2xl hover:shadow-3xl hover:scale-105 hover:-translate-y-2 transition-all duration-500 border border-amber-100 group text-center">
+            <div class="bg-gradient-to-br from-amber-400 to-orange-500 rounded-full p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="text-white" viewBox="0 0 256 256"><path fill="currentColor" d="M223.45,40.07a8,8,0,0,0-7.52-7.52C139.8,28.08,78.82,51,52.82,94a87.09,87.09,0,0,0-12.76,49c.57,15.92,5.21,32,13.79,47.85l-19.51,19.5a8,8,0,0,0,11.32,11.32l19.5-19.51C81,210.73,97.09,215.37,113,215.94q1.67.06,3.33.06A86.93,86.93,0,0,0,162,203.18C205,177.18,227.93,116.21,223.45,40.07Z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Nitelikli Çekirdekler</h3>
+            <p class="text-gray-600 leading-relaxed">Sadece en iyi hasatları, adil ticaret ve sürdürülebilirlik ilkeleriyle tedarik ediyoruz.</p>
+          </div>
+        </div>
+        <div class="fade-in fade-in-delay-1">
+          <div class="bg-gradient-to-br from-white to-blue-50 rounded-3xl p-8 shadow-2xl hover:shadow-3xl hover:scale-105 hover:-translate-y-2 transition-all duration-500 border border-blue-100 group text-center">
+            <div class="bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="text-white" viewBox="0 0 256 256"><path fill="currentColor" d="M80,56V24a8,8,0,0,1,16,0V56a8,8,0,0,1-16,0Zm40,8a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,120,64Zm32,0a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,152,64Zm96,56v8a40,40,0,0,1-37.51,39.91a96.59,96.59,0,0,1-27,40.09H208a8,8,0,0,1,0,16H32a8,8,0,0,1,0-16H56.54A96.3,96.3,0,0,1,24,136V88a8,8,0,0,1,8-8H208A40,40,0,0,1,248,120Z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Usta Kavurma</h3>
+            <p class="text-gray-600 leading-relaxed">Her çekirdeğin eşsiz karakterini ortaya çıkaran, yılların tecrübesiyle şekillenen kavurma profilleri.</p>
+          </div>
+        </div>
+        <div class="fade-in fade-in-delay-2">
+          <div class="bg-gradient-to-br from-white to-green-50 rounded-3xl p-8 shadow-2xl hover:shadow-3xl hover:scale-105 hover:-translate-y-2 transition-all duration-500 border border-green-100 group text-center">
+            <div class="bg-gradient-to-br from-green-400 to-emerald-500 rounded-full p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="text-white" viewBox="0 0 256 256"><path fill="currentColor" d="M115,120a4,4,0,0,1-4,4H80a4,4,0,0,1,0-8h31A4,4,0,0,1,115,120Zm61-4H144a4,4,0,0,0,0,8h32a4,4,0,0,0,0-8ZM199.9,24H56.1A16.2,16.2,0,0,0,40,40.1V215.9A16.2,16.2,0,0,0,56.1,232H199.9A16.2,16.2,0,0,0,216,215.9V40.1A16.2,16.2,0,0,0,199.9,24Zm-0.2,192H56.3V40.3h143.4Z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Özel Destek</h3>
+            <p class="text-gray-600 leading-relaxed">İşletmenizin ihtiyaçlarına özel karışımlar, eğitimler ve ekipman danışmanlığı sağlıyoruz.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Ana sayfaya özel CSS'ler */
+  /* Kategori Marquee */
+  .category-marquee { 
+      overflow: hidden; 
+      width: 100%;
+      max-width: 100vw;
+  }
+  .category-marquee .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee-scroll 36s linear infinite;
+      will-change: transform;
+  }
+  .category-marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+  }
+  /* Kategori kartları - daha dar yükseklik */
+  .category-card { position: relative; width: 85vw; flex-shrink: 0; }
+  @media (min-width: 640px) { .category-card { width: 60vw; } }
+  @media (min-width: 768px) { .category-card { width: 40vw; } }
+  @media (min-width: 1024px) { .category-card { width: 28vw; } }
+  @media (min-width: 1280px) { .category-card { width: 22vw; } }
+  /* Daha dar aspect ratio - 16:7 yerine 16:9 */
+  .category-card::before { content: ""; display: block; padding-top: 45%; }
+  .category-card > img, .category-card > .img-wrap > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .category-card .overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.1) 60%, rgba(0,0,0,0) 100%); }
+  .category-card .label { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #fff; }
+  /* İnce ayraç */
+  .category-row .category-card { border-left: 1px solid rgba(255,255,255,0.35); }
+  .category-row .category-card:first-of-type { border-left: none; }
+  .category-row .category-card:last-of-type { border-right: 1px solid rgba(255,255,255,0.35); }
+
+  /* Partner Marquee (hover'da durmaz) */
+  .partner-marquee { 
+      overflow: hidden;
+      max-width: 100%;
+      width: 100%;
+  }
+  .partner-marquee .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee-scroll 20s linear infinite;
+      will-change: transform;
+  }
+
+  @media (max-width: 640px) {
+      .partner-marquee {
+          display: none !important;
+      }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+      .partner-marquee .marquee-track > div {
+          gap: 0 !important;
+      }
+      .partner-marquee .marquee-track > div > div {
+          width: 120px !important;
+          height: 48px !important;
+          flex-shrink: 0;
+      }
+  }
+
+  /* Slider Styles */
+  .slider-btn {
+      color: var(--brand-color);
+      transition: opacity 0.2s ease, box-shadow 0.2s ease;
+      opacity: 0.9;
+      background: #ffffff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.06);
+  }
+  .slider-btn:hover {
+      opacity: 1;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+  }
+  .slider-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+  }
+
+  /* Yeni Modern Slider Tasarımı */
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+  .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+
+  /* Modern kategori kartları */
+  .modern-category-card {
+      flex-shrink: 0;
+      width: 320px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .modern-category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .modern-category-card .card-image {
+      height: 256px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .modern-category-card .card-image img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      padding: 1rem;
+  }
+
+  .modern-category-card .card-content {
+      padding: 1.5rem;
+  }
+
+  .modern-category-card .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+  }
+
+  .modern-category-card .card-description {
+      color: #6b7280;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+  }
+
+  .modern-category-card .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+  }
+
+  .modern-category-card .card-tag {
+      background: rgba(245, 158, 11, 0.1);
+      color: #f59e0b;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.625rem;
+      border-radius: 9999px;
+  }
+
+  /* Smooth scrolling for sliders */
+  .category-slider .overflow-x-auto {
+      scroll-behavior: smooth;
+  }
+
+  /* Slider Navigation Buttons - Yan taraflarda */
+  .slider-wrapper {
+      position: relative;
+      padding: 0 50px;
+  }
+
+  .slider-nav-btn-left,
+  .slider-nav-btn-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border: 1px solid #e5e7eb;
+      cursor: pointer;
+      transition: all 0.3s ease;
+  }
+
+  .slider-nav-btn-left:hover,
+  .slider-nav-btn-right:hover {
+      background: #fffbeb;
+      border-color: #f59e0b;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      transform: translateY(-50%) scale(1.1);
+  }
+
+  .slider-nav-btn-left {
+      left: 0;
+  }
+
+  .slider-nav-btn-right {
+      right: 0;
+  }
+
+  .slider-nav-btn-left .material-icons,
+  .slider-nav-btn-right .material-icons {
+      font-size: 28px;
+      color: #b45309;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+      .modern-category-card {
+          width: 280px;
+      }
+
+      /* Not: burada eskiden .container için 0.75rem yatay padding kuralı vardı.
+         Sayfadaki her .container aynı zamanda px-4/px-6 sınıfı taşıdığı ve
+         Tailwind bu dosyadan sonra yüklendiği için kural hiçbir zaman
+         uygulanmıyordu — kaldırıldı. */
+
+      /* Butonlar için mobil overflow önleme */
+      section a {
+          min-width: 0;
+      }
+  }
+
+  /* Tablet responsive adjustments */
+  @media (max-width: 1024px) {
+      .header-search-container {
+          max-width: 24rem;
+      }
+  }
+
+  @media (max-width: 768px) {
+      /* Mobil kategori kartları düzenlemesi */
+      .mobile-category-scroll {
+          display: flex;
+          overflow-x: auto;
+          gap: 1rem;
+          padding-bottom: 1rem;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+      }
+
+      .mobile-category-scroll::-webkit-scrollbar {
+          display: none;
+      }
+
+      .mobile-category-card {
+          flex-shrink: 0;
+          width: 112px;
+          scroll-snap-align: start;
+      }
+
+      .mobile-category-card img {
+          width: 112px;
+          height: 144px;
+          object-fit: cover;
+          border-radius: 0.75rem;
+      }
+
+      /* Mobil partner logoları */
+      .mobile-partner-scroll {
+          display: flex;
+          overflow-x: auto;
+          gap: 1.5rem;
+          padding-bottom: 1rem;
+          -webkit-overflow-scrolling: touch;
+      }
+
+      .mobile-partner-scroll::-webkit-scrollbar {
+          display: none;
+      }
+
+      .mobile-partner-scroll img {
+          height: 40px;
+          flex-shrink: 0;
+      }
+  }
+
+  /* Çok Satan Ürünler Bölümü Stilleri */
+  .bestseller-section {
+      background: linear-gradient(135deg, #F9F6F2 0%, #FFF8F0 100%);
+  }
+
+  .bestseller-card {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 10px 30px rgba(111, 78, 55, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 400px;
+  }
+
+  .bestseller-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(111, 78, 55, 0.2);
+  }
+
+  .bestseller-card-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+  }
+
+  .bestseller-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+
+  .bestseller-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+          to top,
+          rgba(59, 42, 34, 0.95) 0%,
+          rgba(59, 42, 34, 0.7) 40%,
+          rgba(59, 42, 34, 0.3) 70%,
+          rgba(59, 42, 34, 0.1) 100%
+      );
+      transition: all 0.4s ease;
+  }
+
+  .bestseller-card:hover .bestseller-card-overlay {
+      background: linear-gradient(
+          to top,
+          rgba(59, 42, 34, 0.98) 0%,
+          rgba(59, 42, 34, 0.8) 40%,
+          rgba(59, 42, 34, 0.4) 70%,
+          rgba(59, 42, 34, 0.15) 100%
+      );
+  }
+
+  .bestseller-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      z-index: 10;
+      transform: translateY(0);
+      transition: transform 0.4s ease;
+  }
+
+  .bestseller-card:hover .bestseller-card-content {
+      transform: translateY(-8px);
+  }
+
+  .bestseller-card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.95);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      backdrop-filter: blur(10px);
+  }
+
+  .bestseller-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+  }
+
+  .bestseller-card-description {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+  }
+
+  .bestseller-card-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      color: var(--brand-color);
+      padding: 0.875rem 1.75rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .bestseller-card-button:hover {
+      background: var(--brand-color);
+      color: white;
+      transform: translateX(4px);
+      box-shadow: 0 6px 20px rgba(111, 78, 55, 0.3);
+  }
+
+  .bestseller-card-button .material-icons {
+      transition: transform 0.3s ease;
+  }
+
+  .bestseller-card-button:hover .material-icons {
+      transform: translateX(4px);
+  }
+
+  /* Responsive adjustments for bestseller cards */
+  @media (max-width: 1024px) {
+      .bestseller-card {
+          height: 350px;
+      }
+
+      .bestseller-card-title {
+          font-size: 1.75rem;
+      }
+
+      .bestseller-card-content {
+          padding: 1.5rem;
+      }
+  }
+
+  @media (max-width: 768px) {
+      .bestseller-card {
+          height: 320px;
+      }
+
+      .bestseller-card-title {
+          font-size: 1.5rem;
+      }
+
+      .bestseller-card-description {
+          font-size: 0.9rem;
+      }
+
+      .bestseller-card-content {
+          padding: 1.25rem;
+      }
+
+      .bestseller-card-button {
+          padding: 0.75rem 1.5rem;
+          font-size: 0.9rem;
+      }
+  }
+</style>
+
+<script>
+  import '../scripts/lightbox.js';
+  import '../scripts/category-sliders.js';
+</script>

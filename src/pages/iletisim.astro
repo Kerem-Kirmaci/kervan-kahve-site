@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="İletişim - Kervan Kahve"
+  description="Kervan Kahve iletişim - Bize ulaşın, sorularınızı sorun. Telefon, e-posta, adres bilgileri ve Google Maps konum."
+  activePage="iletisim"
+>
+  <section class="py-12 md:py-16 lg:py-24 bg-white">
+      <div class="container mx-auto px-6 text-center">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-gray-900 leading-tight">Bize <span class="brand-text">Ulaşın</span></h1>
+          <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Soru, öneri veya iş birliği teklifleriniz için her zaman buradayız.</p>
+      </div>
+  </section>
+
+  <section class="container mx-auto px-6 py-8 md:py-16">
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg fade-in">
+              <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">İletişim Bilgileri</h2>
+              <div class="space-y-6 text-gray-700">
+
+                  <div class="flex items-start gap-4 contact-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <div>
+                          <h3 class="font-bold text-lg">Telefon</h3>
+                          <a href="tel:+905453207713" class="hover:text-[var(--brand-color)]">+90 545 320 77 13</a>
+                      </div>
+                  </div>
+
+                  <div class="flex items-start gap-4 contact-item">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" stroke="currentColor"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+                      <div>
+                          <h3 class="font-bold text-lg">E-posta</h3>
+                          <a href="mailto:info@kervankahve.com" class="hover:text-[var(--brand-color)]">info@kervankahve.com</a>
+                      </div>
+                  </div>
+
+                  <div class="flex items-start gap-4 contact-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                      <div>
+                          <h3 class="font-bold text-lg">Sosyal Medya</h3>
+                          <a href="https://www.instagram.com/kervankahve_toptan__perakende" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--brand-color)]">Instagram: @kervankahve_toptan__perakende</a>
+                      </div>
+                  </div>
+
+                  <div class="flex items-start gap-4 contact-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                      <div>
+                          <h3 class="font-bold text-lg">Adres</h3>
+                          <p>Cami Şerif, İstiklal Cd. 26-1,<br>33060 Akdeniz/Mersin</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="w-full h-80 md:h-96 lg:h-full rounded-xl overflow-hidden shadow-lg fade-in fade-in-delay-1">
+              <iframe
+      title="Kervan Kahve konumu — Cami Şerif, İstiklal Cd. 26-1, Akdeniz/Mersin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3192.343493921354!2d34.629388315281!3d36.8581679799365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1527f4d1c9031737%3A0x133a84944f378946!2zQ2FtaSDFn2VyaWYsIMSwc3Rpa2xhbCBDZC4gMjYtMSwgMzMwNjAgQWtkZW5pei9NZXJzaW4!5e0!3m2!1str!2str!4v1672521600001"
+                  width="100%"
+                  height="100%"
+                  style="border:0;"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+          </div>
+      </div>
+  </section>
+</Base>
+
+<style>
+  /* Bu sayfaya özgü tek kural */
+  .contact-item .icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    stroke: var(--brand-color);
+    margin-top: 5px;
+  }
+</style>
