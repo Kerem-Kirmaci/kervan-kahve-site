@@ -1,4 +1,6 @@
 ---
+import Ikon from './Ikon.astro';
+
 interface Props {
   /** Aktif sayfanın anahtarı */
   activePage?: string;
@@ -6,16 +8,19 @@ interface Props {
 
 const { activePage } = Astro.props;
 
+// Dört öğe. İletişim bilerek yok: mobil header'da zaten belirgin bir
+// İletişim butonu duruyor, beşinci öğe hem onu tekrarlıyor hem 375px'te
+// çubuğu taşırıyordu.
 const items = [
-  { key: 'index', href: '/index.html', icon: 'home', label: 'Ana Sayfa' },
-  { key: 'shop', href: '/shop.html', icon: 'shopping_bag', label: 'Ürünler' },
-  { key: 'ortaklik', href: '/ortaklik.html', icon: 'work', label: 'İş Ortaklığı' },
-  { key: 'hakkimizda', href: '/hakkimizda.html', icon: 'info', label: 'Hakkımızda' },
+  { key: 'index', href: '/index.html', ikon: 'ev', label: 'Ana Sayfa' },
+  { key: 'shop', href: '/shop.html', ikon: 'canta', label: 'Ürünler' },
+  { key: 'ortaklik', href: '/ortaklik.html', ikon: 'is', label: 'Ortaklık' },
+  { key: 'hakkimizda', href: '/hakkimizda.html', ikon: 'bilgi', label: 'Hakkımızda' },
 ];
 ---
 
-<nav class="bottom-nav max-w-md mx-auto" aria-label="Alt menü">
-  <div class="flex justify-around p-2">
+<nav class="bottom-nav" aria-label="Alt menü">
+  <div class="flex justify-around px-1 py-1">
     {
       items.map((item) => {
         const isActive = activePage === item.key;
@@ -23,13 +28,13 @@ const items = [
           <a
             href={item.href}
             class:list={[
-              'flex flex-col items-center py-2',
-              isActive ? 'text-amber-700' : 'text-gray-600 hover:text-amber-700 transition-colors',
+              'flex flex-col items-center gap-1 flex-1 min-w-0 py-2 rounded transition-colors',
+              isActive ? 'text-altin-koyu font-semibold' : 'text-is hover:text-murekkep',
             ]}
             aria-current={isActive ? 'page' : undefined}
           >
-            <span class="material-icons text-2xl" aria-hidden="true">{item.icon}</span>
-            <span class="text-xs font-medium mt-1">{item.label}</span>
+            <Ikon ad={item.ikon} boyut={22} />
+            <span class="text-mini leading-none truncate max-w-full">{item.label}</span>
           </a>
         );
       })

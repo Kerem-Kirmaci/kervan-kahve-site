@@ -11,7 +11,7 @@
 const grid = document.getElementById('product-grid');
 
 if (grid) {
-  const cards = Array.from(grid.querySelectorAll('.modern-product-card'));
+  const cards = Array.from(grid.querySelectorAll('.urun-karti'));
   const searchInput = document.getElementById('product-search');
   const countEl = document.getElementById('product-count');
   const clearBtn = document.getElementById('clear-filters');

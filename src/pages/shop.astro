@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import ProductCard from '../components/ProductCard.astro';
+import UrunKarti from '../components/UrunKarti.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { products } from '../data/products.js';
 import { getImage } from 'astro:assets';
@@ -37,7 +37,7 @@ const filterCategories = [
 ];
 
 // Ürün kataloğu yapılandırılmış verisi (arama motorları için).
-// Görsel yolları ProductCard'ın lightbox sürümüyle birebir aynı parametrelerle
+// Görsel yolları UrunKarti'nın lightbox sürümüyle birebir aynı parametrelerle
 // üretiliyor (900px webp, kalite 78); Astro aynı dosyayı yeniden üretmiyor.
 const yapisalGorseller = await Promise.all(
   sorted.map(async (p) => {
@@ -71,6 +71,7 @@ const itemList = {
     },
   })),
 };
+import Ikon from '../components/Ikon.astro';
 ---
 
 <Base
@@ -84,38 +85,43 @@ const itemList = {
   <Lightbox />
 
   <!-- Mobil filtre arka planı -->
-  <div id="mobile-filter-overlay" class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"></div>
+  <div id="mobile-filter-overlay" class="fixed inset-0 bg-kavurma/30 z-40 hidden lg:hidden"></div>
+
+  <div class="mb-8">
+    <h1 class="text-buyuk font-bold text-murekkep">Ürünlerimiz</h1>
+    <p id="product-count" class="mt-2 text-govde text-is" aria-live="polite">
+      {sorted.length} ürün bulundu
+    </p>
+  </div>
 
   <div class="grid lg:grid-cols-4 gap-8">
     <!-- Kenar çubuğu -->
-    <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm h-fit hidden lg:block">
-      <div class="lg:hidden flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800">Filtreler</h3>
+    <aside class="lg:col-span-1 bg-kagit p-6 rounded shadow-kart h-fit hidden lg:block">
+      <div class="lg:hidden flex justify-between items-center mb-4 pb-4 border-b border-cizgi">
+        <h3 class="text-alt font-bold text-murekkep">Filtreler</h3>
         <button
           id="mobile-filter-close"
           type="button"
-          class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all rounded-full"
+          class="p-2 text-is hover:text-murekkep hover:bg-kum transition-all rounded-tam"
           aria-label="Filtreleri kapat"
         >
-          <span class="material-icons" aria-hidden="true">close</span>
+          <Ikon ad="kapat" />
         </button>
       </div>
 
       <div class="mb-6">
-        <h3 class="text-lg font-semibold mb-4 text-gray-800">Ürün Ara</h3>
+        <h3 class="text-govde font-semibold mb-4 text-murekkep">Ürün Ara</h3>
         <label for="product-search" class="sr-only">Ürün ara</label>
         <input
           type="text"
           id="product-search"
           placeholder="Ürün ara..."
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-color focus:border-transparent"
+          class="w-full px-4 py-2 border border-cizgi rounded focus:ring-2 focus:ring-altin-koyu focus:border-transparent"
         />
       </div>
 
       <div>
-        {/* Sayfanın tek h1'i. Eskiden h3'tü ve sayfada hiç h1 yoktu. */}
-        <h1 class="text-3xl font-bold mb-6 brand-text">Ürünlerimiz</h1>
-        <h2 class="text-lg font-semibold mb-4 text-gray-800">Kategori Filtreleri</h2>
+        <h2 class="text-govde font-semibold mb-4 text-murekkep">Kategori Filtreleri</h2>
         <ul class="space-y-3">
           {
             filterCategories.map((c) => (
@@ -123,10 +129,10 @@ const itemList = {
                 <label class="flex items-center">
                   <input
                     type="checkbox"
-                    class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color"
+                    class="category-checkbox h-4 w-4 rounded border-cizgi text-brand-color focus:ring-altin-koyu"
                     data-category={c.key}
                   />
-                  <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">{c.label}</span>
+                  <span class="ml-3 text-is hover:text-altin-koyu cursor-pointer">{c.label}</span>
                 </label>
               </li>
             ))
@@ -134,16 +140,10 @@ const itemList = {
         </ul>
 
         <div class="mt-4">
-          <button id="clear-filters" type="button" class="text-sm brand-text hover:underline">
+          <button id="clear-filters" type="button" class="text-kucuk text-altin-koyu hover:underline">
             Tüm Filtreleri Temizle
           </button>
         </div>
-      </div>
-
-      <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-        <p id="product-count" class="text-sm text-gray-600" aria-live="polite">
-          {sorted.length} ürün bulundu
-        </p>
       </div>
     </aside>
 
@@ -153,9 +153,9 @@ const itemList = {
         <button
           id="mobile-filter-toggle"
           type="button"
-          class="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+          class="w-full flex items-center justify-center gap-2 bg-kagit border border-cizgi rounded px-4 py-3 text-murekkep font-semibold hover:bg-kum transition-colors"
         >
-          <span class="material-icons" aria-hidden="true">filter_list</span>
+          <Ikon ad="filtre" />
           <span>Filtrele</span>
         </button>
       </div>
@@ -167,7 +167,7 @@ const itemList = {
       >
         {
           sorted.map((product, i) => (
-            <ProductCard product={product} eager={i < 6} hidden={i >= INITIAL_VISIBLE} index={i} />
+            <UrunKarti product={product} eager={i < 6} hidden={i >= INITIAL_VISIBLE} />
           ))
         }
       </div>
@@ -177,17 +177,17 @@ const itemList = {
         class="mt-12 flex flex-col items-center justify-center py-8 hidden"
       >
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin"></div>
-          <span class="text-gray-600 font-medium">Daha fazla ürün yükleniyor...</span>
+          <div class="w-8 h-8 border-4 border-cizgi border-t-amber-600 rounded-tam animate-spin"></div>
+          <span class="text-is font-medium">Daha fazla ürün yükleniyor...</span>
         </div>
       </div>
 
       <div id="end-of-products" class="mt-12 text-center py-8 hidden">
-        <p class="text-gray-500 font-medium">Tüm ürünler yüklendi</p>
+        <p class="text-is font-medium">Tüm ürünler yüklendi</p>
       </div>
 
       <div id="no-results" class="mt-12 text-center py-8 hidden">
-        <p class="text-gray-500 font-medium">Aramanıza uygun ürün bulunamadı.</p>
+        <p class="text-is font-medium">Aramanıza uygun ürün bulunamadı.</p>
       </div>
     </div>
   </div>
@@ -212,7 +212,7 @@ const itemList = {
     max-height: 85vh;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--golge-kart);
   }
 
   @keyframes slideUp {

@@ -4,79 +4,93 @@
 
 /* ==========================================================================
    Kervan Kahve — tüm sayfalarda ortak stiller
-   (eskiden 8 HTML dosyasının her birinde ayrı ayrı tekrar ediyordu)
+
+   Renkler tailwind.config.mjs'te tanımlı; buradaki değişkenler sadece
+   Tailwind sınıfıyla ifade edilemeyen yerler (gradyan, gölge, keyframe) için.
+   Yeni renk EKLENMEZ — ikisi de aynı paletten okur.
    ========================================================================== */
 
 :root {
-  --brand-color: #6F4E37;       /* Coffee */
-  --brand-color-light: #BC987E; /* Latte */
-  --text-dark: #3B2A22;         /* Espresso */
-  --text-light: #6e5e51;
-  --bg-light: #F9F6F2;          /* Cream */
-  --bg-white: #ffffff;
+  --kavurma: #2E1D10;
+  --kabuk: #6B4526;
+  --altin: #E0A924;
+  --altin-koyu: #8A5B12;
+  --kum: #F1EADD;
+  --kagit: #FBF8F2;
+  --murekkep: #241509;
+  --is: #6A5644;
+  --krem: #F5EFE3;
+  --krem-ikincil: #CDBBA2;
+  --cizgi: #DED2BE;
+  --cizgi-koyu: #46301D;
+
+  --golge-kart: 0 1px 2px rgba(36, 21, 9, .06), 0 8px 20px -12px rgba(36, 21, 9, .22);
+  --golge-yuzen: 0 4px 8px rgba(36, 21, 9, .10), 0 24px 48px -16px rgba(36, 21, 9, .35);
 }
 
-/* Not: eskiden burada html ve body için overflow-x:hidden + max-width:100vw
+/* Not: eskiden html ve body için overflow-x:hidden + max-width:100vw
    vardı. Bunlar yatay kaydırmayı gizliyordu; asıl sebep, kapalıyken ekranın
    320px sağında duran mobil menü panelidir. Panel artık .mobile-menu-shell
-   tarafından kırpıldığı için bu bastırmaya gerek kalmadı. Yamanın kalkması,
-   ileride oluşacak gerçek taşmaların da görünür olmasını sağlar. */
+   tarafından kırpıldığı için bu bastırmaya gerek kalmadı. */
 body {
-  font-family: 'Inter', sans-serif;
-  color: var(--text-dark);
-  /* <body> etiketindeki bg-gray-50 sınıfı bu kuralı ezer; sitenin gerçek arka
-     planı gri-beyazdır. Kural, sınıf kaldırılırsa diye duruyor. */
-  background-color: var(--bg-light);
+  font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--murekkep);
+  background-color: var(--kum);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  /* Instagram kullanıcı adı gibi bölünemeyen uzun kelimeler dar ekranda
+     sütunu taşırıyordu. */
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Başlıklar gövdeyle aynı aileden, genişletilmiş eksende (Archivo'nun wdth
+   ekseni). Ayrı bir başlık ailesi yüklemeye gerek yok. */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  font-stretch: 112%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
-.brand-text { color: var(--brand-color); }
-.brand-bg { background-color: var(--brand-color); }
-.brand-bg-light { background-color: var(--brand-color-light); }
+/* Gövde metni satır uzunluğu tavanı — 68 karakteri geçmesin. */
+p { max-width: 68ch; }
+p.genis { max-width: none; }
 
-/* Navigasyon alt çizgi animasyonu */
+/* --------------------------------------------------------------------------
+   Menü bağlantısı ve aktif sayfa vurgusu
+
+   Eski kural `.nav-link::after`ı display:block olarak tanımlıyordu; bağlantı
+   inline-flex olduğu için sözde eleman metnin ALTINA değil YANINA bir flex
+   öğesi olarak yerleşiyor ve 17px'lik bir tire gibi görünüyordu. Aktif sayfa
+   vurgusu her sayfada bu yüzden bozuktu. Mutlak konumlandırma sözde elemanı
+   flex akışından tamamen çıkarır.
+   -------------------------------------------------------------------------- */
+.nav-link { position: relative; }
 .nav-link::after {
   content: '';
-  display: block;
-  width: 0;
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.35rem;
   height: 2px;
-  background: var(--brand-color);
-  transition: width .3s;
+  background: var(--altin-koyu);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
 }
 .nav-link:hover::after,
 .nav-link.active::after {
-  width: 100%;
+  transform: scaleX(1);
 }
-
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-/* Giriş animasyonları */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fade-in { animation: fadeIn 0.8s ease-out forwards; }
-.fade-in-delay-1 { animation-delay: 0.2s; }
-.fade-in-delay-2 { animation-delay: 0.4s; }
-.fade-in-delay-3 { animation-delay: 0.6s; }
 
 /* --------------------------------------------------------------------------
    Mobil menü
-   Not: eski kodda bu değerler HTML'e inline style="... !important" olarak
-   gömülüydü ve buradaki class'ı eziyordu. Gerçekte ekrana basılan değerler
-   inline olanlardı, o yüzden görünümü korumak adına onlar buraya alındı.
+   Paneli kırpan kabuk: viewport'u kaplar, taşan paneli keser.
+   pointer-events:none sayesinde kapalıyken tıklamaları engellemez.
    -------------------------------------------------------------------------- */
-/* Paneli kırpan kabuk: viewport'u kaplar, taşan paneli keser.
-   pointer-events:none sayesinde kapalıyken tıklamaları engellemez. */
 .mobile-menu-shell {
   position: fixed;
   inset: 0;
@@ -92,15 +106,13 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: auto;
   width: 320px;
   height: 100%;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
-  border-left: 1px solid #e2e8f0;
+  background: var(--kagit);
+  box-shadow: var(--golge-yuzen);
+  border-left: 1px solid var(--cizgi);
   transform: translateX(100%);
   /* Kapalıyken visibility:hidden iki işi birden görüyor:
-     1) Ekranın 320px sağında duran panel sayfada yatay kaydırma yaratmıyor
-        (eskiden bunu bastırmak için html/body'ye overflow-x:hidden konmuştu).
-     2) Panelin içindeki bağlantılar klavyeyle sekme sırasına girmiyor;
-        eskiden görünmeyen menüye tab ile odaklanılabiliyordu.
+     1) Ekranın 320px sağında duran panel sayfada yatay kaydırma yaratmıyor.
+     2) Panelin içindeki bağlantılar klavyeyle sekme sırasına girmiyor.
      visibility geçişi transform ile aynı sürede, ama kapanışta gecikmeli
      uygulanıyor ki kayarak çıkma animasyonu görünür kalsın. */
   visibility: hidden;
@@ -131,12 +143,8 @@ h1, h2, h3, h4, h5, h6 {
   }
   .mobile-search-bar {
     height: 2.5rem;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     padding-left: 2.5rem;
-  }
-  .mobile-search-icon {
-    left: 0.75rem;
-    font-size: 1.125rem;
   }
 
   /* Mobilde masaüstü navigasyonu ve arama çubuğu gizlenir */
@@ -157,20 +165,18 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
   left: 0;
   right: 0;
-  background: white;
-  border-top: 1px solid #e5e7eb;
+  background: var(--kagit);
+  border-top: 1px solid var(--cizgi);
   z-index: 50;
   display: none;
 }
 
 @media (max-width: 768px) {
-  .bottom-nav {
-    display: block;
-  }
+  .bottom-nav { display: block; }
 }
 
 /* --------------------------------------------------------------------------
-   Lightbox (ürün görseli büyütme) — index ve shop sayfalarında birebir aynıydı
+   Lightbox (ürün görseli büyütme)
    -------------------------------------------------------------------------- */
 .image-lightbox {
   position: fixed;
@@ -178,7 +184,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.92);
+  background: rgba(24, 14, 6, 0.94);
   z-index: 10000;
   display: flex;
   align-items: center;
@@ -197,108 +203,85 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   max-width: 90vw;
   max-height: 90vh;
-  transform: scale(0.9);
-  transition: transform 0.3s ease;
-}
-.image-lightbox.active .lightbox-content {
-  transform: scale(1);
 }
 
 .lightbox-image {
   max-width: 100%;
   max-height: 85vh;
-  border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
   object-fit: contain;
+  background: var(--kagit);
 }
 
 .lightbox-close {
   position: absolute;
-  top: -50px;
-  right: -10px;
+  top: -52px;
+  right: -4px;
   width: 44px;
   height: 44px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 28px;
+  background: rgba(245, 239, 227, 0.12);
+  border: 1px solid rgba(245, 239, 227, 0.24);
+  border-radius: 9999px;
+  color: var(--krem);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  transition: background 0.2s ease;
 }
-.lightbox-close:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
-}
+.lightbox-close:hover { background: rgba(245, 239, 227, 0.22); }
 
 .lightbox-product-info {
   position: absolute;
-  bottom: -70px;
+  bottom: -68px;
   left: 0;
   right: 0;
   text-align: center;
-  color: white;
+  color: var(--krem);
 }
 .lightbox-product-name {
-  font-family: 'Playfair Display', serif;
+  font-stretch: 112%;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.25rem;
 }
 .lightbox-product-brand {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.9375rem;
+  color: var(--krem-ikincil);
 }
 
 /* Büyütülebilir görseller */
-.zoomable-image {
-  cursor: zoom-in;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.zoomable-image:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
+.zoomable-image { cursor: zoom-in; }
 
-.zoom-icon-wrapper {
-  position: relative;
-}
+.zoom-icon-wrapper { position: relative; }
 .zoom-icon {
   position: absolute;
   top: 8px;
   right: 8px;
   width: 32px;
   height: 32px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--kabuk);
   opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.3s ease;
+  transition: opacity 0.2s ease;
   pointer-events: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
-.zoom-icon-wrapper:hover .zoom-icon {
-  opacity: 1;
-  transform: scale(1);
-}
-.zoom-icon .material-icons {
-  font-size: 18px;
-  color: var(--brand-color);
-}
+.zoom-icon-wrapper:hover .zoom-icon,
+.zoom-icon-wrapper:focus-within .zoom-icon { opacity: 1; }
 
 /* Klavye ile gezinenler için görünür odak halkası (erişilebilirlik) */
 :focus-visible {
-  outline: 2px solid var(--brand-color);
+  outline: 2px solid var(--altin-koyu);
   outline-offset: 2px;
+}
+/* Koyu zeminde odak halkası altın renginde okunur kalsın */
+.koyu-zemin :focus-visible {
+  outline-color: var(--altin);
 }
 
 /* --------------------------------------------------------------------------
@@ -306,12 +289,14 @@ h1, h2, h3, h4, h5, h6 {
    en-boy oranını baştan bildirdiği için sayfa yüklenirken içeriğin zıplamasını
    (layout shift) önler — istediğimiz şey budur. Ancak width özniteliği aynı
    zamanda tarayıcıya bir genişlik dayatır; boyutu yalnızca CSS yüksekliğiyle
-   verilen görsellerde (ör. iş ortağı logolarındaki .h-10) bu, görselin yatayda
-   esnemesine yol açıyor.
-
-   Aşağıdaki kural genişlik dayatmasını kaldırır, en-boy oranı bilgisi kalır.
-   Element seçicisi olduğu için w-full / w-28 gibi her sınıf bunu ezer.
+   verilen görsellerde bu, görselin yatayda esnemesine yol açıyor.
    -------------------------------------------------------------------------- */
-img {
-  width: auto;
+img { width: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

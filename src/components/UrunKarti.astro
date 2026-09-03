@@ -1,0 +1,108 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { productImage } from '../data/product-images.js';
+
+/**
+ * Katalogdaki tek ürün kartı.
+ *
+ * Öncesinde iki ayrı bileşen vardı: ProductCard (mağaza ızgarası) beyaz kart +
+ * object-contain, SliderCard (ana sayfa) kartsız + object-cover. object-cover
+ * görseli kırptığı için aynı ürün iki sayfada iki farklı şey gibi görünüyordu.
+ * Artık tek kart, tek zemin, tek çerçeveleme.
+ *
+ * Ürün görselleri zemin temizliğinden geçtiği için şeffaf; kartın kendi zemini
+ * görselin arkasında görünür (bkz. tools/kesit.swift).
+ */
+interface Props {
+  product: Record<string, any>;
+  /** 'izgara' sütunu doldurur (mağaza), 'serit' sabit genişlikte (kaydırıcı) */
+  variant?: 'izgara' | 'serit';
+  /** İlk ekranda mı — tembel yükleme kararı */
+  eager?: boolean;
+  /** Başlangıçta gizli mi (kaydırdıkça açılan partiler için) */
+  hidden?: boolean;
+}
+
+const { product, variant = 'izgara', eager = false, hidden = false } = Astro.props;
+
+const img = productImage(product.image);
+// Büyütme için daha büyük sürüm; kart görselini açınca bulanık görünmesin
+const large = await getImage({ src: img, width: 900, format: 'webp', quality: 78 });
+
+const markaVar = Boolean(product.brand && product.productName);
+const baslik = markaVar ? product.productName : product.name;
+// Etiketler yalnızca ızgarada: şerit bir gezinme yüzeyi, orada satırı
+// gereksiz yükseltiyorlar.
+const etiketler = variant === 'izgara' ? (product.tastingNotes ?? []).slice(0, 3) : [];
+
+// İstemci tarafı aramanın tarayacağı metin
+const aramaMetni = [
+  product.name,
+  product.description,
+  ...(product.tastingNotes ?? []),
+  ...(product.healthBenefits ?? []),
+]
+  .join(' ')
+  .toLowerCase();
+---
+
+<article
+  class:list={[
+    'urun-karti group flex flex-col bg-kagit border border-cizgi rounded overflow-hidden',
+    'transition-colors hover:border-kabuk',
+    variant === 'serit' && 'w-40 flex-shrink-0',
+    hidden && 'product-hidden',
+  ]}
+  data-product-id={product.id}
+  data-category={product.category}
+  data-search={aramaMetni}
+>
+  <div class="zoom-icon-wrapper bg-kagit">
+    <Image
+      src={img}
+      alt={`${product.name} — ${product.description}`}
+      width={400}
+      class="zoomable-image aspect-square w-full h-auto object-contain p-2"
+      loading={eager ? 'eager' : 'lazy'}
+      data-lightbox-src={large.src}
+      data-lightbox-name={baslik}
+      data-lightbox-brand={product.brand ?? ''}
+    />
+    <span class="zoom-icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="6.5"></circle><path d="M20 20.5 15.6 16"></path>
+        <path d="M11 8.5v5"></path><path d="M8.5 11h5"></path>
+      </svg>
+    </span>
+  </div>
+
+  <div class="flex flex-col gap-1 border-t border-cizgi px-3 py-2.5">
+    {markaVar && <p class="text-mini text-is leading-none">{product.brand}</p>}
+    <h3 class="urun-karti-ad text-kucuk font-semibold text-murekkep">{baslik}</h3>
+    {
+      etiketler.length > 0 && (
+        <ul class="mt-0.5 flex flex-wrap gap-1">
+          {etiketler.map((not: string) => (
+            <li class="text-mini leading-none text-is bg-kum rounded-tam px-2 py-1">{not}</li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  /* Ürün adı iki satırı geçmesin — ızgarada kart yükseklikleri oynamasın */
+  .urun-karti-ad {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Mağaza ızgarasında kaydırdıkça açılan partiler için */
+  .urun-karti.product-hidden {
+    display: none;
+  }
+</style>

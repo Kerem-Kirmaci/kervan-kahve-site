@@ -83,7 +83,7 @@ for (const p of ['index', 'shop', 'gizlilik-politikasi', 'kullanim-sartlari']) {
 console.log('\n[4] Mağaza: filtre, arama, sonsuz kaydırma');
 await page.goto(`${BASE}/shop.html`, { waitUntil: 'networkidle' });
 
-const visible = () => page.locator('.modern-product-card:not(.product-hidden)').count();
+const visible = () => page.locator('.urun-karti:not(.product-hidden)').count();
 const countText = () => page.locator('#product-count').textContent();
 
 check('başlangıçta 24 ürün görünür', (await visible()) === 24, `${await visible()}`);

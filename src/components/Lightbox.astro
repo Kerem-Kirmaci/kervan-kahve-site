@@ -1,11 +1,12 @@
 ---
 // Ürün görseli büyütme katmanı. index ve shop sayfalarında kullanılır.
+import Ikon from './Ikon.astro';
 ---
 
 <div id="image-lightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-name" aria-hidden="true">
   <div class="lightbox-content">
     <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Kapat">
-      <span class="material-icons" aria-hidden="true">close</span>
+      <Ikon ad="kapat" />
     </button>
     <img id="lightbox-image" class="lightbox-image" src="" alt="" />
     <div class="lightbox-product-info">
