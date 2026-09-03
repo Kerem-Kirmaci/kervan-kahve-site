@@ -14,10 +14,12 @@ import Ikon from './Ikon.astro';
  */
 interface Props {
   href: string;
-  variant?: 'birincil' | 'ikincil' | 'vurgu';
+  variant?: 'birincil' | 'ikincil' | 'ikincil-koyu' | 'vurgu';
   boyut?: 'orta' | 'buyuk';
-  /** Ikon.astro'daki ikon adı — metnin soluna gelir */
+  /** Ikon.astro'daki ikon adı */
   ikon?: string;
+  /** İkon metnin sonuna gelsin (yön bildiren oklar için) */
+  ikonSonda?: boolean;
   /** Kapsayıcının tamamını kaplasın (mobilde yan yana iki buton için) */
   tam?: boolean;
   sinif?: string;
@@ -26,12 +28,14 @@ interface Props {
 
 const {
   href, variant = 'birincil', boyut = 'orta',
-  ikon, tam = false, sinif = '', yeniSekme = false,
+  ikon, ikonSonda = false, tam = false, sinif = '', yeniSekme = false,
 } = Astro.props;
 
 const varyantlar = {
   birincil: 'bg-kabuk text-krem hover:bg-kavurma',
   ikincil: 'bg-kagit text-murekkep border border-kabuk hover:bg-kum',
+  // Koyu zeminde: dolgusuz, krem kenarlıklı
+  'ikincil-koyu': 'bg-transparent text-krem border border-krem-ikincil hover:bg-kabuk hover:border-kabuk',
   vurgu: 'bg-altin text-kavurma hover:bg-altin-koyu hover:text-krem',
 };
 
@@ -53,6 +57,7 @@ const boyutlar = {
   ]}
   {...yeniSekme ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
 >
-  {ikon && <Ikon ad={ikon} boyut={boyut === 'buyuk' ? 20 : 18} />}
+  {ikon && !ikonSonda && <Ikon ad={ikon} boyut={boyut === 'buyuk' ? 20 : 18} />}
   <slot />
+  {ikon && ikonSonda && <Ikon ad={ikon} boyut={boyut === 'buyuk' ? 20 : 18} />}
 </a>
