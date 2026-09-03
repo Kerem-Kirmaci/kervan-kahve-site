@@ -134,10 +134,7 @@ import Ikon from './Ikon.astro';
             class="p-2 text-is hover:text-murekkep hover:bg-kum transition-all rounded-tam"
             aria-label="Menüyü kapat"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
-              <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-              <line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
-            </svg>
+            <Ikon ad="kapat" boyut={24} />
           </button>
         </div>
       </div>
@@ -176,10 +173,7 @@ import Ikon from './Ikon.astro';
             class="group flex items-center justify-center gap-3 p-4 rounded bg-kagit transition-all duration-300 border border-cizgi"
             aria-current={isContactActive ? 'page' : undefined}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="var(--kabuk)" viewBox="0 0 256 256" aria-hidden="true">
-              <path d="M224,48H32a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H224a8,8,0,0,0,8-8V56A8,8,0,0,0,224,48Zm-8,136H40V64H216Z"></path>
-              <path d="M224,40H32A16,16,0,0,0,16,56V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V56A16,16,0,0,0,224,40Zm0,16V72L138.5,123.4a16.08,16.08,0,0,1-21,0L32,72V56ZM32,192V88l64,40,24,15,24-15,64-40v104Z"></path>
-            </svg>
+            <Ikon ad="eposta" boyut={18} />
             <span class="text-govde font-semibold text-altin-koyu">İletişim</span>
           </a>
         </div>

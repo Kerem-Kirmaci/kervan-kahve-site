@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import { productImage } from '../data/product-images.js';
+import Ikon from './Ikon.astro';
 
 /**
  * Katalogdaki tek ürün kartı.
@@ -69,11 +70,7 @@ const aramaMetni = [
       data-lightbox-brand={product.brand ?? ''}
     />
     <span class="zoom-icon" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="6.5"></circle><path d="M20 20.5 15.6 16"></path>
-        <path d="M11 8.5v5"></path><path d="M8.5 11h5"></path>
-      </svg>
+      <Ikon ad="buyutec" boyut={16} />
     </span>
   </div>
 

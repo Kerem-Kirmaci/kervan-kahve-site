@@ -96,9 +96,9 @@ import Ikon from '../components/Ikon.astro';
 
   <div class="grid lg:grid-cols-4 gap-8">
     <!-- Kenar çubuğu -->
-    <aside class="lg:col-span-1 bg-kagit p-6 rounded shadow-kart h-fit hidden lg:block">
+    <aside class="lg:col-span-1 bg-kagit border border-cizgi p-5 rounded h-fit hidden lg:block">
       <div class="lg:hidden flex justify-between items-center mb-4 pb-4 border-b border-cizgi">
-        <h3 class="text-alt font-bold text-murekkep">Filtreler</h3>
+        <h2 class="text-alt text-murekkep">Filtreler</h2>
         <button
           id="mobile-filter-close"
           type="button"
@@ -110,18 +110,18 @@ import Ikon from '../components/Ikon.astro';
       </div>
 
       <div class="mb-6">
-        <h3 class="text-govde font-semibold mb-4 text-murekkep">Ürün Ara</h3>
+        <h2 class="text-govde font-semibold mb-3 text-murekkep">Ürün ara</h2>
         <label for="product-search" class="sr-only">Ürün ara</label>
         <input
           type="text"
           id="product-search"
           placeholder="Ürün ara..."
-          class="w-full px-4 py-2 border border-cizgi rounded focus:ring-2 focus:ring-altin-koyu focus:border-transparent"
+          class="form-alan"
         />
       </div>
 
       <div>
-        <h2 class="text-govde font-semibold mb-4 text-murekkep">Kategori Filtreleri</h2>
+        <h2 class="text-govde font-semibold mb-3 text-murekkep">Kategori</h2>
         <ul class="space-y-3">
           {
             filterCategories.map((c) => (
@@ -129,7 +129,7 @@ import Ikon from '../components/Ikon.astro';
                 <label class="flex items-center">
                   <input
                     type="checkbox"
-                    class="category-checkbox h-4 w-4 rounded border-cizgi text-brand-color focus:ring-altin-koyu"
+                    class="category-checkbox h-4 w-4 rounded border-cizgi text-kabuk focus:ring-kabuk"
                     data-category={c.key}
                   />
                   <span class="ml-3 text-is hover:text-altin-koyu cursor-pointer">{c.label}</span>
@@ -162,7 +162,7 @@ import Ikon from '../components/Ikon.astro';
 
       <div
         id="product-grid"
-        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8"
+        class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5"
         data-initial-visible={INITIAL_VISIBLE}
       >
         {
@@ -177,7 +177,7 @@ import Ikon from '../components/Ikon.astro';
         class="mt-12 flex flex-col items-center justify-center py-8 hidden"
       >
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 border-4 border-cizgi border-t-amber-600 rounded-tam animate-spin"></div>
+          <div class="w-8 h-8 border-4 border-cizgi border-t-kabuk rounded-tam animate-spin"></div>
           <span class="text-is font-medium">Daha fazla ürün yükleniyor...</span>
         </div>
       </div>
@@ -196,6 +196,25 @@ import Ikon from '../components/Ikon.astro';
 <style>
   /* Mağaza sayfasına özgü stiller */
 
+  /* Arama alanı — ortaklık formundaki alanla aynı görünüm */
+  .form-alan {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    background: var(--kum);
+    border: 1px solid var(--cizgi);
+    border-radius: 6px;
+    color: var(--murekkep);
+    font-size: 0.9375rem;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .form-alan::placeholder { color: var(--is); opacity: 0.75; }
+  .form-alan:focus {
+    outline: none;
+    border-color: var(--kabuk);
+    background: var(--kagit);
+    box-shadow: 0 0 0 3px rgba(107, 69, 38, 0.12);
+  }
+
   /* Mobil filtre paneli */
   .mobile-filter-visible {
     display: block !important;
@@ -206,7 +225,7 @@ import Ikon from '../components/Ikon.astro';
     bottom: 0;
     z-index: 50;
     overflow-y: auto;
-    background: white;
+    background: var(--kagit);
     padding: 1.5rem;
     animation: slideUp 0.3s ease-out;
     max-height: 85vh;
