@@ -31,6 +31,17 @@ const img = productImage(product.image);
 const large = await getImage({ src: img, width: 900, format: 'webp', quality: 78 });
 
 const markaVar = Boolean(product.brand && product.productName);
+
+// Föy, kategoriye götüren bir bağlantı gösteriyor.
+const KATEGORI_ADI: Record<string, string> = {
+  surup: 'Şuruplar',
+  'pure-tatlandirici': 'Püre ve Tatlandırıcılar',
+  tatli: 'Tatlılar',
+  espresso: 'Kahveler',
+  cay: 'Bitki Çayları',
+  aksesuar: 'Ekipmanlar',
+};
+const kategoriAdi = KATEGORI_ADI[product.category] ?? 'Tüm ürünler';
 const baslik = markaVar ? product.productName : product.name;
 // Etiketler yalnızca ızgarada: şerit bir gezinme yüzeyi, orada satırı
 // gereksiz yükseltiyorlar.
@@ -65,6 +76,10 @@ const aramaMetni = [
     data-lightbox-src={large.src}
     data-lightbox-name={baslik}
     data-lightbox-brand={product.brand ?? ''}
+    data-lightbox-desc={product.description ?? ''}
+    data-lightbox-notes={(product.tastingNotes ?? []).join('|')}
+    data-lightbox-category={kategoriAdi}
+    data-lightbox-href={`/shop.html?category=${product.category}`}
   >
     <Image
       src={img}

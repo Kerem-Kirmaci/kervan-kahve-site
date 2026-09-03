@@ -13,6 +13,10 @@ const lightbox = document.getElementById('image-lightbox');
 const image = document.getElementById('lightbox-image');
 const nameEl = document.getElementById('lightbox-name');
 const brandEl = document.getElementById('lightbox-brand');
+const descEl = document.getElementById('lightbox-desc');
+const notesEl = document.getElementById('lightbox-notes');
+const linkEl = document.getElementById('lightbox-link');
+const linkTextEl = document.getElementById('lightbox-link-text');
 const closeBtn = document.getElementById('lightbox-close');
 
 let lastTrigger = null;
@@ -21,10 +25,31 @@ function open(trigger) {
   if (!lightbox || !image) return;
 
   const gorsel = trigger.querySelector('img') ?? trigger;
-  image.src = trigger.dataset.lightboxSrc || gorsel.currentSrc || gorsel.src;
+  const d = trigger.dataset;
+
+  image.src = d.lightboxSrc || gorsel.currentSrc || gorsel.src;
   image.alt = gorsel.alt || '';
-  if (nameEl) nameEl.textContent = trigger.dataset.lightboxName || '';
-  if (brandEl) brandEl.textContent = trigger.dataset.lightboxBrand || '';
+  if (nameEl) nameEl.textContent = d.lightboxName || '';
+  if (brandEl) brandEl.textContent = d.lightboxBrand || '';
+  if (descEl) descEl.textContent = d.lightboxDesc || '';
+
+  // Tat notları
+  if (notesEl) {
+    notesEl.textContent = '';
+    for (const not of (d.lightboxNotes || '').split('|').filter(Boolean)) {
+      const li = document.createElement('li');
+      li.textContent = not;
+      notesEl.appendChild(li);
+    }
+  }
+
+  // Kategoriye götüren bağlantı
+  if (linkEl && linkTextEl) {
+    linkEl.href = d.lightboxHref || '/shop.html';
+    linkTextEl.textContent = d.lightboxCategory
+      ? `${d.lightboxCategory} içinde gör`
+      : 'Tüm ürünler';
+  }
 
   lightbox.classList.add('active');
   lightbox.setAttribute('aria-hidden', 'false');

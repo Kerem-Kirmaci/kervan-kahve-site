@@ -73,7 +73,11 @@ const socialImage = new URL(ogImage ?? '/og-image.jpg', Astro.site).href;
   <body>
     <Header activePage={activePage} />
 
-    <main class={mainClass} style="z-index: 1; position: relative;">
+    {/* Not: burada eskiden `z-index: 1; position: relative` vardı (eski HTML
+        sürümünden kalma). Bir yığın bağlamı yaratıyordu ve içindeki ürün
+        föyü modalı z-index:10000 olmasına rağmen header'ın (z-50) ALTINDA
+        kalıyordu — modal açıkken header pırıl pırıl görünüyordu. */}
+    <main class={mainClass}>
       <slot />
     </main>
 

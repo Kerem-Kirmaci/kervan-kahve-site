@@ -1,17 +1,48 @@
 ---
-// Ürün görseli büyütme katmanı. index ve shop sayfalarında kullanılır.
+// Ürün föyü — kart görseline tıklanınca açılan modal.
+//
+// Öncesinde "büyük fotoğraf + altına asılı yazı" idi: bilgi bloğu görselin
+// altına `bottom: -68px` ile asılıydı ve genişliği görselin genişliği kadardı.
+// Ürün görselleri zemin temizliğinden sonra çok farklı boyutlarda olduğu için
+// (147px genişliğinde şişe, 1400px genişliğinde pasta) yazı her üründe başka
+// yere gidiyor, dar ürünlerde panelden taşıp marka adı kayboluyordu.
+//
+// Artık panel sabit: görsel solda kendi alanında, bilgi sağda kendi alanında.
+// Ürün ne kadar dar ya da geniş olursa olsun yazı yerinden oynamıyor.
 import Ikon from './Ikon.astro';
 ---
 
-<div id="image-lightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-name" aria-hidden="true">
-  <div class="lightbox-content">
-    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Kapat">
-      <Ikon ad="kapat" />
+<div
+  id="image-lightbox"
+  class="urun-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="lightbox-name"
+  aria-hidden="true"
+>
+  <div class="urun-modal-panel">
+    <button class="urun-modal-kapat" id="lightbox-close" type="button" aria-label="Kapat">
+      <Ikon ad="kapat" boyut={20} />
     </button>
-    <img id="lightbox-image" class="lightbox-image" src="" alt="" />
-    <div class="lightbox-product-info">
-      <div class="lightbox-product-brand" id="lightbox-brand"></div>
-      <div class="lightbox-product-name" id="lightbox-name"></div>
+
+    <div class="urun-modal-gorsel">
+      <img id="lightbox-image" src="" alt="" />
+    </div>
+
+    <div class="urun-modal-bilgi">
+      <p class="urun-modal-marka" id="lightbox-brand"></p>
+      <h2 class="urun-modal-ad" id="lightbox-name"></h2>
+      <p class="urun-modal-aciklama" id="lightbox-desc"></p>
+
+      <ul class="urun-modal-notlar" id="lightbox-notes"></ul>
+
+      <div class="urun-modal-alt">
+        <a class="urun-modal-baglanti" id="lightbox-link" href="/shop.html">
+          <span id="lightbox-link-text">Tüm ürünler</span>
+          <Ikon ad="ok-sag" boyut={16} />
+        </a>
+        <a class="urun-modal-teklif" href="/ortaklik.html">Bu ürün için teklif alın</a>
+      </div>
     </div>
   </div>
 </div>

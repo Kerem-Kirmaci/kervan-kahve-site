@@ -176,82 +176,197 @@ p.genis { max-width: none; }
 }
 
 /* --------------------------------------------------------------------------
-   Lightbox (ürün görseli büyütme)
+   Ürün föyü (kart görseline tıklanınca açılan modal)
+
+   Panel sabit ölçüde: görsel kendi alanında, bilgi kendi alanında. Eskiden
+   bilgi bloğu görselin altına asılıydı ve genişliği görselin genişliği
+   kadardı; ürün görselleri çok farklı boyutlarda olduğu için yazı her üründe
+   başka yere gidiyordu.
    -------------------------------------------------------------------------- */
-.image-lightbox {
+.urun-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(24, 14, 6, 0.94);
+  inset: 0;
   z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  background: rgba(24, 14, 6, 0.82);
+  backdrop-filter: blur(6px);
   opacity: 0;
   visibility: hidden;
-  /* visibility anında açılır, kapanışta gecikir. Eskiden 0.3s'lik bir geçişti
-     ve açılır açılmaz çağrılan closeBtn.focus() öğe hâlâ gizli olduğu için
-     sessizce başarısız oluyordu — odak body'de kalıyordu. */
-  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
-  backdrop-filter: blur(8px);
+  /* visibility anında açılır, kapanışta gecikir — açılır açılmaz çağrılan
+     closeBtn.focus() öğe hâlâ gizliyse sessizce başarısız oluyordu. */
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
 }
-.image-lightbox.active {
+.urun-modal.active {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease, visibility 0s linear 0s;
+  transition: opacity 0.2s ease, visibility 0s linear 0s;
 }
 
-.lightbox-content {
+.urun-modal-panel {
   position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
-}
-
-.lightbox-image {
-  max-width: 100%;
-  max-height: 85vh;
-  border-radius: 6px;
-  object-fit: contain;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: min(920px, 100%);
+  max-height: min(88vh, 640px);
   background: var(--kagit);
+  border-radius: 6px;
+  overflow: hidden;
+  transform: translateY(8px);
+  transition: transform 0.2s ease;
+}
+.urun-modal.active .urun-modal-panel { transform: translateY(0); }
+
+@media (min-width: 720px) {
+  .urun-modal-panel {
+    grid-template-rows: none;
+    grid-template-columns: 1.15fr 0.85fr;
+    /* Sabit yükseklik: ürünün en-boy oranına göre panel oynamasın. Yatık bir
+       pasta ile dikey bir şişe arasında 160px fark oluyordu. Bilgi sütunu
+       gerekirse kendi içinde kayar. */
+    height: min(460px, 80vh);
+  }
 }
 
-.lightbox-close {
-  position: absolute;
-  top: -52px;
-  right: -4px;
-  width: 44px;
-  height: 44px;
-  background: rgba(245, 239, 227, 0.12);
-  border: 1px solid rgba(245, 239, 227, 0.24);
-  border-radius: 9999px;
-  color: var(--krem);
-  cursor: pointer;
+/* --- görsel alanı --- */
+.urun-modal-gorsel {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  padding: 1.5rem;
+  background: var(--kagit);
+  min-height: 180px;
+  /* Dar ekranda görsel bütün paneli kaplayıp bilgiyi ekran dışına itiyordu */
+  max-height: 40vh;
+  overflow: hidden;
 }
-.lightbox-close:hover { background: rgba(245, 239, 227, 0.22); }
+@media (min-width: 720px) {
+  .urun-modal-gorsel {
+    padding: 2.5rem;
+    border-right: 1px solid var(--cizgi);
+    min-height: 0;
+    max-height: none;
+  }
+}
+.urun-modal-gorsel img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
 
-.lightbox-product-info {
-  position: absolute;
-  bottom: -68px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  color: var(--krem);
+/* --- bilgi alanı --- */
+.urun-modal-bilgi {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.5rem 1.5rem;
+  background: var(--kum);
+  border-top: 1px solid var(--cizgi);
+  overflow-y: auto;
 }
-.lightbox-product-name {
-  font-stretch: 112%;
+@media (min-width: 720px) {
+  .urun-modal-bilgi {
+    padding: 2.5rem 2rem;
+    border-top: none;
+    justify-content: center;
+  }
+}
+
+.urun-modal-marka {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--is);
+}
+.urun-modal-marka:empty { display: none; }
+
+.urun-modal-ad {
+  margin: 0.25rem 0 0;
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 0.25rem;
+  font-stretch: 112%;
+  line-height: 1.2;
+  color: var(--murekkep);
 }
-.lightbox-product-brand {
+
+.urun-modal-aciklama {
+  margin: 0.75rem 0 0;
   font-size: 0.9375rem;
-  color: var(--krem-ikincil);
+  line-height: 1.55;
+  color: var(--is);
+  max-width: none;
+}
+.urun-modal-aciklama:empty { display: none; }
+
+.urun-modal-notlar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.urun-modal-notlar:empty { display: none; }
+.urun-modal-notlar li {
+  font-size: 0.8125rem;
+  line-height: 1;
+  color: var(--is);
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 9999px;
+  padding: 0.4rem 0.7rem;
+}
+
+.urun-modal-alt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cizgi);
+}
+.urun-modal-baglanti {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--altin-koyu);
+}
+.urun-modal-baglanti:hover { color: var(--kabuk); }
+.urun-modal-teklif {
+  font-size: 0.9375rem;
+  color: var(--is);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.urun-modal-teklif:hover { color: var(--murekkep); }
+
+/* --- kapatma --- */
+.urun-modal-kapat {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 9999px;
+  color: var(--murekkep);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.urun-modal-kapat:hover { background: var(--kum); border-color: var(--kabuk); }
+
+@media (prefers-reduced-motion: reduce) {
+  .urun-modal-panel { transform: none; }
 }
 
 /* Büyütülebilir görseller — tetikleyici bir <button> (klavyeyle de açılır) */

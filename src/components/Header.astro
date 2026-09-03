@@ -108,6 +108,13 @@ import Ikon from './Ikon.astro';
     </button>
   </div>
 
+</header>
+
+{/* Mobil menü ve arka planı bilerek <header> DIŞINDA.
+    Header'da `backdrop-blur` var; backdrop-filter, sabit konumlu alt öğeler
+    için kapsayıcı blok yaratıyor. İçeride kaldıklarında `inset: 0` viewport'a
+    değil header kutusuna göre çözülüyor ve panel 320x88px'e sıkışıyordu —
+    menüdeki bağlantıların hepsi kesiliyordu. */}
   <!-- Mobil menü arka planı -->
   <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-kavurma/75 z-40 lg:hidden"></div>
 
@@ -181,4 +188,3 @@ import Ikon from './Ikon.astro';
       </div>
     </div>
   </div>
-</header>
