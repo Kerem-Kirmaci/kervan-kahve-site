@@ -191,12 +191,16 @@ p.genis { max-width: none; }
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  /* visibility anında açılır, kapanışta gecikir. Eskiden 0.3s'lik bir geçişti
+     ve açılır açılmaz çağrılan closeBtn.focus() öğe hâlâ gizli olduğu için
+     sessizce başarısız oluyordu — odak body'de kalıyordu. */
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
   backdrop-filter: blur(8px);
 }
 .image-lightbox.active {
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s linear 0s;
 }
 
 .lightbox-content {
@@ -250,8 +254,8 @@ p.genis { max-width: none; }
   color: var(--krem-ikincil);
 }
 
-/* Büyütülebilir görseller */
-.zoomable-image { cursor: zoom-in; }
+/* Büyütülebilir görseller — tetikleyici bir <button> (klavyeyle de açılır) */
+.zoomable-image { cursor: zoom-in; border: 0; padding: 0; background: none; }
 
 .zoom-icon-wrapper { position: relative; }
 .zoom-icon {

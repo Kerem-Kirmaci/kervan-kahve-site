@@ -58,21 +58,25 @@ const aramaMetni = [
   data-category={product.category}
   data-search={aramaMetni}
 >
-  <div class="zoom-icon-wrapper bg-kagit">
+  <button
+    type="button"
+    class="zoomable-image zoom-icon-wrapper bg-kagit block w-full cursor-zoom-in"
+    aria-label={`${baslik} görselini büyüt`}
+    data-lightbox-src={large.src}
+    data-lightbox-name={baslik}
+    data-lightbox-brand={product.brand ?? ''}
+  >
     <Image
       src={img}
       alt={`${product.name} — ${product.description}`}
       width={400}
-      class="zoomable-image aspect-square w-full h-auto object-contain p-2"
+      class="aspect-square w-full h-auto object-contain p-2"
       loading={eager ? 'eager' : 'lazy'}
-      data-lightbox-src={large.src}
-      data-lightbox-name={baslik}
-      data-lightbox-brand={product.brand ?? ''}
     />
     <span class="zoom-icon" aria-hidden="true">
       <Ikon ad="buyutec" boyut={16} />
     </span>
-  </div>
+  </button>
 
   <div class="flex flex-col gap-1 border-t border-cizgi px-3 py-2.5">
     {markaVar && <p class="text-mini text-is leading-none">{product.brand}</p>}

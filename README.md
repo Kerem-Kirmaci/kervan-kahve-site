@@ -28,7 +28,7 @@ src/
   pages/         Her dosya bir sayfa: index.astro → /index.html
   layouts/
     Base.astro   Ortak <head>, header, footer, alt menü
-  components/    Header, Footer, BottomNav, ProductCard, SliderCard, Lightbox
+  components/    Header, Footer, BottomNav, Ikon, Buton, UrunKarti, Lightbox
   data/
     products.js       Ürün kataloğu (100 ürün)
     home-sliders.js   Ana sayfadaki kategori slider'larının içeriği
@@ -37,9 +37,28 @@ src/
   styles/
     global.css   Tüm sayfalarda ortak stiller
   assets/images/ Kaynak görseller (build sırasında optimize edilir)
+  assets/_orijinal/  Ürün görsellerinin zemin temizliği öncesi hâlleri.
+                 Astro'nun glob'unun DIŞINDA — içeride olsa her görsel iki
+                 kez işlenirdi.
 public/          Olduğu gibi kopyalanan dosyalar (robots.txt, favicon, og-image)
 tests/           İşlevsel test + görsel karşılaştırma araçları
+tools/           kesit.swift — ürün görseli zemin temizleyici
+.claude/skills/  Tasarım sözleşmesi ve frontend-design skill'i
 ```
+
+## Tasarım sistemi
+
+Renk, tipografi, ölçek, ikon ve ürün görseli kuralları
+`.claude/skills/kervan-tasarim-sistemi/SKILL.md` içinde. **Sayfa veya bileşen
+yazmadan önce okuyun.**
+
+Özet:
+- Tek kaynak `tailwind.config.mjs`. Tailwind'in `amber/gray/blue/green`
+  skalaları bilinçli olarak kaldırıldı; yazarsanız sınıf üretilmez.
+- Tek yazı tipi ailesi: Archivo (değişken).
+- Tek ikon kaynağı: `src/components/Ikon.astro`. Sitedeki tek `<svg>` orada.
+- Altı adımlı punto ölçeği, üç yarıçap, iki gölge.
+- Altın (`altin`) tek aksan — sayfa başına en fazla iki yerde.
 
 ### URL'ler neden `.html` uzantılı?
 
@@ -63,6 +82,21 @@ eklerken de aynı biçimi kullanın.
 Görselleri elle küçültmeye gerek yok: Astro build sırasında WebP'ye çevirir,
 kart ve büyütme (lightbox) için ayrı boyutlar üretir, `width`/`height`
 özniteliklerini kendisi ekler.
+
+### Ürün görselinin zeminini temizlemek
+
+Katalogdaki bütün ürün görselleri şeffaf zeminli; kartın kendi zemini arkada
+görünüyor. Tedarikçiden gelen görsellerin her biri kendi renkli stüdyo zemini
+ile geldiği için katalog eskiden yamalı duruyordu.
+
+```bash
+swiftc -O tools/kesit.swift -o tools/kesit   # bir kez derlenir
+tools/kesit girdi.jpg cikti.png              # şeffaf zeminli kesit
+```
+
+macOS Vision çerçevesini kullanır: model indirmez, cihaz üzerinde çalışır.
+Sonra 900px'e sığdırıp %5 şeffaf pay ekleyip WebP'ye çevirin. Orijinali
+`src/assets/_orijinal/` altına koyun.
 
 ## Test
 
@@ -110,3 +144,8 @@ altına yazar. `docs/` klasörü git'e girmez.
   kırılmasın diye adres, iletişim bağlantıları içeren bir sayfa gösteriyor.
 - **Analytics kurulu değil.** Eklenirse çerez banner'ı da gerekir; çerez
   politikası sayfası buna göre güncellenmeli.
+- **Tailwind Typography eklentisi kurulu değil.** Yasal sayfalarda bir dönem
+  `prose` sınıfları vardı ama hiçbir şey yapmıyorlardı; kaldırıldı.
+- **İş ortağı logoları krem tonuna indiriliyor** (`filter: brightness(0)
+  invert(1)`). Koyu zeminde altı farklı marka rengi paleti dağıtıyordu. Tam
+  renk gerekiyorsa `index.astro` içindeki `.ortak-logo img` filtresi kaldırılır.

@@ -20,8 +20,9 @@ let lastTrigger = null;
 function open(trigger) {
   if (!lightbox || !image) return;
 
-  image.src = trigger.dataset.lightboxSrc || trigger.currentSrc || trigger.src;
-  image.alt = trigger.alt || '';
+  const gorsel = trigger.querySelector('img') ?? trigger;
+  image.src = trigger.dataset.lightboxSrc || gorsel.currentSrc || gorsel.src;
+  image.alt = gorsel.alt || '';
   if (nameEl) nameEl.textContent = trigger.dataset.lightboxName || '';
   if (brandEl) brandEl.textContent = trigger.dataset.lightboxBrand || '';
 
@@ -56,6 +57,29 @@ if (lightbox) {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) close();
+    if (!lightbox.classList.contains('active')) return;
+
+    if (e.key === 'Escape') {
+      close();
+      return;
+    }
+
+    // Odak tuzağı: Tab, arkadaki sayfaya kaçıyordu. Lightbox bir modal
+    // (aria-modal), odak içeride kalmalı.
+    if (e.key === 'Tab') {
+      const odaklanabilir = lightbox.querySelectorAll(
+        'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+      );
+      if (odaklanabilir.length === 0) return;
+      const ilk = odaklanabilir[0];
+      const son = odaklanabilir[odaklanabilir.length - 1];
+      if (e.shiftKey && document.activeElement === ilk) {
+        e.preventDefault();
+        son.focus();
+      } else if (!e.shiftKey && document.activeElement === son) {
+        e.preventDefault();
+        ilk.focus();
+      }
+    }
   });
 }
