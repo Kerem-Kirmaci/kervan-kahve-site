@@ -24,6 +24,50 @@ Aşağıdakiler açık kalan işler.
       `elma-tarcin-cayi` (315×315), `buz_makinesi` (350×496),
       `şerbetlik` (355×457).
 
+## Sayfa metinleri — gözden geçirilecek
+
+### ÖNCE BUNLAR: doğrulanması gereken iddialar
+
+Yenileme sırasında yeni metin yazıldı ve bazı yerlerde sitede daha önce
+olmayan **somut iş iddiaları** girdi. Bunlar uydurma değil, makul çıkarımlar —
+ama doğrulanmadan yayına çıkmamalı. Yanlışsa müşteriye verilmiş söz olur.
+
+| Nerede | İddia | Durum |
+|---|---|---|
+| `iletisim.astro` | "Hafta içi 09:00–18:00 arası açığız" | **Tamamen yeni.** Çalışma saatleri sitede hiç yazmıyordu. Doğru mu? |
+| `ortaklik.astro` SSS | "Mersin içinde aynı gün teslimat yapabiliyoruz" | **Tamamen yeni.** Eski metinde sadece "2-3 iş günü" vardı. |
+| `ortaklik.astro` SSS | "Eğitimi işletmenizde, kendi ekipmanınız üzerinde veriyoruz" | **Genişletildi.** Eskisi: "genel destek sağlıyoruz". Eğitim gerçekten yerinde mi veriliyor? |
+| `index.astro` + `ortaklik.astro` | "Makine seçiminde danışmanlık, **kurulum ve düzenli bakım**" | **Genişletildi.** Eskisi sadece "ekipman danışmanlığı"ydı. Kurulum ve bakım gerçekten veriliyor mu? |
+| `index.astro` | "Mersin'deki **tesisimizde** kavuruyor" | Kavurma iddiası eskiden de vardı ama "tesis" kelimesi yeni. Kendi kavurma tesisi var mı? |
+| `index.astro` + `ortaklik.astro` | "100'den fazla **kafe, restoran ve otelle** çalışıyoruz" | Sayı `hakkimizda`'dan geliyordu; segment ayrımı (otel dahil) yeni. |
+
+### Sonra: eski metinlerin tonu
+
+Sitenin konumlandırması yenilendi — artık "nitelikli kahve tutkusu" değil,
+"kafenin ihtiyacı olan her şey tek tedarikçiden". Ama bazı metinler eski
+romantik tonda kaldı ve yeni ana sayfayla çelişiyor:
+
+- **Footer açıklaması:** "Nitelikli kahve çekirdeklerini tutkuyla kavuruyor,
+  işletmelere ve kahve severlere ulaştırıyoruz." Her sayfanın altında duruyor
+  ve ana sayfadaki iddiayla aynı şeyi söylemiyor.
+- **`hakkimizda` hero:** "Kahveye Olan Tutkumuz" — aynı eski ton.
+- **Misyon / Vizyon:** kurumsal kalıp cümleler ("sektörde standart belirleyen
+  marka olmak"). Kimse okumuyor, hiçbir şey söylemiyor.
+- **Değerlerimiz:** Kalite, Güvenilirlik, Müşteri Odaklılık, Yenilikçilik.
+  Bunlar herhangi bir şirketin değerleri; Kervan'a dair hiçbir şey anlatmıyor.
+  Ya somutlaşmalı ya kalkmalı.
+
+### Küçük tutarsızlıklar
+
+- **Sayfa başlıkları karışık:** `index` ve `ortaklik` artık "Kervan Kahve —
+  ..." biçiminde (uzun tire), diğerleri hâlâ "... - Kervan Kahve" (kısa tire).
+  Tek biçime indirilmeli.
+- **Tat notları dolgu olabiliyor:** `products.js` içinde Bubble Tea'nin notları
+  "modern / trend / çok amaçlı" — bunlar tat notu değil. Ürün föyünde artık
+  görünür oldukları için gözden geçirilmeli.
+- **Meta açıklamalar** bazı sayfalarda hâlâ eski konumlandırmayı anlatıyor.
+
+
 ## QR menü — karar bekliyor
 
 `/menu` şu an "yenileniyor" yer tutucusu. Eski QR menü uygulamasının kaynağı
