@@ -16,3 +16,6 @@ docs/after/
 # işletim sistemi
 .DS_Store
 docs/diff/
+
+# claude code yerel ayarları
+.claude/
