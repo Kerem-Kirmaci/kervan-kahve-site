@@ -26,3 +26,4 @@ docs/tasarim-oncesi-arsiv.html
 
 # derlenmiş araç ikilisi (kaynağından üretilir: swiftc -O tools/kesit.swift -o tools/kesit)
 tools/kesit
+docs/yenilenme-raporu.html
