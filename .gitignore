@@ -17,5 +17,12 @@ docs/after/
 .DS_Store
 docs/diff/
 
-# claude code yerel ayarları
-.claude/
+# claude code yerel ayarları — skill'ler hariç (onlar repoya girsin)
+.claude/*
+!.claude/skills/
+
+# tasarım arşivi (2MB gömülü görsel; kalıcı kopya Artifact olarak duruyor)
+docs/tasarim-oncesi-arsiv.html
+
+# derlenmiş araç ikilisi (kaynağından üretilir: swiftc -O tools/kesit.swift -o tools/kesit)
+tools/kesit
