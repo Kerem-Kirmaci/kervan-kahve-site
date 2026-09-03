@@ -191,24 +191,27 @@ const localBusiness = {
       <!-- İş Ortakları -->
       <div>
         <h2 class="text-xl font-semibold mb-4 text-gray-900">İş Ortaklarımız</h2>
-        <div class="flex overflow-x-auto space-x-6 items-center pb-4 no-scrollbar">
-          <div class="flex-shrink-0">
-            <Image src={assetImage('images/partnerships/doro.png')} alt="D'oro Cake logo" class="h-10" width={240} />
+        {/* Logolar 512x160 tuvale önceden ölçeklenip ortalanmış hâlde geliyor
+            (bkz. src/assets/images/partnerships). Bu yüzden logo başına elle
+            yükseklik vermeye gerek yok; hepsi aynı kutuya oturuyor. */}
+        <div class="flex overflow-x-auto space-x-4 items-center pb-4 no-scrollbar">
+          <div class="h-12 w-40 flex items-center justify-center flex-shrink-0">
+            <Image src={assetImage('images/partnerships/doro.png')} alt="D'oro Cake logo" class="max-h-full max-w-full object-contain" width={512} />
           </div>
-          <div class="flex-shrink-0">
-            <Image src={assetImage('images/partnerships/hario.png')} alt="Hario logo" class="h-6" width={240} />
+          <div class="h-12 w-40 flex items-center justify-center flex-shrink-0">
+            <Image src={assetImage('images/partnerships/hario.png')} alt="Hario logo" class="max-h-full max-w-full object-contain" width={512} />
           </div>
-          <div class="flex-shrink-0">
-            <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali logo" class="h-10" width={240} />
+          <div class="h-12 w-40 flex items-center justify-center flex-shrink-0">
+            <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali logo" class="max-h-full max-w-full object-contain" width={512} />
           </div>
-          <div class="flex-shrink-0">
-            <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci logo" class="h-6" width={240} />
+          <div class="h-12 w-40 flex items-center justify-center flex-shrink-0">
+            <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci logo" class="max-h-full max-w-full object-contain" width={512} />
           </div>
-          <div class="flex-shrink-0">
-            <Image src={assetImage('images/partnerships/gusse.png')} alt="Gussse logo" class="h-10" width={240} />
+          <div class="h-12 w-40 flex items-center justify-center flex-shrink-0">
+            <Image src={assetImage('images/partnerships/gusse.png')} alt="Gusse logo" class="max-h-full max-w-full object-contain" width={512} />
           </div>
-          <div class="flex-shrink-0">
-            <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products logo" class="h-6" width={240} />
+          <div class="h-12 w-40 flex items-center justify-center flex-shrink-0">
+            <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products logo" class="max-h-full max-w-full object-contain" width={512} />
           </div>
         </div>
       </div>
@@ -236,43 +239,43 @@ const localBusiness = {
           <div class="marquee-track">
             <div class="flex items-center gap-2 md:gap-0">
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/hario.png')} alt="Hario" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/hario.png')} alt="Hario" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci Gourmet" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci Gourmet" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/gusse.png')} alt="Gussse" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/gusse.png')} alt="Gusse" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/doro.png')} alt="D'ORO Cake" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/doro.png')} alt="D'ORO Cake" class="max-h-full max-w-full object-contain" width={512} />
               </div>
             </div>
             <!-- Sonsuzluk etkisi için tekrar -->
             <div class="flex items-center gap-2 md:gap-0" aria-hidden="true">
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/hario.png')} alt="Hario" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/hario.png')} alt="Hario" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/cimbali.png')} alt="La Cimbali" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci Gourmet" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/davinci.png')} alt="DaVinci Gourmet" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/gusse.png')} alt="Gussse" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/gusse.png')} alt="Gusse" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/fo.png')} alt="Fo Food Products" class="max-h-full max-w-full object-contain" width={512} />
               </div>
               <div class="h-14 md:h-20 w-32 sm:w-40 md:w-60 lg:w-64 flex items-center justify-center flex-shrink-0">
-                <Image src={assetImage('images/partnerships/doro.png')} alt="D'ORO Cake" class="max-h-full max-w-full object-contain" width={240} />
+                <Image src={assetImage('images/partnerships/doro.png')} alt="D'ORO Cake" class="max-h-full max-w-full object-contain" width={512} />
               </div>
             </div>
           </div>
