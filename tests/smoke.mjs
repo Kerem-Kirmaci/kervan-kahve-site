@@ -56,13 +56,13 @@ for (const [slug, label] of Object.entries(activeMap)) {
   check(`${slug}: masaüstü menüde "${label}" aktif`, active?.trim() === label, `bulunan: ${active}`);
 }
 await page.goto(`${BASE}/iletisim.html`, { waitUntil: 'domcontentloaded' });
-const bottomActive = await page.locator('.bottom-nav a[aria-current="page"]').count();
-check('iletisim: alt menüde yanlış öğe vurgulanmıyor', bottomActive === 0,
-  `${bottomActive} öğe vurgulu`);
+const yanlisAktif = await page.locator('nav.desktop-nav a.active').count();
+check('iletisim: menüde yanlış öğe vurgulanmıyor', yanlisAktif === 0,
+  `${yanlisAktif} öğe vurgulu`);
 
 // ------------------------------------------------------------------ mobil menü
 console.log('\n[3] Mobil menü (hamburger ikonu dahil)');
-const mobileCtx = await browser.newContext({ viewport: { width: 820, height: 900 } });
+const mobileCtx = await browser.newContext({ viewport: { width: 375, height: 760 } });
 const mpage = await mobileCtx.newPage();
 mpage.on('pageerror', (e) => consoleErrors.push(`${mpage.url()} :: ${e.message}`));
 for (const p of ['index', 'shop', 'gizlilik-politikasi', 'kullanim-sartlari']) {

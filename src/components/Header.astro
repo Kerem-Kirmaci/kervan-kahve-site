@@ -40,7 +40,7 @@ import Ikon from './Ikon.astro';
         class="h-10 sm:h-14 md:h-16 w-auto object-contain shrink-0"
         loading="eager"
       />
-      <span class="text-govde sm:text-alt font-bold tracking-tight text-murekkep truncate" style="font-stretch: 112%">Kervan Kahve</span>
+      <span class="hidden min-[360px]:inline text-kucuk sm:text-alt font-bold tracking-tight text-murekkep whitespace-nowrap" style="font-stretch: 112%">Kervan Kahve</span>
     </a>
 
     <nav class="hidden lg:flex items-center gap-2 desktop-nav" aria-label="Ana menü">
@@ -84,7 +84,7 @@ import Ikon from './Ikon.astro';
     <a
       href="/iletisim.html"
       class:list={[
-        'flex items-center justify-center gap-2 shrink-0 h-11 px-4 rounded-tam',
+        'flex items-center justify-center gap-2 shrink-0 h-11 px-3 sm:px-4 rounded-tam',
         'bg-kabuk text-krem font-semibold text-kucuk whitespace-nowrap',
         'hover:bg-kavurma transition-colors',
       ]}
@@ -94,11 +94,14 @@ import Ikon from './Ikon.astro';
       <span>İletişim</span>
     </a>
 
-    <!-- Hamburger menü butonu (tablet ve üstü) -->
+    {/* Menü butonu. Öncesinde `hidden md:block lg:hidden` idi: telefonda
+        gizliydi, çünkü gezinme alttaki sabit çubukla yapılıyordu. O çubuk
+        her ekranda 80px yer kaplıyor ve zaten bu menüdeki bağlantıların
+        aynısını taşıyordu; kaldırıldı, menü butonu telefona indi. */}
     <button
       id="mobile-menu-btn"
       type="button"
-      class="hidden md:block lg:hidden p-2 text-murekkep transition-colors"
+      class="lg:hidden p-2 -mr-1 text-murekkep hover:text-kabuk transition-colors"
       aria-label="Menüyü aç"
       aria-expanded="false"
       aria-controls="mobile-menu"

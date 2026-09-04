@@ -1,7 +1,6 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import BottomNav from '../components/BottomNav.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -81,7 +80,6 @@ const socialImage = new URL(ogImage ?? '/og-image.jpg', Astro.site).href;
       <slot />
     </main>
 
-    <BottomNav activePage={activePage} />
     <Footer />
 
     <script>

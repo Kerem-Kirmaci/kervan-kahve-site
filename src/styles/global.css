@@ -152,27 +152,6 @@ p.genis { max-width: none; }
   .mobile-simplified-header .header-search-container {
     display: none !important;
   }
-
-  /* Alt navigasyon çubuğu için sayfa altında boşluk */
-  body {
-    padding-bottom: 80px;
-  }
-}
-
-/* Mobil alt navigasyon */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--kagit);
-  border-top: 1px solid var(--cizgi);
-  z-index: 50;
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .bottom-nav { display: block; }
 }
 
 /* --------------------------------------------------------------------------
