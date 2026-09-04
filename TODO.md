@@ -66,10 +66,18 @@ romantik tonda kaldı ve yeni ana sayfayla çelişiyor:
   "modern / trend / çok amaçlı" — bunlar tat notu değil. Ürün föyünde artık
   görünür oldukları için gözden geçirilmeli.
 - **Meta açıklamalar** bazı sayfalarda hâlâ eski konumlandırmayı anlatıyor.
-- **"Çikolatalı Kurabiye" adı doğrulanmalı.** Ürün önce "Brownie" olarak
-  kayıtlıydı ama görselde çatlak yüzeyli bir çikolatalı kurabiye var; ad
-  görsele göre düzeltildi. D'ORO'nun bu ürün için resmî bir adı varsa o
-  kullanılmalı (`products.js` id=64, slug `doro-cake-cikolatali-kurabiye`).
+- **13 tatlının adı fotoğraftan okunarak değiştirildi, doğrulanmalı.**
+  "Premium/Deluxe" ekleri bilgi taşımıyordu; yerlerine görselde görünen ayırt
+  edici özellik yazıldı. Ürünlerin tadına bakılmadı, ad görsele bakılarak
+  verildi — yanlış olan varsa düzeltilmeli:
+  Kakaolu / Pudra Şekerli / Çifte Fıstıklı / Fıstık Kremalı Çikolatalı Pasta,
+  Çikolatalı Mus Bar, Frambuaz Jöleli Cheesecake, Frambuazlı Dilim Cheesecake,
+  Yaban Mersini Soslu Cheesecake, Orman Meyveli Kremalı Pasta,
+  Beyaz Çikolatalı Kare Pasta, Frambuazlı Çikolata Bar,
+  Çikolata Küreli Brownie, Orman Meyveli Cheesecake.
+- **"Çikolatalı Kurabiye"** önce "Brownie" olarak kayıtlıydı ama görselde
+  çatlak yüzeyli bir kurabiye var. D'ORO'nun resmî bir adı varsa o kullanılmalı
+  (`products.js` id=64, slug `doro-cake-cikolatali-kurabiye`).
 
 
 ### Tatlı adlarında marka riski
@@ -94,6 +102,19 @@ Bunlara dokunmadım çünkü karar hukuki, tasarımsal değil:
   iyi olur (kimse "ferrero rocher pasta dilimi" aramıyor).
 
 Ne olduklarını siz bilirsiniz; söylerseniz düzeltirim.
+
+## Bilinçli takaslar — istenirse geri alınabilir
+
+Bunlar hata değil, verilmiş kararlar. Yanlış geldiyse geri almak kolay.
+
+- **`/shop`'ta çoklu kategori seçimi kalktı.** Kenar çubuğundaki onay kutuları
+  "Şuruplar + Tatlılar" gibi birleştirmeye izin veriyordu; kategori sekmeleri
+  tek seçim. Altı ilgisiz kategoride birleştirmenin pratik karşılığı yok
+  sayıldı, kategoriler arası arama zaten arama kutusuyla yapılıyor.
+- **Mobil alt menü çubuğu kalktı**, gezinme hamburger menüye alındı. Alt çubuk
+  başparmağa daha yakındı; karşılığında her mobil ekranda 80px kazanıldı ve
+  aynı bağlantıları taşıyan ikinci gezinme sistemi ortadan kalktı.
+- **İş ortağı logoları krem tonuna indirildi** (yukarıda ayrıca yazılı).
 
 ## QR menü — karar bekliyor
 
