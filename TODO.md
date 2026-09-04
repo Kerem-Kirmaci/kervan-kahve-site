@@ -72,6 +72,29 @@ romantik tonda kaldı ve yeni ana sayfayla çelişiyor:
   kullanılmalı (`products.js` id=64, slug `doro-cake-cikolatali-kurabiye`).
 
 
+### Tatlı adlarında marka riski
+
+Dört tatlı, başka şirketlerin tescilli markalarını ad olarak taşıyor:
+
+| Ürün | Marka sahibi |
+|---|---|
+| Ferrero Rocher | Ferrero |
+| Beyaz Çikolatalı Raffaello | Ferrero |
+| Fıstıklı Albeni | Ülker |
+| Kırmızı Kadife Albeni | Ülker |
+
+Bunlara dokunmadım çünkü karar hukuki, tasarımsal değil:
+
+- **Albeni'li ikisinin görselinde gerçekten "Albeni" markalı ambalaj var.** Eğer
+  bunlar Ülker'in ürünüyse ve siz bayi olarak satıyorsanız ad doğru, sorun yok.
+  Ama ambalaj D'ORO'ya aitse ve marka adı ödünç alınmışsa risk var.
+- **Ferrero Rocher ve Raffaello** birer tatlı çeşidi değil, tescilli ürün adı.
+  Kendi üretiminizse "Fındıklı Çikolata Topu" ve "Hindistan Cevizli Beyaz
+  Çikolatalı Pasta" gibi tanımlayıcı adlar hem güvenli hem SEO açısından daha
+  iyi olur (kimse "ferrero rocher pasta dilimi" aramıyor).
+
+Ne olduklarını siz bilirsiniz; söylerseniz düzeltirim.
+
 ## QR menü — karar bekliyor
 
 `/menu` şu an "yenileniyor" yer tutucusu. Eski QR menü uygulamasının kaynağı

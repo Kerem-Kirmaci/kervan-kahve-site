@@ -23,11 +23,11 @@ const sliderConfig = {
   sweets: {
     categories: ['tatli'],
     oneCikanlar: [
-      'doro-cake-frambuazli-cheesecake',
-      'doro-cake-cikolatali-pasta',
+      'doro-cake-frambuaz-joleli-cheesecake',
+      'doro-cake-kakaolu-cikolatali-pasta',
       'doro-cake-frambuazli-pasta',
-      'doro-cake-krokanli-cikolatali-pasta',
-      'doro-cake-kirmizi-meyveli-pasta',
+      'doro-cake-frambuazli-cikolata-bar',
+      'doro-cake-orman-meyveli-cheesecake',
       'doro-cake-cikolatali-kurabiye',
       'doro-cake-tiramisu',
       'doro-cake-san-sebastian-cheesecake',
