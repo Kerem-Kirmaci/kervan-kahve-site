@@ -89,16 +89,19 @@ const countText = () => page.locator('#product-count').textContent();
 check('başlangıçta 24 ürün görünür', (await visible()) === 24, `${await visible()}`);
 check('sayaç 100 ürün diyor', (await countText())?.includes('100'), await countText());
 
-await page.check('.category-checkbox[data-category="espresso"]');
-await page.waitForTimeout(300);
-check('Kahveler filtresi 8 ürüne indiriyor', (await visible()) === 8, `${await visible()}`);
-check('sayaç filtreyle güncelleniyor', (await countText())?.includes('8'), await countText());
+await page.click('.kategori-sekme[data-category="espresso"]');
+await page.waitForTimeout(200);
+check('Kahveler sekmesi 8 ürüne indiriyor', (await visible()) === 8, `${await visible()}`);
+check('sayaç sekmeyle güncelleniyor', (await countText())?.includes('8'), await countText());
 
-await page.check('.category-checkbox[data-category="cay"]');
-await page.waitForTimeout(300);
-check('iki kategori birlikte 14 ürün', (await visible()) === 14, `${await visible()}`);
+await page.click('.kategori-sekme[data-category="cay"]');
+await page.waitForTimeout(200);
+check('Bitki Çayları sekmesi 6 ürüne indiriyor', (await visible()) === 6, `${await visible()}`);
 
-await page.click('#clear-filters');
+const aktif = await page.locator('.kategori-sekme[aria-selected="true"]').count();
+check('tek sekme aktif kalıyor', aktif === 1, `${aktif} sekme aktif`);
+
+await page.click('.kategori-sekme[data-category=""]');
 await page.waitForTimeout(300);
 check('filtre temizleme 24 görünüre dönüyor', (await visible()) === 24, `${await visible()}`);
 
