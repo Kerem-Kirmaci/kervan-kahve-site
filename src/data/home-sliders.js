@@ -28,7 +28,7 @@ const sliderConfig = {
       'doro-cake-frambuazli-pasta',
       'doro-cake-krokanli-cikolatali-pasta',
       'doro-cake-kirmizi-meyveli-pasta',
-      'doro-cake-brownie',
+      'doro-cake-cikolatali-kurabiye',
       'doro-cake-tiramisu',
       'doro-cake-san-sebastian-cheesecake',
       'doro-cake-ferrero-rocher',

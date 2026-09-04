@@ -66,6 +66,10 @@ romantik tonda kaldı ve yeni ana sayfayla çelişiyor:
   "modern / trend / çok amaçlı" — bunlar tat notu değil. Ürün föyünde artık
   görünür oldukları için gözden geçirilmeli.
 - **Meta açıklamalar** bazı sayfalarda hâlâ eski konumlandırmayı anlatıyor.
+- **"Çikolatalı Kurabiye" adı doğrulanmalı.** Ürün önce "Brownie" olarak
+  kayıtlıydı ama görselde çatlak yüzeyli bir çikolatalı kurabiye var; ad
+  görsele göre düzeltildi. D'ORO'nun bu ürün için resmî bir adı varsa o
+  kullanılmalı (`products.js` id=64, slug `doro-cake-cikolatali-kurabiye`).
 
 
 ## QR menü — karar bekliyor

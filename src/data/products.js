@@ -636,18 +636,18 @@ export const products = [
   // DİLİM TATLILAR - D'Oro
   {
     id: 64,
-    slug: "doro-cake-brownie",
-    name: "DORO CAKE Brownie",
+    slug: "doro-cake-cikolatali-kurabiye",
+    name: "DORO CAKE Çikolatalı Kurabiye",
     brand: "DORO CAKE",
-    productName: "Brownie",
-    description: "Klasik çikolatalı brownie, yoğun kakao tadı",
+    productName: "Çikolatalı Kurabiye",
+    description: "Çatlak yüzeyli, yoğun kakaolu çikolatalı kurabiye",
     category: "tatli",
     subCategory: "çikolata",
-    image: "images/sweets/dilim-tatlilar/brownie.webp",
+    image: "images/sweets/dilim-tatlilar/cikolatali-kurabiye.webp",
     featured: true,
-    serving: "1 dilim",
+    serving: "1 adet",
     ingredients: ["bitter çikolata", "kakao", "tereyağı"],
-    tastingNotes: ["yoğun", "çikolatalı", "nemli"]
+    tastingNotes: ["yoğun", "çikolatalı", "kakaolu"]
   },
   {
     id: 65,
