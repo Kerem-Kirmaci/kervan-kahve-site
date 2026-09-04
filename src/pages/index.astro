@@ -121,7 +121,7 @@ const destekKalemleri = [
        Kahraman bir stok fotoğraf değil, yükün genişliği.
        =================================================================== -->
   <section class="koyu-zemin bg-kavurma text-krem">
-    <div class="container mx-auto px-4 md:px-6 py-14 md:py-20">
+    <div class="container mx-auto px-4 md:px-6 py-10 md:py-12">
       <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
         <div>
           <h1 class="text-buyuk text-krem">
@@ -140,14 +140,14 @@ const destekKalemleri = [
 
         <!-- Yük manifestosu -->
         <div class="border border-cizgi-koyu rounded overflow-hidden">
-          <p class="px-4 py-3 border-b border-cizgi-koyu text-kucuk text-krem-ikincil">
+          <p class="px-4 py-2.5 border-b border-cizgi-koyu text-kucuk text-krem-ikincil">
             Katalogda bugün
           </p>
           <ul class="divide-y divide-cizgi-koyu">
             {manifesto.map((m) => (
               <li>
                 <a href={m.href}
-                   class="flex items-baseline justify-between gap-4 px-4 py-3 hover:bg-kabuk transition-colors">
+                   class="flex items-baseline justify-between gap-4 px-4 py-2.5 hover:bg-kabuk transition-colors">
                   <span class="text-govde text-krem">{m.ad}</span>
                   <span class="text-govde font-semibold text-altin tabular-nums">{m.adet}</span>
                 </a>
@@ -158,9 +158,9 @@ const destekKalemleri = [
       </div>
 
       <!-- İş ortakları: iddianın kanıtı, süs değil -->
-      <div class="mt-12 md:mt-16 pt-8 border-t border-cizgi-koyu">
+      <div class="mt-8 md:mt-10 pt-6 border-t border-cizgi-koyu">
         <p class="text-kucuk text-krem-ikincil">Bayiliğini yaptığımız markalar</p>
-        <ul class="mt-5 flex flex-wrap items-center gap-x-10 gap-y-6">
+        <ul class="mt-4 flex flex-wrap items-center gap-x-10 gap-y-6">
           {isOrtaklari.map((o) => (
             <li class="ortak-logo" style={`height: ${o.yukseklik}px`}>
               <Image src={assetImage(`images/partnerships/${o.dosya}`)} alt={o.ad} width={400} />
