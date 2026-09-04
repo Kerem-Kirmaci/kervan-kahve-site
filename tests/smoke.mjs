@@ -180,25 +180,20 @@ const validAfter = await page.evaluate(() =>
   document.getElementById('partnership-form').checkValidity());
 check('onay kutusu işaretliyken form geçerli', validAfter === true);
 
-// -------------------------------------------------------------- harita cephesi
-console.log('\n[7b] İletişim haritası (tıklayınca yükleniyor)');
+// ----------------------------------------------------------- iletişim sayfası
+console.log('\n[7b] İletişim sayfası (gömülü harita yok)');
 const haritaIstekleri = [];
 const haritaDinleyici = (req) => {
   if (req.url().includes('google.com/maps')) haritaIstekleri.push(req.url());
 };
 page.on('request', haritaDinleyici);
 await page.goto(`${BASE}/iletisim.html`, { waitUntil: 'networkidle' });
-check('başlangıçta harita cephesi görünüyor', await page.locator('#map-embed').isVisible());
-check('başlangıçta iframe yok', await page.locator('iframe').count() === 0);
+check('sayfada iframe yok', await page.locator('iframe').count() === 0);
 check('sayfa açılışında Google Maps isteği yok', haritaIstekleri.length === 0,
   `${haritaIstekleri.length} istek`);
-check('yol tarifi bağlantısı var', await page.locator('.map-facade-link').count() === 1);
-await page.click('#map-load');
-await page.waitForTimeout(1500);
-check('tıklayınca iframe yükleniyor', await page.locator('iframe').count() === 1);
-const haritaSrc = await page.locator('iframe').getAttribute('src');
-check('iframe doğru adrese bakıyor', (haritaSrc || '').includes('google.com/maps/embed'));
-check('cephe kayboluyor', await page.locator('#map-embed').count() === 0);
+check('yol tarifi bağlantısı var', await page.locator('a[href*="google.com/maps/dir"]').count() === 1);
+check('dört kanal kartı var', await page.locator('.kanal-karti').count() === 4);
+check('WhatsApp bağlantısı var', await page.locator('.kanal-karti[href*="wa.me"]').count() === 1);
 page.off('request', haritaDinleyici);
 
 // --------------------------------------------------------- görsel öznitelikleri

@@ -34,7 +34,6 @@ ama doğrulanmadan yayına çıkmamalı. Yanlışsa müşteriye verilmiş söz o
 
 | Nerede | İddia | Durum |
 |---|---|---|
-| `iletisim.astro` | "Hafta içi 09:00–18:00 arası açığız" | **Tamamen yeni.** Çalışma saatleri sitede hiç yazmıyordu. Doğru mu? |
 | `ortaklik.astro` SSS | "Mersin içinde aynı gün teslimat yapabiliyoruz" | **Tamamen yeni.** Eski metinde sadece "2-3 iş günü" vardı. |
 | `ortaklik.astro` SSS | "Eğitimi işletmenizde, kendi ekipmanınız üzerinde veriyoruz" | **Genişletildi.** Eskisi: "genel destek sağlıyoruz". Eğitim gerçekten yerinde mi veriliyor? |
 | `index.astro` + `ortaklik.astro` | "Makine seçiminde danışmanlık, **kurulum ve düzenli bakım**" | **Genişletildi.** Eskisi sadece "ekipman danışmanlığı"ydı. Kurulum ve bakım gerçekten veriliyor mu? |
