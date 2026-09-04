@@ -189,6 +189,55 @@ olduğunu bilmiyoruz. Yeni yapı `/menu/<kafe>` ise, `/menu` bir seçim sayfası
 ya da mevcut yer tutucu olarak kalır.
 
 
+## Başka bilgisayardan devam etmek
+
+Çalışma `tasarim-yenileme` dalında ve GitHub'da. Canlı site etkilenmedi;
+`origin/main` hâlâ redesign öncesinde duruyor.
+
+### Kurulum
+
+```bash
+git clone https://github.com/Kerem-Kirmaci/kervan-kahve-site.git
+cd kervan-kahve-site
+git checkout tasarim-yenileme
+npm install
+npm run dev          # http://localhost:4321
+```
+
+Depo zaten varsa: `git fetch && git checkout tasarim-yenileme`
+
+### Depoyla birlikte gelenler
+
+- Tasarım sözleşmesi (`.claude/skills/kervan-tasarim-sistemi/`) — yeni oturumda
+  kendiliğinden yüklenir, sistemin tekrar dağılmasını engeller.
+- `frontend-design` skill'i.
+- Bu dosya ve ayrıntılı commit mesajları — commit'ler bir iş günlüğü gibi
+  yazıldı, `git log` okunabilir bir kayıt.
+
+### Gelmeyenler ve karşılıkları
+
+| Ne | Ne yapmalı |
+|---|---|
+| `node_modules` | `npm install` |
+| `tools/kesit` (derlenmiş) | `swiftc -O tools/kesit.swift -o tools/kesit` (yalnızca macOS) |
+| `docs/before`, `docs/after` ekran görüntüleri | Gerekirse yeniden üretilir: `tests/ekran-goruntusu-al.sh` |
+| Tasarım arşivi ve yenilenme raporu (HTML) | Artifact olarak duruyor, aşağıdaki bağlantılar |
+| Bu konuşmanın dökümü | Taşınmaz. Bağlam bu dosyada ve commit mesajlarında. |
+
+### Yerelde kalan bir bilgi
+
+`~/.claude/projects/.../memory/` altında iki not var; bunlar bu bilgisayara
+özel, depoyla gitmez. Biri Güvenli İnternet engelinin teşhisi ve itiraz yolu
+(kervankahve.com zaman zaman BTK filtresine takılıyor, site kaynaklı değil),
+diğeri commit alışkanlığı. İlkine ihtiyaç olursa teşhis sayfası:
+https://claude.ai/code/artifact/a2c72641-0e36-483c-8487-0d01a61388b9
+
+### Canlıya çıkarken dikkat
+
+Yerel `main`, `origin/main`'in **4 commit önünde** ve bu commit'ler hiç
+yayınlanmamış (marquee logo çalışması). `tasarim-yenileme` bunları zaten
+içeriyor, yani dalı birleştirince o dördü de canlıya çıkar.
+
 ## Yayına alma
 
 - [ ] `tasarim-yenileme` dalını `main`'e birleştir. Netlify `main`'i yayınlıyor;
