@@ -28,10 +28,10 @@
   --golge-yuzen: 0 4px 8px rgba(36, 21, 9, .10), 0 24px 48px -16px rgba(36, 21, 9, .35);
 }
 
-/* Not: eskiden html ve body için overflow-x:hidden + max-width:100vw
-   vardı. Bunlar yatay kaydırmayı gizliyordu; asıl sebep, kapalıyken ekranın
-   320px sağında duran mobil menü panelidir. Panel artık .mobile-menu-shell
-   tarafından kırpıldığı için bu bastırmaya gerek kalmadı. */
+/* Not: eskiden html ve body için overflow-x:hidden + max-width:100vw vardı.
+   Bunlar yatay kaydırmayı gizliyordu; sebebi kapalıyken ekranın 320px sağında
+   duran mobil menü paneliydi. Menü artık tam ekran ve yerinde duruyor, o
+   yüzden bastırmaya da kırpma kabuğuna da gerek yok. */
 body {
   font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
   color: var(--murekkep);
@@ -87,53 +87,125 @@ p.genis { max-width: none; }
 }
 
 /* --------------------------------------------------------------------------
-   Mobil menü
-   Paneli kırpan kabuk: viewport'u kaplar, taşan paneli keser.
-   pointer-events:none sayesinde kapalıyken tıklamaları engellemez.
+   Mobil menü — tam ekran
+
+   Öncesinde sağdan kayan 320px'lik bir paneldi; kapalıyken ekranın dışında
+   durduğu için sayfada yatay kaydırma yaratıyor ve bunu bastırmak için ayrı
+   bir kırpma kabuğu gerekiyordu. Tam ekran menüde öyle bir sorun yok: panel
+   yerinde duruyor, yalnızca görünürlüğü değişiyor.
    -------------------------------------------------------------------------- */
-.mobile-menu-shell {
+.mobil-menu {
   position: fixed;
   inset: 0;
-  overflow: hidden;
-  pointer-events: none;
   z-index: 9999;
-}
-
-.mobile-menu {
-  position: absolute;
-  top: 0;
-  right: 0;
-  pointer-events: auto;
-  width: 320px;
-  height: 100%;
-  background: var(--kagit);
-  box-shadow: var(--golge-yuzen);
-  border-left: 1px solid var(--cizgi);
-  transform: translateX(100%);
-  /* Kapalıyken visibility:hidden iki işi birden görüyor:
-     1) Ekranın 320px sağında duran panel sayfada yatay kaydırma yaratmıyor.
-     2) Panelin içindeki bağlantılar klavyeyle sekme sırasına girmiyor.
-     visibility geçişi transform ile aynı sürede, ama kapanışta gecikmeli
-     uygulanıyor ki kayarak çıkma animasyonu görünür kalsın. */
-  visibility: hidden;
-  transition: transform 0.3s ease, visibility 0s linear 0.3s;
-  z-index: 9999;
-}
-.mobile-menu.active {
-  transform: translateX(0);
-  visibility: visible;
-  transition: transform 0.3s ease, visibility 0s linear 0s;
-}
-
-.mobile-menu-overlay {
+  display: flex;
+  flex-direction: column;
+  background: var(--kavurma);
+  color: var(--krem);
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
+  visibility: hidden;
+  /* visibility anında açılır, kapanışta gecikir — açılır açılmaz odak
+     taşınabilsin diye (gizli öğeye focus() sessizce başarısız oluyor). */
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
 }
-.mobile-menu-overlay.active {
+.mobil-menu.active {
   opacity: 1;
-  pointer-events: auto;
+  visibility: visible;
+  transition: opacity 0.2s ease, visibility 0s linear 0s;
 }
+
+.mobil-menu-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--cizgi-koyu);
+}
+
+.mobil-menu-kapat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -0.35rem;
+  border: 0;
+  background: none;
+  color: var(--krem);
+  cursor: pointer;
+}
+.mobil-menu-kapat:hover { color: var(--altin); }
+
+.mobil-menu-baglantilar {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  /* Dikeyde ortala: boşluk altta göllenmesin. `safe`, içerik sığmadığında
+     (küçük telefon, yatay ekran) ortalamayı bırakıp başa hizalar — yoksa
+     listenin üstü ekran dışında kalıp erişilemez oluyor. */
+  justify-content: safe center;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+  /* Geniş ekranda bağlantılar uçtan uca gerilmesin */
+  width: 100%;
+  max-width: 34rem;
+}
+
+.mobil-menu-baglanti {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--cizgi-koyu);
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  color: var(--krem);
+  transition: color 0.15s ease;
+}
+.mobil-menu-baglanti:last-child { border-bottom: 0; }
+.mobil-menu-baglanti:hover { color: var(--altin); }
+
+/* Bulunulan sayfa — altın, sistemdeki tek aksan kuralına göre */
+.mobil-menu-baglanti.aktif { color: var(--altin); }
+
+/* Kısa ekranlarda (küçük telefon, yatay tutuş) liste kaydırmaya girmesin */
+@media (max-height: 660px) {
+  .mobil-menu-baglanti { font-size: 1.4rem; padding: 0.75rem 0; }
+  .mobil-menu-alt { gap: 0.6rem; padding-block: 0.9rem; }
+}
+
+.mobil-menu-adet {
+  flex-shrink: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--krem-ikincil);
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 9999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.mobil-menu-alt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.25rem 1rem calc(1.25rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--cizgi-koyu);
+}
+.mobil-menu-alt > * { max-width: 34rem; }
+.mobil-menu-alt a {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1rem;
+  color: var(--krem-ikincil);
+}
+.mobil-menu-alt a:hover { color: var(--krem); }
 
 /* Mobil header ayarlamaları */
 @media (max-width: 768px) {

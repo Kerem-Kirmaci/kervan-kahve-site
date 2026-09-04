@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/images/logo.png';
+import { products } from '../data/products.js';
 
 interface Props {
   /** Aktif sayfanın anahtarı: index | shop | ortaklik | hakkimizda | iletisim */
@@ -15,9 +16,14 @@ const navItems = [
   { key: 'hakkimizda', href: '/hakkimizda.html', label: 'Hakkımızda' },
 ];
 
-const mobileNavItems = [
+// Mobil menü. "Ürünlerimiz"in yanındaki sayı ana sayfadaki manifestoyla aynı
+// mantık: yapı bilgi taşısın, süs olmasın.
+const mobilMenu = [
   { key: 'index', href: '/index.html', label: 'Ana Sayfa' },
-  ...navItems,
+  { key: 'shop', href: '/shop.html', label: 'Ürünlerimiz', adet: products.length },
+  { key: 'ortaklik', href: '/ortaklik.html', label: 'İş Ortaklığı' },
+  { key: 'hakkimizda', href: '/hakkimizda.html', label: 'Hakkımızda' },
+  { key: 'iletisim', href: '/iletisim.html', label: 'İletişim' },
 ];
 
 const isContactActive = activePage === 'iletisim';
@@ -113,81 +119,58 @@ import Ikon from './Ikon.astro';
 
 </header>
 
-{/* Mobil menü ve arka planı bilerek <header> DIŞINDA.
+{/* Mobil menü bilerek <header> DIŞINDA.
     Header'da `backdrop-blur` var; backdrop-filter, sabit konumlu alt öğeler
-    için kapsayıcı blok yaratıyor. İçeride kaldıklarında `inset: 0` viewport'a
-    değil header kutusuna göre çözülüyor ve panel 320x88px'e sıkışıyordu —
-    menüdeki bağlantıların hepsi kesiliyordu. */}
-  <!-- Mobil menü arka planı -->
-  <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-kavurma/75 z-40 lg:hidden"></div>
+    için kapsayıcı blok yaratıyor. İçeride kalsaydı `inset: 0` viewport'a
+    değil header kutusuna göre çözülürdü.
 
-  <!-- Mobil menü.
-       Dıştaki kabuk viewport'u tam kaplar ve overflow:hidden ile paneli kırpar.
-       Panel kapalıyken ekranın 320px sağında durur; kabuk olmadan bu, sayfada
-       yatay kaydırma yaratıyordu (eskiden html/body'ye overflow-x:hidden
-       konarak bastırılmıştı). -->
-  <div class="mobile-menu-shell lg:hidden">
-    <div
-      id="mobile-menu"
-      class="mobile-menu"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Mobil menü"
-    >
-    <div class="h-full overflow-y-auto">
-      <div class="bg-kagit p-6 border-b border-cizgi">
-        <div class="flex justify-between items-center">
-          <h3 class="text-alt font-bold text-murekkep">Menü</h3>
-          <button
-            id="mobile-menu-close"
-            type="button"
-            class="p-2 text-is hover:text-murekkep hover:bg-kum transition-all rounded-tam"
-            aria-label="Menüyü kapat"
-          >
-            <Ikon ad="kapat" boyut={24} />
-          </button>
-        </div>
-      </div>
-
-      <nav class="p-6" aria-label="Mobil menü">
-        <div class="space-y-3">
-          {
-            mobileNavItems.map((item) => {
-              const isActive = activePage === item.key;
-              return (
-                <a
-                  href={item.href}
-                  class:list={[
-                    'group flex items-center gap-3 p-3 rounded transition-all duration-200',
-                    isActive ? 'bg-kum hover:bg-kum' : 'hover:bg-kum',
-                  ]}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  <span
-                    class:list={[
-                      'text-govde font-medium',
-                      isActive ? 'text-altin-koyu' : 'text-murekkep group-hover:text-altin-koyu',
-                    ]}
-                  >
-                    {item.label}
-                  </span>
-                </a>
-              );
-            })
-          }
-        </div>
-
-        <div class="mt-8 pt-6 border-t border-cizgi">
-          <a
-            href="/iletisim.html"
-            class="group flex items-center justify-center gap-3 p-4 rounded bg-kagit transition-all duration-300 border border-cizgi"
-            aria-current={isContactActive ? 'page' : undefined}
-          >
-            <Ikon ad="eposta" boyut={18} />
-            <span class="text-govde font-semibold text-altin-koyu">İletişim</span>
-          </a>
-        </div>
-        </nav>
-      </div>
-    </div>
+    Yan panel değil tam ekran: 320px'lik çekmece sayfanın bir kısmını açıkta
+    bırakıp üstüne yapıştırılmış gibi duruyordu. Şimdi sitenin koyu zemini,
+    büyük tipografisi ve tek altın aksanıyla aynı dili konuşuyor. */}
+<div
+  id="mobile-menu"
+  class="mobil-menu lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menü"
+>
+  <div class="mobil-menu-ust">
+    <Image
+      src={logo}
+      alt=""
+      width={96}
+      height={96}
+      class="h-10 w-auto object-contain"
+    />
+    <button id="mobile-menu-close" type="button" class="mobil-menu-kapat" aria-label="Menüyü kapat">
+      <Ikon ad="kapat" boyut={22} />
+    </button>
   </div>
+
+  <nav class="mobil-menu-baglantilar" aria-label="Mobil menü">
+    {
+      mobilMenu.map((item) => (
+        <a
+          href={item.href}
+          class:list={['mobil-menu-baglanti', { aktif: activePage === item.key }]}
+          aria-current={activePage === item.key ? 'page' : undefined}
+        >
+          <span>{item.label}</span>
+          {item.adet && <span class="mobil-menu-adet">{item.adet}</span>}
+        </a>
+      ))
+    }
+  </nav>
+
+  {/* Telefonda menüyü açanların bir kısmı zaten aramak istiyor */}
+  <div class="mobil-menu-alt">
+    <a href="tel:+905453207713">
+      <Ikon ad="telefon" boyut={18} />
+      <span>+90 545 320 77 13</span>
+    </a>
+    <a href="mailto:info@kervankahve.com">
+      <Ikon ad="eposta" boyut={18} />
+      <span>info@kervankahve.com</span>
+    </a>
+  </div>
+</div>
