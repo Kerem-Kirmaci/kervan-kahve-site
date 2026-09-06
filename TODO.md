@@ -45,29 +45,20 @@ geometrisi imkânsızdı.
 
 ### Denetim sonucu
 
-Ürün kataloğu dışındaki bütün görseller tek tek incelendi. Üçü değişmeli,
-dördü olduğu gibi kalabilir.
+Ürün kataloğu dışındaki bütün görseller tek tek incelendi. Üçünden ikisi
+değiştirildi, biri duruyor; dördü olduğu gibi kalabilir.
 
 | Görsel | Nerede | Durum |
 |---|---|---|
-| `about_us/hikayemiz.webp` | Hakkımızda → Hikayemiz | **Değişmeli** |
-| `about_us/farkimiz.webp` | Hakkımızda → Bizi Farklı Kılan | **Değişmeli** |
-| `images/tedarikci.jpeg` | Ana sayfa → Tedarikçiden fazlası | **Değişmeli** |
+| `about_us/hikayemiz.webp` | Hakkımızda → Hikayemiz | ✅ **Değişti** — denetimden geçmiş kavurmahane |
+| `images/teslimat.webp` | Ana sayfa → Tedarikçiden fazlası | ✅ **Değişti** — kafeye varan sipariş (eski `tedarikci.jpeg` silindi) |
+| `about_us/farkimiz.webp` | Hakkımızda → Bizi Farklı Kılan | **Değişmeli** — tek kalan |
 | `about_us/hero-hakkimizda.webp` | Hakkımızda hero | Kalabilir — sadece doku, üstünde %80 perde var |
 | `coffees/espresso.webp` | Ana sayfa kahve kartı | Kalabilir — jenerik espresso, iddia yok |
 | `coffees/filtre-kahve.webp` | Ana sayfa kahve kartı | Kalabilir — jenerik demleme, iddia yok |
 | `coffees/turk-kahvesi.webp` | Ana sayfa kahve kartı | Kalabilir — cezve/fincan, iddia yok |
 
 Marka logoları (`partnerships/`), `logo.png` ve `og-image.jpg` gerçek; sorun yok.
-
-- [ ] **`about_us/hikayemiz.webp` yerine gerçek bir fotoğraf.** Yapay zekâ
-      üretimi bir kavurma makinesi; boşaltma oluğu havada duruyor, soğutma
-      kolu gövdeye kaynamış, sol tarafta gövde hiçliğe karışıyor. Gerçek bir
-      model değil.
-      **Kavurma doğrulandı**, yani konu artık serbest — sorun görselin sahte
-      olması. En iyisi kendi kavurmanızdan telefonla çekilmiş sıradan bir kare;
-      gerçek makine, kusurlu ışık, hiç önemi yok. İkinci seçenek yeniden AI
-      üretimi (bu oturumda yazılan "B seçeneği" promptu buna göre hazırlandı).
 
 - [ ] **`about_us/farkimiz.webp` yerine gerçek bir fotoğraf.** Yapay zekâ
       üretimi bir tezgâh düzeni ve etiketleri bozuk ("THIBISCUS ROSEHIPS",
@@ -77,15 +68,6 @@ Marka logoları (`partnerships/`), `logo.png` ve `og-image.jpg` gerçek; sorun y
       yelpazesi hakkında iddia taşıyor. **Bunun kolay çözümü var:** kendi
       ürünlerinizden bir masa düzeni kurup telefonla tepeden çekmek. 100
       ürünün gerçeği elinizde.
-
-- [ ] **`images/tedarikci.jpeg` yerine gerçek bir fotoğraf.** Ana sayfadaki
-      "Tedarikçiden fazlası" bölümünde duruyor — bölüm depo, servis ve
-      destekten bahsederken görselde dumanı tüten tek bir çekirdek var.
-      Alt metni "Kervan Kahve deposunda hazırlanan işletme siparişi" diyordu,
-      yani görselde olmayan bir şeyi tarif ediyordu; şimdilik dürüst hâline
-      çekildi. Depodan/servis aracından/teslimattan **telefonla** çekilmiş
-      sıradan bir kare bile bu bölümü daha inandırıcı yapar. Görsel
-      değişirse alt metin de değişmeli.
 
 ## Sayfa metinleri — gözden geçirilecek
 

@@ -281,14 +281,12 @@ const destekKalemleri = [
         </div>
 
         <div class="rounded overflow-hidden border border-cizgi-koyu">
-          {/* Alt metin görselin ne olduğunu söylemeli, ne olmasını istediğimizi
-              değil. Eskiden "Kervan Kahve deposunda hazırlanan işletme siparişi"
-              yazıyordu ama görselde depo yok — dumanı tüten tek bir çekirdek var.
-              Ekran okuyucu kullanan biri olmayan bir şeyin tarifini duyuyordu.
-              Buraya gerçek bir depo/sipariş fotoğrafı gelirse alt metin de
-              güncellenmeli (bkz. TODO.md). */}
-          <Image src={assetImage('images/tedarikci.jpeg')}
-                 alt="Yeni kavrulmuş, dumanı tüten bir kahve çekirdeği"
+          {/* Eskiden burada dumanı tüten tek bir kahve çekirdeği vardı ve alt
+              metni "Kervan Kahve deposunda hazırlanan işletme siparişi" diyordu
+              — görselde olmayan bir şeyi tarif ediyordu. Bölüm ürünü bırakıp
+              gitmemekten bahsederken görselin de bunu göstermesi gerekiyordu. */}
+          <Image src={assetImage('images/teslimat.webp')}
+                 alt="Açılış öncesi bir kafeye getirilen sipariş: ahşap kasalarda şurup şişeleri, kahve torbaları ve tatlı tepsisi"
                  class="w-full h-auto object-cover" width={900} loading="lazy" />
         </div>
       </div>
