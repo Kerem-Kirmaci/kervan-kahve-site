@@ -55,7 +55,11 @@ export const products = [
     roastLevel: "orta-koyu",
     origin: "Guatemala",
     image: "images/coffees/guatemala.webp",
-    featured: true,
+    // Beş tek-menşe kahveden yalnızca bu featured'dı. Mağazada featured olanlar
+    // öne alınıp kendi aralarında alfabetik sıralandığı için Guatemala, Filtre
+    // Kahve ile Türk Kahvesi'nin arasına düşüyor ve üç harmanı bölüyordu.
+    // Diğer dört menşe gibi featured değil.
+    featured: false,
     weight: "250g",
     tastingNotes: ["dumanlı", "baharat", "kakao"]
   },
