@@ -32,8 +32,25 @@ Tek kaynak: `tailwind.config.mjs`. CSS değişkenleri `src/styles/global.css`.
 
 ### Kurallar
 
-1. **Altın sayfa başına en fazla iki yerde.** Bulunulan sayfanın işareti ve tek
-   birincil eylem. Üçüncü bir altın öğe varsa biri fazladır.
+1. **Altın yolu işaretler: altın olan her şey tıklanabilir.** Buton, bağlantı,
+   bulunulan sayfanın işareti, odak halkası. Başka hiçbir şey.
+
+   Zemine göre seçilir: koyu zeminde `altin`, açık zeminde `altin-koyu`. Aynı
+   yüzeyde ikisi bir arada kullanılmaz.
+
+   Altın **olmayanlar:** gövde metni, başlık, başlıktaki tek kelime, süs
+   ikonu, istatistik sayısı, kenarlık, ayraç, kart zemini. Tıklanamayan bir
+   şeyi altın yapmak istiyorsan cevap hayır — punto, kalınlık veya boşlukla
+   çöz.
+
+   **Dolu altın buton (`vurgu`) bölüm başına bir tane.** Uzun bir sayfa aynı
+   eylemi altta bir kez tekrarlayabilir — ana sayfadaki "Teklif alın" ve "İş
+   ortağı olun" ikisi de `/ortaklik.html`'e gidiyor, o yüzden bir eylem
+   sayılıyor. İkinci bir *farklı* eylem altın olmaz.
+
+   *(Bu kural önce "sayfa başına en fazla iki altın öğe" diye yazılmıştı ama
+   hiçbir sayfa ona uymuyordu; sayı saymak yerine rol tarif ediyor artık.
+   Sayfayı kurala çekmeye çalışma — kural sayfadan sonra yazıldı.)*
 2. **Tailwind'in kendi renk skalaları kullanılmaz.** `amber-*`, `gray-*`, `blue-*`,
    `green-*` config'den kaldırıldı; yazarsan sınıf hiç üretilmez ve sessizce
    hiçbir şey olmaz. Bu bilinçli bir tuzak.
@@ -111,7 +128,8 @@ Elle buton yazma. Daha önce 15 farklı elle yazılmış varyant vardı.
 <Buton href="/ortaklik.html" variant="vurgu" boyut="buyuk">Teklif alın</Buton>
 ```
 
-`vurgu` altın demektir — sayfa başına bir kez (bkz. Renk kuralı 1).
+`vurgu` altın demektir — bölüm başına bir tane ve yalnızca sayfanın birincil
+eylemi için (bkz. Renk kuralı 1).
 
 ## Ürün görselleri
 

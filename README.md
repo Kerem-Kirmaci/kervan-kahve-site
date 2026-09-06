@@ -58,7 +58,8 @@ yazmadan önce okuyun.**
 - Tek yazı tipi ailesi: Archivo (değişken).
 - Tek ikon kaynağı: `src/components/Ikon.astro`. Sitedeki tek `<svg>` orada.
 - Altı adımlı punto ölçeği, üç yarıçap, iki gölge.
-- Altın (`altin`) tek aksan — sayfa başına en fazla iki yerde.
+- Altın (`altin`) tek aksan ve yalnızca tıklanabilir öğelerde: buton, bağlantı,
+  aktif sayfa işareti, odak halkası. Süs ikonu veya istatistik sayısı altın olmaz.
 
 ### URL'ler neden `.html` uzantılı?
 

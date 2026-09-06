@@ -114,6 +114,14 @@ Bunlar hata değil, verilmiş kararlar. Yanlış geldiyse geri almak kolay.
   başparmağa daha yakındı; karşılığında her mobil ekranda 80px kazanıldı ve
   aynı bağlantıları taşıyan ikinci gezinme sistemi ortadan kalktı.
 - **İş ortağı logoları krem tonuna indirildi** (yukarıda ayrıca yazılı).
+- **Altın artık yalnızca tıklanabilir öğelerde.** Sözleşmedeki "sayfa başına en
+  fazla iki altın öğe" kuralı hiçbir sayfada tutmuyordu; rol tarif eden bir
+  kurala çevrildi (bkz. SKILL.md, Renk kuralı 1) ve kural dışı kalan beş yer
+  düzeltildi: ana sayfa ve ortaklık destek ikonları, iletişim adres kartının
+  konum ikonu, çerez politikasındaki altın paragraf, `hakkimizda`'daki dört
+  istatistik sayısı (100+ / 9 / 50+ / Mersin).
+  *Sayıların altın hâli isteniyorsa:* `hakkimizda.astro` içinde
+  `text-murekkep` → `text-altin-koyu`. Ama o zaman kural yine sayfayla çelişir.
 
 ## QR menü — karar bekliyor
 
