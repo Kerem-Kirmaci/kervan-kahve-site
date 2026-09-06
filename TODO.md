@@ -62,19 +62,19 @@ Marka logoları (`partnerships/`), `logo.png` ve `og-image.jpg` gerçek; sorun y
 
 ## Sayfa metinleri — gözden geçirilecek
 
-### ÖNCE BUNLAR: doğrulanması gereken iddialar
+### ✅ İş iddiaları — hepsi doğrulandı
 
-Yenileme sırasında yeni metin yazıldı ve bazı yerlerde sitede daha önce
-olmayan **somut iş iddiaları** girdi. Bunlar uydurma değil, makul çıkarımlar —
-ama doğrulanmadan yayına çıkmamalı. Yanlışsa müşteriye verilmiş söz olur.
+Yenileme sırasında sitede daha önce olmayan **somut iş iddiaları** girmişti.
+Beşi de işletmeye sorulup doğrulandı; ikisi düzeltildi, üçü olduğu gibi
+kaldı. Bundan sonra bu tür bir cümle eklenirse aynı yoldan geçmeli.
 
 | Nerede | İddia | Durum |
 |---|---|---|
 | ~~`ortaklik.astro` SSS~~ | ~~"Mersin içinde aynı gün teslimat"~~ | ✅ **Çözüldü.** Böyle bir söz verilmiyormuş; süre siparişe göre değişiyor. Sabit süre taahhüdü kaldırıldı, yerine kendi aracıyla dağıtım yazıldı. |
-| `ortaklik.astro` SSS | "Eğitimi işletmenizde, kendi ekipmanınız üzerinde veriyoruz" | **Genişletildi.** Eskisi: "genel destek sağlıyoruz". Eğitim gerçekten yerinde mi veriliyor? |
-| `index.astro` + `ortaklik.astro` | "Makine seçiminde danışmanlık, **kurulum ve düzenli bakım**" | **Genişletildi.** Eskisi sadece "ekipman danışmanlığı"ydı. Kurulum ve bakım gerçekten veriliyor mu? |
-| ~~`index.astro`~~ | ~~"Mersin'deki tesisimizde kavuruyor"~~ | ✅ **Doğrulandı** — kahveyi Kervan kendisi kavuruyor. Yalnızca "tesis" kelimesi ölçek ima ediyor, atölye ölçeğindeyse yumuşatılabilir. |
-| `index.astro` + `ortaklik.astro` | "100'den fazla **kafe, restoran ve otelle** çalışıyoruz" | Sayı `hakkimizda`'dan geliyordu; segment ayrımı (otel dahil) yeni. |
+| ~~`ortaklik.astro` SSS~~ | ~~"Eğitimi işletmenizde veriyoruz"~~ | ✅ **Doğrulandı.** |
+| ~~`index.astro` + `ortaklik.astro`~~ | ~~"Kurulum ve düzenli bakım"~~ | ✅ **Doğrulandı.** |
+| ~~`index.astro`~~ | ~~"Mersin'deki tesisimizde kavuruyor"~~ | ✅ **Doğrulandı.** "Tesis" ölçek ima ettiği için yumuşatıldı: "Mersin'de kendimiz kavuruyor". |
+| ~~`index.astro` + `ortaklik.astro`~~ | ~~"100'den fazla kafe, restoran ve otelle"~~ | ✅ **Doğrulandı.** |
 
 ### ✅ Eski metinlerin tonu — yapıldı
 
@@ -107,10 +107,8 @@ geri eklendi — ama sayfanın konusu olarak değil, dağıtım çerçevesi içi
 "salt aracı değiliz" diyen madde olarak. Hikayemiz metni artık "kahveyle
 başladık ve kahveyi hâlâ kendimiz kavuruyoruz" diyor.
 
-Küçük bir ayrıntı açık: ana sayfadaki cümle "Mersin'deki **tesisimizde**
-kavuruyor" diyor. Kavurma doğrulandı ama "tesis" kelimesi ölçek ima ediyor;
-kavurma küçük bir atölyede yapılıyorsa "kendi kavurmamızı yapıyoruz" gibi bir
-ifade daha doğru olur. Yanlış değil, sadece kelime seçimi.
+"Tesis" kelimesi ölçek ima ettiği için yumuşatıldı: cümle artık "Mersin'de
+kendimiz kavuruyor" diyor.
 
 ### Küçük tutarsızlıklar
 
@@ -312,10 +310,14 @@ https://claude.ai/code/artifact/a2c72641-0e36-483c-8487-0d01a61388b9
 GitHub'a girdi. `main` ile `origin/main` aynı noktada, yayınlanmamış commit yok.
 `tasarim-yenileme` `origin/main`'in 28 commit önünde.)*
 
-## Yayına alma
+## Yayına alma — işletme onayı bekliyor
 
-- [ ] `tasarim-yenileme` dalını `main`'e birleştir. Netlify `main`'i yayınlıyor;
-      birleştirene kadar canlıda eski sürüm duruyor.
+Teknik olarak hazır: açık iddia kalmadı, marka riski çözüldü, testler
+geçiyor. **Ama yayına işletme sahibi görüp onaylamadan alınmayacak.**
+
+- [ ] Yeni sürümü işletme sahibine göster.
+- [ ] Onay gelince `tasarim-yenileme` dalını `main`'e birleştir. Netlify
+      `main`'i yayınlıyor; birleştirene kadar canlıda eski sürüm duruyor.
       ```bash
       git checkout main && git merge tasarim-yenileme
       ```
