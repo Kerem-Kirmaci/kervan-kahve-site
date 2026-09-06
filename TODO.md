@@ -97,27 +97,50 @@ ama doğrulanmadan yayına çıkmamalı. Yanlışsa müşteriye verilmiş söz o
 
 | Nerede | İddia | Durum |
 |---|---|---|
-| `ortaklik.astro` SSS | "Mersin içinde aynı gün teslimat yapabiliyoruz" | **Tamamen yeni.** Eski metinde sadece "2-3 iş günü" vardı. |
+| ~~`ortaklik.astro` SSS~~ | ~~"Mersin içinde aynı gün teslimat"~~ | ✅ **Çözüldü.** Böyle bir söz verilmiyormuş; süre siparişe göre değişiyor. Sabit süre taahhüdü kaldırıldı, yerine kendi aracıyla dağıtım yazıldı. |
 | `ortaklik.astro` SSS | "Eğitimi işletmenizde, kendi ekipmanınız üzerinde veriyoruz" | **Genişletildi.** Eskisi: "genel destek sağlıyoruz". Eğitim gerçekten yerinde mi veriliyor? |
 | `index.astro` + `ortaklik.astro` | "Makine seçiminde danışmanlık, **kurulum ve düzenli bakım**" | **Genişletildi.** Eskisi sadece "ekipman danışmanlığı"ydı. Kurulum ve bakım gerçekten veriliyor mu? |
 | `index.astro` | "Mersin'deki **tesisimizde** kavuruyor" | Kavurma iddiası eskiden de vardı ama "tesis" kelimesi yeni. Kendi kavurma tesisi var mı? |
 | `index.astro` + `ortaklik.astro` | "100'den fazla **kafe, restoran ve otelle** çalışıyoruz" | Sayı `hakkimizda`'dan geliyordu; segment ayrımı (otel dahil) yeni. |
 
-### Sonra: eski metinlerin tonu
+### ✅ Eski metinlerin tonu — yapıldı
 
-Sitenin konumlandırması yenilendi — artık "nitelikli kahve tutkusu" değil,
-"kafenin ihtiyacı olan her şey tek tedarikçiden". Ama bazı metinler eski
-romantik tonda kaldı ve yeni ana sayfayla çelişiyor:
+Konumlandırma dağıtıma çevrildi. Asıl iş kahve değil **dağıtım ağı**: kahve
+şirketin çıkış noktası, ama bugün gidenin içinde şurup, tatlandırıcı, tatlı,
+çay ve ekipman da var. İsimde kahve geçmesi metinlerin yalnızca kahveyi
+anlatmasını gerektirmiyor.
 
-- **Footer açıklaması:** "Nitelikli kahve çekirdeklerini tutkuyla kavuruyor,
-  işletmelere ve kahve severlere ulaştırıyoruz." Her sayfanın altında duruyor
-  ve ana sayfadaki iddiayla aynı şeyi söylemiyor.
-- **`hakkimizda` hero:** "Kahveye Olan Tutkumuz" — aynı eski ton.
-- **Misyon / Vizyon:** kurumsal kalıp cümleler ("sektörde standart belirleyen
-  marka olmak"). Kimse okumuyor, hiçbir şey söylemiyor.
-- **Değerlerimiz:** Kalite, Güvenilirlik, Müşteri Odaklılık, Yenilikçilik.
-  Bunlar herhangi bir şirketin değerleri; Kervan'a dair hiçbir şey anlatmıyor.
-  Ya somutlaşmalı ya kalkmalı.
+- ~~**Footer açıklaması**~~ → "Mersin ve çevresinde kafe, restoran ve otellere
+  tedarik yapıyoruz: kahve, şurup, püre, tatlı, bitki çayı ve ekipman."
+  Her sayfanın altında durduğu için sitenin genel iddiası buydu.
+- ~~**`hakkimizda` hero**~~ → "Mersin'de kurulu bir dağıtım ağı".
+- ~~**Misyon / Vizyon**~~ → bölüm kaldırıldı.
+- ~~**Değerlerimiz**~~ → bölüm kaldırıldı. Dördü de jenerikti ve "Kalite:
+  özenle **kavururuz**" satırı doğrulanmamış kavurma iddiası taşıyordu.
+- Yerlerine tek bölüm: "Bizi Farklı Kılan" dağıtım üzerine yeniden yazıldı
+  (tek elden tedarik / kendi aracımızla Mersin içi / menüye göre seçim /
+  kullanım desteği).
+- "Sürdürülebilir Tedarik — çevre dostu ambalaj ve **adil ticaret**" maddesi
+  silindi. Adil ticaret sertifikaya bağlı bir terim, sertifika yok.
+- `Sayılarla Kervan` sayıları veriden hesaplanıyor artık. Elle yazıldıkları
+  için eskimişlerdi: "9 yıllık deneyim" iki yıl geride kalmıştı, "50+ farklı
+  ürün" kataloğun yarısını saklıyordu (100 ürün var).
+
+### Açık kalan: kavurma iddiası ve sitedeki tutarsızlık
+
+`hakkimizda` ve footer artık kavurmadan bahsetmiyor, ama **ana sayfa hâlâ
+bahsediyor** — "Kendi kavurduğumuz kahveler" başlıklı bir bölüm ve
+"Mersin'deki tesisimizde kavuruyor" cümlesi var. Doğru olabilir diye
+silmedim; cevap gelince iki yoldan biri seçilmeli:
+
+- **Kavuruyorsanız:** ana sayfa olduğu gibi kalır, `hakkimizda`'ya da kavurma
+  geri eklenebilir ve `hikayemiz` görseli kavurmahane olabilir.
+- **Kavurmuyorsanız:** ana sayfadaki bölüm ve cümle değişmeli.
+
+Buna bağlı ikinci madde: `hakkimizda`'daki **"Özel Kahve Harmanları"**
+maddesi bu düzenlemede çıkarıldı, çünkü harman iddiası kavurma kontrolüne
+yaslanıyor. Fason bile olsa harmanı siz belirliyorsanız madde geri gelebilir
+(`ortaklik.astro` SSS'inde benzer bir soru duruyor).
 
 ### Küçük tutarsızlıklar
 

@@ -21,8 +21,12 @@ const kazanimlar = [
 const sorular = [
   { s: 'Minimum sipariş miktarı nedir?',
     c: 'Ürüne göre değişiyor. Menünüzü ve tahmini tüketiminizi konuştuktan sonra net rakam veriyoruz.' },
+  // "Mersin içinde aynı gün teslimat yapabiliyoruz" yazıyordu; böyle bir söz
+  // verilmiyor, süre siparişe göre değişiyor. Sabit bir süre taahhüt etmek
+  // yerine gerçekten farklı olan şeyi söylüyoruz: şehir içinde dağıtımı kargo
+  // değil kendi aracımız yapıyor.
   { s: 'Sipariş ne kadar sürede geliyor?',
-    c: 'Siparişler genellikle 2-3 iş günü içinde işlenip kargoya veriliyor. Mersin içinde aynı gün teslimat yapabiliyoruz.' },
+    c: 'Süre siparişin içeriğine ve miktarına göre değişiyor; sipariş alırken net tarih veriyoruz. Mersin içinde teslimatı kargoya vermiyoruz, kendi aracımızla biz getiriyoruz.' },
   { s: 'Personelimize eğitim veriyor musunuz?',
     c: 'Evet. Ürün kullanımı ve temel kahve hazırlama eğitimini işletmenizde, kendi ekipmanınız üzerinde veriyoruz.' },
   { s: 'Hangi ürünleri tedarik ediyorsunuz?',
