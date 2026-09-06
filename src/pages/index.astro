@@ -37,23 +37,17 @@ const localBusiness = {
 // (masaüstü şerit ×2, mobil kategori satırı, bölüm başlıkları).
 const kategoriler = [
   { anahtar: 'surup', ad: 'Şuruplar', altyazi: 'Kahvenize lezzet katın.',
-    ikon: 'surup', gorsel: 'images/category-cards/syrup-banner.webp',
-    kategoriParam: 'surup', seritId: 'syrups', seritAnahtar: 'syrups' },
+    ikon: 'surup', kategoriParam: 'surup', seritId: 'syrups', seritAnahtar: 'syrups' },
   { anahtar: 'pure-tatlandirici', ad: 'Püre ve Tatlandırıcılar', altyazi: 'Özel formüller ve soslar.',
-    ikon: 'pure', gorsel: 'images/category-cards/pure-tatlandirici-banner.webp',
-    kategoriParam: 'pure-tatlandirici', seritId: 'pure', seritAnahtar: 'pure' },
+    ikon: 'pure', kategoriParam: 'pure-tatlandirici', seritId: 'pure', seritAnahtar: 'pure' },
   { anahtar: 'tatli', ad: 'Tatlılar', altyazi: 'Kahvenizin yanına en iyi eşlikçi.',
-    ikon: 'pasta', gorsel: 'images/category-cards/sweet-banner.webp',
-    kategoriParam: 'tatli', seritId: 'sweets', seritAnahtar: 'sweets' },
+    ikon: 'pasta', kategoriParam: 'tatli', seritId: 'sweets', seritAnahtar: 'sweets' },
   { anahtar: 'kahve', ad: 'Kahveler', altyazi: 'Özenle seçilmiş çekirdekler.',
-    ikon: 'kahve', gorsel: 'images/category-cards/espresso-banner.webp',
-    kategoriParam: 'espresso', seritId: 'coffees', seritAnahtar: 'coffees' },
+    ikon: 'kahve', kategoriParam: 'espresso', seritId: 'coffees', seritAnahtar: 'coffees' },
   { anahtar: 'cay', ad: 'Bitki Çayları', altyazi: 'Doğal ve aromalı bitki çayları.',
-    ikon: 'cay', gorsel: 'images/category-cards/cay-banner.webp',
-    kategoriParam: 'cay', seritId: 'teas', seritAnahtar: 'teas' },
+    ikon: 'cay', kategoriParam: 'cay', seritId: 'teas', seritAnahtar: 'teas' },
   { anahtar: 'aksesuar', ad: 'Ekipmanlar', altyazi: 'Profesyonel ekipmanlar.',
-    ikon: 'ekipman', gorsel: 'images/category-cards/aksesuar-banner.webp',
-    kategoriParam: 'aksesuar', seritId: 'accessories', seritAnahtar: 'accessories' },
+    ikon: 'ekipman', kategoriParam: 'aksesuar', seritId: 'accessories', seritAnahtar: 'accessories' },
 ];
 
 // Yük manifestosu: gerçek envanter sayıları. Süs değil, sayfanın işi bu —
@@ -171,27 +165,14 @@ const destekKalemleri = [
     </div>
   </section>
 
-  <!-- ==================================================================
-       Kategori şeridi — tam genişlik fotoğraf bandı
-       =================================================================== -->
-  <section class="kategori-serit border-y border-cizgi" aria-label="Kategoriler">
-    <div class="serit-ray">
-      {[0, 1].map((tekrar) => (
-        <div class="flex" aria-hidden={tekrar === 1 ? 'true' : undefined}>
-          {kategoriler.map((k) => (
-            <a href={`#kategori-${k.anahtar}`} class="kategori-kart">
-              <Image src={assetImage(k.gorsel)} alt={tekrar === 0 ? k.ad : ''} width={400} />
-              <span class="kategori-perde"></span>
-              <span class="kategori-etiket">
-                <Ikon ad={k.ikon} boyut={20} />
-                <span class="font-semibold">{k.ad}</span>
-              </span>
-            </a>
-          ))}
-        </div>
-      ))}
-    </div>
-  </section>
+  {/* Buradaki kayan kategori şeridi kaldırıldı. Kategoriler sayfada zaten iki
+      kez var: hero'daki manifesto (gerçek sayılarla, sabit, tıklanabilir) ve
+      aşağıdaki altı bölümün kendisi. Şerit üçüncü kez aynı listeyi gösteriyor,
+      sürekli hareket ederek tıklama hedefini kaçırtıyor ve zemini hero'yla
+      aynı olduğu için ("kavurma" üstüne "kavurma") zemin ritmini bozuyordu.
+      Görselleri de yapay zekâ üretimiydi: şurup bandındaki DaVinci ve Gusse
+      etiketleri uydurma metin taşıyordu, tatlı bandı satılmayan katlı pasta
+      gösteriyordu. Ayrıntı: TODO.md, "bilinçli takaslar". */}
 
   <!-- ==================================================================
        Öne çıkan kahveler
@@ -300,8 +281,14 @@ const destekKalemleri = [
         </div>
 
         <div class="rounded overflow-hidden border border-cizgi-koyu">
+          {/* Alt metin görselin ne olduğunu söylemeli, ne olmasını istediğimizi
+              değil. Eskiden "Kervan Kahve deposunda hazırlanan işletme siparişi"
+              yazıyordu ama görselde depo yok — dumanı tüten tek bir çekirdek var.
+              Ekran okuyucu kullanan biri olmayan bir şeyin tarifini duyuyordu.
+              Buraya gerçek bir depo/sipariş fotoğrafı gelirse alt metin de
+              güncellenmeli (bkz. TODO.md). */}
           <Image src={assetImage('images/tedarikci.jpeg')}
-                 alt="Kervan Kahve deposunda hazırlanan işletme siparişi"
+                 alt="Yeni kavrulmuş, dumanı tüten bir kahve çekirdeği"
                  class="w-full h-auto object-cover" width={900} loading="lazy" />
         </div>
       </div>
@@ -333,46 +320,6 @@ const destekKalemleri = [
        dağıtıyordu. Kanıt olarak duruyorlar; dikkat çekmeleri gerekmiyor. */
     filter: brightness(0) invert(1);
     opacity: 0.72;
-  }
-
-  /* ---------------- Kategori şeridi ---------------- */
-  .kategori-serit { overflow: hidden; background: var(--kavurma); }
-  .serit-ray {
-    display: flex;
-    width: max-content;
-    animation: serit-kay 48s linear infinite;
-    will-change: transform;
-  }
-  .kategori-serit:hover .serit-ray { animation-play-state: paused; }
-  @keyframes serit-kay {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  .kategori-kart {
-    position: relative;
-    flex-shrink: 0;
-    width: 68vw;
-    border-left: 1px solid rgba(245, 239, 227, 0.18);
-  }
-  @media (min-width: 640px)  { .kategori-kart { width: 40vw; } }
-  @media (min-width: 1024px) { .kategori-kart { width: 26vw; } }
-  @media (min-width: 1280px) { .kategori-kart { width: 20vw; } }
-  .kategori-kart::before { content: ''; display: block; padding-top: 42%; }
-  .kategori-kart :global(img) {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-  .kategori-perde {
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg, rgba(46, 29, 16, .85) 0%, rgba(46, 29, 16, .35) 70%, rgba(46, 29, 16, .1) 100%);
-  }
-  .kategori-etiket {
-    position: absolute;
-    left: 1rem; bottom: 0.85rem;
-    display: flex; align-items: center; gap: 0.5rem;
-    color: var(--krem);
   }
 
   /* ---------------- Öne çıkan kahve kartları ---------------- */
@@ -434,9 +381,4 @@ const destekKalemleri = [
   .serit-ok:disabled { opacity: 0.35; cursor: default; }
   .serit-ok--sol { left: -14px; }
   .serit-ok--sag { right: -14px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .serit-ray { animation: none; }
-    .kategori-serit { overflow-x: auto; }
-  }
 </style>

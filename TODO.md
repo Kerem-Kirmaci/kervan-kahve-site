@@ -24,6 +24,34 @@ Aşağıdakiler açık kalan işler.
       `elma-tarcin-cayi` (315×315), `buz_makinesi` (350×496),
       `şerbetlik` (355×457).
 
+## Görseller — hangi fotoğraf sorun, hangisi değil
+
+Sitedeki sahne fotoğraflarının bir kısmı yapay zekâ üretimi. Bunların hepsi
+sorun değil; ölçüt "AI mi gerçek mi" değil, **görsel belirli bir iddiada
+bulunuyor mu**:
+
+- **İddia yok** (atmosfer, doku, sıcaklık) → AI veya stok sorun değil.
+  Örnek: `coffees/turk-kahvesi.webp` — cezve, fincan, lokum. Kimseye ait
+  değil, hiçbir şey iddia etmiyor, iş görüyor.
+- **İddia var** (bu bizim ürünümüz / depomuz / ekipmanımız) → **vasat bir
+  gerçek fotoğraf, güzel bir sahteden iyidir.** Telefonla çekilmiş net bir
+  depo fotoğrafı, havada duran çekirdekten daha ikna edici.
+
+Kaldırılan kategori şeridinin görselleri ikinci gruptaydı: şurup bandındaki
+DaVinci ve Gusse şişeleri gerçek bayiliklerin sahte etiketli taklidiydi
+("Gusse geda", "CHOCOLATE SYWOP", "VALILI"), tatlı bandı satılmayan katlı
+düğün pastası gösteriyordu, ekipman bandı ev mutfağıydı ve makinenin
+geometrisi imkânsızdı.
+
+- [ ] **`images/tedarikci.jpeg` yerine gerçek bir fotoğraf.** Ana sayfadaki
+      "Tedarikçiden fazlası" bölümünde duruyor — bölüm depo, servis ve
+      destekten bahsederken görselde dumanı tüten tek bir çekirdek var.
+      Alt metni "Kervan Kahve deposunda hazırlanan işletme siparişi" diyordu,
+      yani görselde olmayan bir şeyi tarif ediyordu; şimdilik dürüst hâline
+      çekildi. Depodan/servis aracından/teslimattan **telefonla** çekilmiş
+      sıradan bir kare bile bu bölümü daha inandırıcı yapar. Görsel
+      değişirse alt metin de değişmeli.
+
 ## Sayfa metinleri — gözden geçirilecek
 
 ### ÖNCE BUNLAR: doğrulanması gereken iddialar
@@ -114,6 +142,15 @@ Bunlar hata değil, verilmiş kararlar. Yanlış geldiyse geri almak kolay.
   başparmağa daha yakındı; karşılığında her mobil ekranda 80px kazanıldı ve
   aynı bağlantıları taşıyan ikinci gezinme sistemi ortadan kalktı.
 - **İş ortağı logoları krem tonuna indirildi** (yukarıda ayrıca yazılı).
+- **Ana sayfadaki kayan kategori şeridi kaldırıldı.** Kategoriler sayfada
+  zaten iki kez vardı (hero manifestosu ve altı bölümün kendisi); şerit
+  üçüncüsüydü. Sürekli hareket ettiği için tıklama hedefi kaçıyordu, zemini
+  hero'yla aynı olduğu için zemin ritmini bozuyordu (`kavurma` üstüne
+  `kavurma`) ve sözleşmenin Hareket kuralına aykırıydı — redesign aynı kararı
+  ortaklık logoları için zaten vermiş, bunu atlamıştı. Kaldırınca zemin ritmi
+  `kavurma → kum → kagit → kavurma` oldu, yani kural kendiliğinden düzeldi.
+  *Geri isteniyorsa:* `git show 641aaad:src/pages/index.astro` içinde tam hâli
+  var (bölüm + CSS + `kategoriler` dizisindeki `gorsel` alanı).
 - **Altın artık yalnızca tıklanabilir öğelerde.** Sözleşmedeki "sayfa başına en
   fazla iki altın öğe" kuralı hiçbir sayfada tutmuyordu; rol tarif eden bir
   kurala çevrildi (bkz. SKILL.md, Renk kuralı 1) ve kural dışı kalan beş yer
