@@ -52,7 +52,7 @@ gerekenlerin üçü de değişti; dördü olduğu gibi kaldı.
 |---|---|---|
 | `about_us/hikayemiz.webp` | Hakkımızda → Hikayemiz | ✅ **Değişti** — denetimden geçmiş kavurmahane |
 | `images/teslimat.webp` | Ana sayfa → Tedarikçiden fazlası | ✅ **Değişti** — kafeye varan sipariş (eski `tedarikci.jpeg` silindi) |
-| `about_us/farkimiz.webp` | Hakkımızda → Bizi Farklı Kılan | ✅ **Değişti** — gerçek ürün kesitlerinden kuruldu |
+| `about_us/farkimiz.webp` | Hakkımızda → Bizi Farklı Kılan | ✅ **Değişti** — denetimden geçmiş tezgâh fotoğrafı |
 | `about_us/hero-hakkimizda.webp` | Hakkımızda hero | Kalabilir — sadece doku, üstünde %80 perde var |
 | `coffees/espresso.webp` | Ana sayfa kahve kartı | Kalabilir — jenerik espresso, iddia yok |
 | `coffees/filtre-kahve.webp` | Ana sayfa kahve kartı | Kalabilir — jenerik demleme, iddia yok |
