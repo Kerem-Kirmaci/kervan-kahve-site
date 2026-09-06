@@ -163,7 +163,7 @@ npm run serve:dist        # ayrı bir terminalde
 npm test
 ```
 
-70 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
+71 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
 filtreleri ve arama, sonsuz kaydırma, lightbox, slider okları, ortaklık formu
 ve KVKK onayı, iletişim sayfası (gömülü harita yok), görsel öznitelikleri,
 yatay taşma ve konsol hataları.

@@ -301,7 +301,14 @@ p.genis { max-width: none; }
     max-height: none;
   }
 }
+/* Yüklenmemiş görsel gizli tutulur: <img> yeni src çözülene kadar eskisini
+   göstermeye devam ediyor ve modal beklemeden açıldığı için bir an önceki
+   ürün görünüyordu (bkz. scripts/lightbox.js). Kutu yerinde kaldığı için
+   sıçrama olmuyor, görsel hazır olunca beliriyor. */
+.urun-modal-gorsel img.yukleniyor { opacity: 0; }
+
 .urun-modal-gorsel img {
+  transition: opacity 0.15s ease;
   max-width: 100%;
   max-height: 100%;
   width: auto;

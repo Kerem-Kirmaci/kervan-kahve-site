@@ -148,6 +148,46 @@ await page.keyboard.press('Escape');
 await page.waitForTimeout(400);
 check('ESC ile kapanıyor', (await page.locator('#image-lightbox.active').count()) === 0);
 
+// İkinci bir ürüne tıklandığında bir an ÖNCEKİ ürünün fotoğrafı görünüyordu:
+// img.src'ye atama yüklemeyi başlatır ama <img> yeni görsel çözülene kadar
+// eskisini göstermeye devam eder, modal ise beklemeden açılıyordu. Yükleme
+// yavaşlatılıp yakalanıyor — hızlı bağlantıda hata görünmez.
+await page.route('**/_astro/**.webp', async (route) => {
+  await new Promise((r) => setTimeout(r, 600));
+  // unroute çağrıldığında bekleyen yönlendiriciler kalabiliyor; onların
+  // continue() çağrısı "Route is already handled" ile patlıyor.
+  try {
+    await route.continue();
+  } catch {}
+});
+const kartlar = page.locator('.zoomable-image');
+await kartlar.nth(0).click();
+await page.waitForTimeout(1200); // ilk görsel tam yüklensin
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+await kartlar.nth(1).click();
+await page.waitForTimeout(150); // yeni görsel daha yüklenmedi
+// currentSrc'ye bakmak işe yaramaz: src atanır atanmaz güncelleniyor ama
+// ekranda hâlâ eski görselin pikselleri duruyor. Asıl hatalı durum şu —
+// modal açık, görsel henüz yüklenmemiş VE gizlenmemiş. Tarayıcı o aralıkta
+// bir öncekini çiziyor.
+const durum = await page.evaluate(() => {
+  const i = document.getElementById('lightbox-image');
+  return {
+    modalAcik: document.getElementById('image-lightbox').classList.contains('active'),
+    yuklendi: i.complete && i.naturalWidth > 0,
+    gizli: i.classList.contains('yukleniyor'),
+  };
+});
+check(
+  'ikinci açılışta önceki ürünün fotoğrafı görünmüyor',
+  !durum.modalAcik || durum.gizli || durum.yuklendi,
+  'modal açık, görsel yüklenmemiş ve gizlenmemiş — eski görsel çiziliyor'
+);
+await page.unroute('**/_astro/**.webp');
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+
 // ------------------------------------------------------ ana sayfa slider okları
 console.log('\n[6] Ana sayfa slider okları (çift kayma bug\'ı)');
 await page.goto(`${BASE}/index.html`, { waitUntil: 'networkidle' });

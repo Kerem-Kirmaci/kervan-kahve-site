@@ -170,7 +170,7 @@ eylemine cevap veren hareket (açılma, genişleme) hoş karşılanır.
 ## Değişiklikten sonra
 
 ```bash
-npm run build && npm test          # 70 kontrol
+npm run build && npm test          # 71 kontrol
 ```
 
 Görsel değişiklik yaptıysan ayrıca:

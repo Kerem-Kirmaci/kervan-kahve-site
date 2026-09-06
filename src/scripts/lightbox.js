@@ -21,14 +21,48 @@ const closeBtn = document.getElementById('lightbox-close');
 
 let lastTrigger = null;
 
+// Her açılışa bir numara veriyoruz: hızlıca iki ürüne tıklanırsa eskisinin
+// yüklenmesi sonradan bitip yenisinin üstüne binmesin.
+let acilisNo = 0;
+
+/**
+ * Görseli değiştirir ve yüklenene kadar gizli tutar.
+ *
+ * `img.src`e atama yapmak yüklemeyi başlatır ama <img> yeni görsel çözülene
+ * kadar BİR ÖNCEKİNİ göstermeye devam eder. Modal beklemeden açıldığı için
+ * ikinci ve sonraki açılışlarda bir an önceki ürünün fotoğrafı görünüyordu.
+ *
+ * Modal yine anında açılıyor — bilgi sütunu hemen okunuyor — yalnızca görsel
+ * hazır olduğunda beliriyor. Önbellekteyse bekleme hiç olmuyor.
+ */
+function gorseliDegistir(src, alt) {
+  const no = ++acilisNo;
+  image.alt = alt;
+  image.classList.add('yukleniyor');
+  image.src = src;
+
+  if (image.complete && image.naturalWidth > 0) {
+    image.classList.remove('yukleniyor');
+    return;
+  }
+
+  image
+    .decode()
+    // src bu arada değişirse decode() reddediyor; yeni açılış zaten
+    // kendi numarasıyla ilgileniyor.
+    .catch(() => {})
+    .then(() => {
+      if (no === acilisNo) image.classList.remove('yukleniyor');
+    });
+}
+
 function open(trigger) {
   if (!lightbox || !image) return;
 
   const gorsel = trigger.querySelector('img') ?? trigger;
   const d = trigger.dataset;
 
-  image.src = d.lightboxSrc || gorsel.currentSrc || gorsel.src;
-  image.alt = gorsel.alt || '';
+  gorseliDegistir(d.lightboxSrc || gorsel.currentSrc || gorsel.src, gorsel.alt || '');
   if (nameEl) nameEl.textContent = d.lightboxName || '';
   if (brandEl) brandEl.textContent = d.lightboxBrand || '';
   if (descEl) descEl.textContent = d.lightboxDesc || '';
