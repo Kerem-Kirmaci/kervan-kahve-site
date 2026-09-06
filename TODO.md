@@ -43,6 +43,41 @@ DaVinci ve Gusse şişeleri gerçek bayiliklerin sahte etiketli taklidiydi
 düğün pastası gösteriyordu, ekipman bandı ev mutfağıydı ve makinenin
 geometrisi imkânsızdı.
 
+### Denetim sonucu
+
+Ürün kataloğu dışındaki bütün görseller tek tek incelendi. Üçü değişmeli,
+dördü olduğu gibi kalabilir.
+
+| Görsel | Nerede | Durum |
+|---|---|---|
+| `about_us/hikayemiz.webp` | Hakkımızda → Hikayemiz | **Değişmeli** |
+| `about_us/farkimiz.webp` | Hakkımızda → Bizi Farklı Kılan | **Değişmeli** |
+| `images/tedarikci.jpeg` | Ana sayfa → Tedarikçiden fazlası | **Değişmeli** |
+| `about_us/hero-hakkimizda.webp` | Hakkımızda hero | Kalabilir — sadece doku, üstünde %80 perde var |
+| `coffees/espresso.webp` | Ana sayfa kahve kartı | Kalabilir — jenerik espresso, iddia yok |
+| `coffees/filtre-kahve.webp` | Ana sayfa kahve kartı | Kalabilir — jenerik demleme, iddia yok |
+| `coffees/turk-kahvesi.webp` | Ana sayfa kahve kartı | Kalabilir — cezve/fincan, iddia yok |
+
+Marka logoları (`partnerships/`), `logo.png` ve `og-image.jpg` gerçek; sorun yok.
+
+- [ ] **`about_us/hikayemiz.webp` yerine gerçek bir fotoğraf.** Yapay zekâ
+      üretimi bir kavurma makinesi; boşaltma oluğu havada duruyor, soğutma
+      kolu gövdeye kaynamış, sol tarafta gövde hiçliğe karışıyor. Gerçek bir
+      model değil. "Hikayemiz" metninin yanında durduğu için **"bu bizim
+      kavurmahanemiz" diyor** — ve bu, yukarıdaki doğrulanacak iddialar
+      listesindeki "Mersin'deki tesisimizde kavuruyor" maddesiyle doğrudan
+      bağlantılı. Kavurma gerçekten yapılıyorsa oradan çekilmiş sıradan bir
+      fotoğraf; yapılmıyorsa hem görsel hem metin değişmeli.
+
+- [ ] **`about_us/farkimiz.webp` yerine gerçek bir fotoğraf.** Yapay zekâ
+      üretimi bir tezgâh düzeni ve etiketleri bozuk ("THIBISCUS ROSEHIPS",
+      okunamayan paket yazıları). Üstelik gösterdiği ürünler sizin
+      ürünleriniz değil — jenerik pompalı şişeler, oysa siz DaVinci ve Gusse
+      satıyorsunuz. "Bizi Farklı Kılan" başlığının yanında, yani ürün
+      yelpazesi hakkında iddia taşıyor. **Bunun kolay çözümü var:** kendi
+      ürünlerinizden bir masa düzeni kurup telefonla tepeden çekmek. 100
+      ürünün gerçeği elinizde.
+
 - [ ] **`images/tedarikci.jpeg` yerine gerçek bir fotoğraf.** Ana sayfadaki
       "Tedarikçiden fazlası" bölümünde duruyor — bölüm depo, servis ve
       destekten bahsederken görselde dumanı tüten tek bir çekirdek var.
