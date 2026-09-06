@@ -97,7 +97,11 @@ const farklar = [
           <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div class="">
                   <div class="rounded overflow-hidden border border-cizgi">
-                      <Image src={farkimizImg} alt="Tezgâh üzerine dizilmiş kahve, şurup, çay ve tatlı çeşitleri" class="w-full h-full object-cover" />
+                      {/* Bu görsel bir fotoğraf değil, katalogdaki ürünlerin kendi
+                          kesitlerinden kuruluyor: tools/farkimiz-uret.mjs. Bölüm
+                          yelpaze iddiası taşıdığı için ürünlerin gerçek olması
+                          iddianın kendisi. */}
+                      <Image src={farkimizImg} alt="Katalogdan on beş ürün yan yana: şurup şişeleri, kahve paketleri, dilim pastalar, bitki çayı, kahve değirmeni ve blender" class="w-full h-full object-cover" />
                   </div>
               </div>
               <div class="">

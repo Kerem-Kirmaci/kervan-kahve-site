@@ -43,6 +43,7 @@ src/
 public/          Olduğu gibi kopyalanan dosyalar (robots.txt, favicon, og-image)
 tests/           İşlevsel test + görsel karşılaştırma araçları
 tools/           kesit.swift (ürün görseli zemin temizleyici),
+                 farkimiz-uret.mjs (hakkımızda ürün yelpazesi görseli),
                  og-kart-uret.mjs (sosyal paylaşım kartı)
 .claude/skills/  Tasarım sözleşmesi ve frontend-design skill'i
 ```
@@ -116,6 +117,20 @@ yeniden çalıştırın. Sistemdeki Chrome'u sürer, ayrı tarayıcı indirmez.
 Kart 1200×630; sohbet uygulamalarında ~320px genişlikte görüldüğü için
 başlık büyük tutuldu. **Not:** paylaşım platformları bu görseli agresif
 önbelleğe alır — değiştirdikten sonra eski kart bir süre daha görünebilir.
+
+### Hakkımızda ürün yelpazesi görseli
+
+`src/assets/images/about_us/farkimiz.webp` de elle hazırlanmış bir dosya
+değil: katalogdaki ürünlerin kendi kesitlerinden üretiliyor.
+
+```bash
+node tools/farkimiz-uret.mjs
+```
+
+Hangi ürünlerin görüneceği `tools/farkimiz-uret.mjs` içindeki `SECIM`
+listesinde, slug'larla yazılı. Katalog değişirse veya başka ürün gösterilmek
+istenirse liste düzenlenip komut yeniden çalıştırılır. Bilinmeyen bir slug
+betiği durdurur.
 
 ## Test
 
