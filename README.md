@@ -101,24 +101,7 @@ macOS Vision çerçevesini kullanır: model indirmez, cihaz üzerinde çalışı
 Sonra 900px'e sığdırıp %5 şeffaf pay ekleyip WebP'ye çevirin. Orijinali
 `src/assets/_orijinal/` altına koyun.
 
-### Sosyal paylaşım kartı
-
-`public/og-image.jpg`, bağlantı WhatsApp / LinkedIn / X'te paylaşıldığında
-görünen görsel. Elle çizilmiş bir dosya değil: sitenin kendi paletinden ve
-Archivo'dan üretiliyor.
-
-```bash
-node tools/og-kart-uret.mjs
-```
-
-Metni veya tasarımı değiştirmek için `tools/og-kart.html`i düzenleyip komutu
-yeniden çalıştırın. Sistemdeki Chrome'u sürer, ayrı tarayıcı indirmez.
-
-Kart 1200×630; sohbet uygulamalarında ~320px genişlikte görüldüğü için
-başlık büyük tutuldu. **Not:** paylaşım platformları bu görseli agresif
-önbelleğe alır — değiştirdikten sonra eski kart bir süre daha görünebilir.
-
-#### Beyaz zeminli görseller için (her yerde çalışır)
+### Beyaz zeminli görseller için (her yerde çalışır)
 
 `kesit.swift` yalnızca macOS'ta derleniyor. Ürün görseli **düz beyaz** stüdyo
 zeminiyle geliyorsa — AI üretimi mockup'lar ve çoğu tedarikçi çekimi öyle —
@@ -152,6 +135,23 @@ olduğu için sonuç doğru görünür. **Karşılığı:** çıktı opak olur. 
 değiştirilirse (`UrunKarti.astro` içindeki `bg-kagit`) bu görseller uyumsuz
 kalır ve sebebi kolay anlaşılmaz. Şu an yalnızca altı bitki çayı bu kipte;
 ürün opak ise şeffaf kesim her zaman daha sağlam.
+
+### Sosyal paylaşım kartı
+
+`public/og-image.jpg`, bağlantı WhatsApp / LinkedIn / X'te paylaşıldığında
+görünen görsel. Elle çizilmiş bir dosya değil: sitenin kendi paletinden ve
+Archivo'dan üretiliyor.
+
+```bash
+node tools/og-kart-uret.mjs
+```
+
+Metni veya tasarımı değiştirmek için `tools/og-kart.html`i düzenleyip komutu
+yeniden çalıştırın. Sistemdeki Chrome'u sürer, ayrı tarayıcı indirmez.
+
+Kart 1200×630; sohbet uygulamalarında ~320px genişlikte görüldüğü için
+başlık büyük tutuldu. **Not:** paylaşım platformları bu görseli agresif
+önbelleğe alır — değiştirdikten sonra eski kart bir süre daha görünebilir.
 
 ## Test
 
