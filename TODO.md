@@ -243,22 +243,7 @@ https://claude.ai/code/artifact/a2c72641-0e36-483c-8487-0d01a61388b9
 
 *(Eski uyarı — "yerel main 4 commit önünde" — artık geçerli değil; o commit'ler
 GitHub'a girdi. `main` ile `origin/main` aynı noktada, yayınlanmamış commit yok.
-`tasarim-yenileme` `origin/main`'in 25 commit önünde.)*
-
-## Devam eden iş
-
-- [ ] **`hakkimizda.astro` CTA'sı ayrı bir oturumda elden geçiriliyor.**
-      Sayfanın en altındaki bölüm sözleşmenin dışında kalmıştı: elle yazılmış
-      iki buton, kaldırılmış olan `hover:scale-105`, ortalanmış yerleşim,
-      zemin olarak `bg-kabuk` (koyu yüzey `kavurma` olmalı) ve eksik
-      `koyu-zemin` sınıfı — o sınıf odak halkasını altına çeviriyor,
-      erişilebilirlik için gerekli.
-
-      **Birleştirirken dikkat:** aynı dosyanın 178–190. satırlarındaki dört
-      istatistik sayısı `d35c52e`'de `altin-koyu` → `murekkep` oldu. O iş
-      commit öncesi bir hâlden dallandıysa bu satırlar çakışabilir; çakışırsa
-      doğru taraf `murekkep` (bkz. SKILL.md Renk kuralı 1 — altın yalnızca
-      tıklanabilir öğelerde).
+`tasarim-yenileme` `origin/main`'in 28 commit önünde.)*
 
 ## Yayına alma
 
