@@ -135,28 +135,30 @@ ifade daha doğru olur. Yanlış değil, sadece kelime seçimi.
   (`products.js` id=64, slug `doro-cake-cikolatali-kurabiye`).
 
 
-### Tatlı adlarında marka riski
+### ✅ Tatlı adlarında marka riski — çözüldü
 
-Dört tatlı, başka şirketlerin tescilli markalarını ad olarak taşıyor:
+Dört tatlı başka şirketlerin tescilli markalarını ad olarak taşıyordu.
+Dördü de `brand: DORO CAKE` kayıtlıydı, yani D'ORO'nun kendi ürünleriydi ve
+adlar ödünç alınmıştı; açıklamalarda "Ferrero Rocher tarzı", "Red velvet
+tarzı" gibi ifadelerle taklit olduğu zaten yazılıydı.
 
-| Ürün | Marka sahibi |
+| Eski ad | Yeni ad |
 |---|---|
-| Ferrero Rocher | Ferrero |
-| Beyaz Çikolatalı Raffaello | Ferrero |
-| Fıstıklı Albeni | Ülker |
-| Kırmızı Kadife Albeni | Ülker |
+| Ferrero Rocher | Fındıklı Çikolata Topu |
+| Beyaz Çikolatalı Raffaello | Beyaz Çikolata Yongalı Pasta |
+| Fıstıklı Albeni | Fıstık Kaplı Yuvarlak Pasta |
+| Kırmızı Kadife Albeni | Kırmızı Kadife Yuvarlak Pasta |
 
-Bunlara dokunmadım çünkü karar hukuki, tasarımsal değil:
+Adlar görsellere bakılarak, ürünün gerçekten ne olduğunu tarif edecek şekilde
+verildi. Slug'lar, açıklamalar ve **görsel dosya adları** da değişti — dosya
+adları derlenmiş çıktıda herkese açık adres oluyordu
+(`/_astro/ferrero-rocher.HASH.webp`). Derlenmiş çıktıda marka adı hiç kalmadı.
 
-- **Albeni'li ikisinin görselinde gerçekten "Albeni" markalı ambalaj var.** Eğer
-  bunlar Ülker'in ürünüyse ve siz bayi olarak satıyorsanız ad doğru, sorun yok.
-  Ama ambalaj D'ORO'ya aitse ve marka adı ödünç alınmışsa risk var.
-- **Ferrero Rocher ve Raffaello** birer tatlı çeşidi değil, tescilli ürün adı.
-  Kendi üretiminizse "Fındıklı Çikolata Topu" ve "Hindistan Cevizli Beyaz
-  Çikolatalı Pasta" gibi tanımlayıcı adlar hem güvenli hem SEO açısından daha
-  iyi olur (kimse "ferrero rocher pasta dilimi" aramıyor).
-
-Ne olduklarını siz bilirsiniz; söylerseniz düzeltirim.
+**Açık kalan tek şey görselin kendisi:** iki yuvarlak pastanın ambalajında
+"Albeni" yazısı basılı ve fotoğrafta okunuyor. Ambalaj tedarikçiden öyle
+geliyorsa fotoğraf yalnızca gerçeği gösteriyor; katalog adı Kervan'ın
+kontrolündeydi, o düzeldi. Ambalajın kime ait olduğunu bilmiyorum — sizin
+bileceğiniz iş.
 
 ## Bilinçli takaslar — istenirse geri alınabilir
 
