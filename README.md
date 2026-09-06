@@ -42,7 +42,8 @@ src/
                  kez işlenirdi.
 public/          Olduğu gibi kopyalanan dosyalar (robots.txt, favicon, og-image)
 tests/           İşlevsel test + görsel karşılaştırma araçları
-tools/           kesit.swift (ürün görseli zemin temizleyici),
+tools/           kesit.swift (zemin temizleyici, macOS),
+                 beyaz-kes.mjs (beyaz stüdyo zemini temizleyici),
                  og-kart-uret.mjs (sosyal paylaşım kartı)
 .claude/skills/  Tasarım sözleşmesi ve frontend-design skill'i
 ```
@@ -116,6 +117,25 @@ yeniden çalıştırın. Sistemdeki Chrome'u sürer, ayrı tarayıcı indirmez.
 Kart 1200×630; sohbet uygulamalarında ~320px genişlikte görüldüğü için
 başlık büyük tutuldu. **Not:** paylaşım platformları bu görseli agresif
 önbelleğe alır — değiştirdikten sonra eski kart bir süre daha görünebilir.
+
+#### Beyaz zeminli görseller için (her yerde çalışır)
+
+`kesit.swift` yalnızca macOS'ta derleniyor. Ürün görseli **düz beyaz** stüdyo
+zeminiyle geliyorsa — AI üretimi mockup'lar ve çoğu tedarikçi çekimi öyle —
+bu araç aynı işi her işletim sisteminde yapar:
+
+```bash
+node tools/beyaz-kes.mjs girdi.jpg cikti.webp --genislik 900
+```
+
+Ürünü bulup kırpar, beyaz zemini şeffaflaştırır, kenarı yumuşatır ve WebP
+yazar. Doğrudan `src/assets/images/<kategori>/` altına üretebilirsiniz.
+
+Eşikleme yapmaz, **kenardan taşma-doldurma** yapar: yalnızca kadrajın
+kenarına bağlı beyaz bölge silinir. Ürünün içindeki beyaz korunur — Kervan
+logosundaki beyaz "KERVAN KAHVE" yazısı düz eşiklemeyle delinirdi.
+
+Rastgele veya renkli zeminler için yine `kesit.swift` gerekir.
 
 ## Test
 
