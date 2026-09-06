@@ -1,7 +1,85 @@
 # Yapılacaklar
 
 Tasarım yenilenmesi (Faz 1–6) tamamlandı, `tasarim-yenileme` dalında duruyor.
-Aşağıdakiler açık kalan işler.
+Site yayına hazır ama **işletme sahibinin onayını bekliyor** (bkz. "Yayına
+alma"). Sıradaki iş QR menü.
+
+## 1. ÖNCELİK: QR menü
+
+**Sıradaki oturum buradan başlıyor.** Ama önce aşağıdaki "bu kimin menüsü?"
+sorusunun cevabı lazım — üç senaryo bambaşka işler doğuruyor, cevap gelmeden
+kod yazmak boşa gider. İşletme sahibiyle görüşülürken sorulacak somut soru en
+altta: basılı QR kodlar kaç tane ve nerede duruyor?
+
+`/menu` şu an "yenileniyor" yer tutucusu. Eski QR menü uygulamasının kaynağı
+yok; sayfa, basılı QR kodlar kırılmasın diye duruyor (`noindex`, sitemap
+dışında). WhatsApp ve telefon bağlantısı veriyor.
+
+### Önce şu netleşmeli: bu kimin menüsü?
+
+Her şey buna bağlı. Üç ihtimal var ve üçü bambaşka iş:
+
+**A — Kervan'ın kendi dükkânı.** Cami Şerif'teki kuru kahveci tezgâhındaki QR.
+Gelen müşteri ne satıldığını görsün. En basiti; katalog zaten var, fiyat
+eklenip kategorilere bölünmesi yeterli.
+
+**B — Tedarik ettiğimiz kafelerin masalarındaki menü.** Yani Kervan, kafeye
+kahveyi de menüyü de veriyor. Stratejik olarak en güçlüsü:
+- Sitenin yeni konumlandırması zaten "tek tedarikçi + biz destekliyoruz".
+  Ana sayfada "Özel karışım / Barista eğitimi / Ekipman ve servis" var;
+  "Menünüzü de biz kuralım" doğal dördüncü madde.
+- Kafenin menüsü Kervan'ın sisteminde çalışıyorsa tedarikçi değiştirmek
+  zorlaşır.
+- Her masada küçük bir "Kervan Kahve" imzası olur — tam hedef kitlenin
+  (diğer kafe sahiplerinin) gözü önünde, bedava tanıtım.
+
+**C — Saha ekibinin kataloğu.** Kafeye giden temsilcinin tablette gösterdiği
+ürün listesi. Aslında `/shop` bunu zaten yapıyor; ayrı bir menüye gerek yok.
+
+**Sorulacak:** Şu an basılı olan QR kodlar nerede duruyor? Dükkânda mı,
+kafelerde mi? Kaç tane?
+
+### B seçilirse: altyapı gerekmiyor
+
+Site statik Astro; çok kiracılı bir menü sistemi kurmaya gerek yok:
+- Kafe başına bir veri dosyası: `src/data/menuler/<kafe-slug>.js`
+- Build çıktısı: `/menu/<kafe-slug>.html`
+- Güncellemeyi Kervan yapar (self-servis değil, hizmetin parçası)
+- Veritabanı yok, giriş yok, aylık maliyet yok
+
+2-3 kafeyle pilot; talep gelirse self-servise o zaman bakılır.
+
+### Çözülmesi gereken teknik konu: fiyat
+
+`products.js` içinde fiyat alanı **yok** ve olmamalı da — toptan fiyat
+müşteriye göre pazarlıkla belirleniyor, siteye açık yazılamaz. Ama bir kafe
+menüsünün fiyata ihtiyacı var ve o fiyat kafenin kendi perakende fiyatı,
+Kervan'ınki değil.
+
+Yani menü verisi ürün kataloğundan **ayrı** tutulmalı: ürün adı ve görseli
+katalogdan gelir, fiyat ve menü sıralaması kafeye ait olur.
+
+### Tasarım notları (hangi yön seçilirse seçilsin)
+
+Kafe masasında, kötü Wi-Fi'da, tek elle, güneş altında açılan bir sayfa:
+
+- **Hız her şeyden önemli.** Statik HTML, çerçeve yok, görseller tembel
+  yüklensin. Hedef: 3G'de 2 saniyenin altında ilk görünüm.
+- **Tek elle kullanılabilsin.** Kategori gezinme başparmağın ulaştığı yerde
+  (üstte değil altta ya da yapışkan şerit), tek uzun kaydırma değil.
+- **Yakınlaştırma gerektirmesin.** Punto en az 16px; mevcut `text-govde` (18px)
+  zaten uygun.
+- **Güneş altında okunsun.** Kontrast tarafı hâlihazırda iyi (hepsi AA).
+- **Uygulama indirme, çerez banner'ı, giriş yok.** Sıfır sürtünme.
+- Fiyatlar sağa dayalı ve `tabular-nums` ile hizalı (token zaten var).
+- Sayfa açıldığında ne olduğu belli olsun: kafenin adı ve logosu üstte,
+  Kervan imzası altta küçük.
+
+### Ne olursa olsun
+
+`/menu` adresi çalışmaya devam etmeli — basılı QR kodların kaç tane ve nerede
+olduğunu bilmiyoruz. Yeni yapı `/menu/<kafe>` ise, `/menu` bir seçim sayfası
+ya da mevcut yer tutucu olarak kalır.
 
 ## Karar bekleyenler
 
@@ -188,79 +266,6 @@ Bunlar hata değil, verilmiş kararlar. Yanlış geldiyse geri almak kolay.
   istatistik sayısı (100+ / 9 / 50+ / Mersin).
   *Sayıların altın hâli isteniyorsa:* `hakkimizda.astro` içinde
   `text-murekkep` → `text-altin-koyu`. Ama o zaman kural yine sayfayla çelişir.
-
-## QR menü — karar bekliyor
-
-`/menu` şu an "yenileniyor" yer tutucusu. Eski QR menü uygulamasının kaynağı
-yok; sayfa, basılı QR kodlar kırılmasın diye duruyor (`noindex`, sitemap
-dışında). WhatsApp ve telefon bağlantısı veriyor.
-
-### Önce şu netleşmeli: bu kimin menüsü?
-
-Her şey buna bağlı. Üç ihtimal var ve üçü bambaşka iş:
-
-**A — Kervan'ın kendi dükkânı.** Cami Şerif'teki kuru kahveci tezgâhındaki QR.
-Gelen müşteri ne satıldığını görsün. En basiti; katalog zaten var, fiyat
-eklenip kategorilere bölünmesi yeterli.
-
-**B — Tedarik ettiğimiz kafelerin masalarındaki menü.** Yani Kervan, kafeye
-kahveyi de menüyü de veriyor. Stratejik olarak en güçlüsü:
-- Sitenin yeni konumlandırması zaten "tek tedarikçi + biz destekliyoruz".
-  Ana sayfada "Özel karışım / Barista eğitimi / Ekipman ve servis" var;
-  "Menünüzü de biz kuralım" doğal dördüncü madde.
-- Kafenin menüsü Kervan'ın sisteminde çalışıyorsa tedarikçi değiştirmek
-  zorlaşır.
-- Her masada küçük bir "Kervan Kahve" imzası olur — tam hedef kitlenin
-  (diğer kafe sahiplerinin) gözü önünde, bedava tanıtım.
-
-**C — Saha ekibinin kataloğu.** Kafeye giden temsilcinin tablette gösterdiği
-ürün listesi. Aslında `/shop` bunu zaten yapıyor; ayrı bir menüye gerek yok.
-
-**Sorulacak:** Şu an basılı olan QR kodlar nerede duruyor? Dükkânda mı,
-kafelerde mi? Kaç tane?
-
-### B seçilirse: altyapı gerekmiyor
-
-Site statik Astro; çok kiracılı bir menü sistemi kurmaya gerek yok:
-- Kafe başına bir veri dosyası: `src/data/menuler/<kafe-slug>.js`
-- Build çıktısı: `/menu/<kafe-slug>.html`
-- Güncellemeyi Kervan yapar (self-servis değil, hizmetin parçası)
-- Veritabanı yok, giriş yok, aylık maliyet yok
-
-2-3 kafeyle pilot; talep gelirse self-servise o zaman bakılır.
-
-### Çözülmesi gereken teknik konu: fiyat
-
-`products.js` içinde fiyat alanı **yok** ve olmamalı da — toptan fiyat
-müşteriye göre pazarlıkla belirleniyor, siteye açık yazılamaz. Ama bir kafe
-menüsünün fiyata ihtiyacı var ve o fiyat kafenin kendi perakende fiyatı,
-Kervan'ınki değil.
-
-Yani menü verisi ürün kataloğundan **ayrı** tutulmalı: ürün adı ve görseli
-katalogdan gelir, fiyat ve menü sıralaması kafeye ait olur.
-
-### Tasarım notları (hangi yön seçilirse seçilsin)
-
-Kafe masasında, kötü Wi-Fi'da, tek elle, güneş altında açılan bir sayfa:
-
-- **Hız her şeyden önemli.** Statik HTML, çerçeve yok, görseller tembel
-  yüklensin. Hedef: 3G'de 2 saniyenin altında ilk görünüm.
-- **Tek elle kullanılabilsin.** Kategori gezinme başparmağın ulaştığı yerde
-  (üstte değil altta ya da yapışkan şerit), tek uzun kaydırma değil.
-- **Yakınlaştırma gerektirmesin.** Punto en az 16px; mevcut `text-govde` (18px)
-  zaten uygun.
-- **Güneş altında okunsun.** Kontrast tarafı hâlihazırda iyi (hepsi AA).
-- **Uygulama indirme, çerez banner'ı, giriş yok.** Sıfır sürtünme.
-- Fiyatlar sağa dayalı ve `tabular-nums` ile hizalı (token zaten var).
-- Sayfa açıldığında ne olduğu belli olsun: kafenin adı ve logosu üstte,
-  Kervan imzası altta küçük.
-
-### Ne olursa olsun
-
-`/menu` adresi çalışmaya devam etmeli — basılı QR kodların kaç tane ve nerede
-olduğunu bilmiyoruz. Yeni yapı `/menu/<kafe>` ise, `/menu` bir seçim sayfası
-ya da mevcut yer tutucu olarak kalır.
-
 
 ## Başka bilgisayardan devam etmek
 
