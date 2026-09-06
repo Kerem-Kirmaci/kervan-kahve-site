@@ -63,11 +63,11 @@ Marka logoları (`partnerships/`), `logo.png` ve `og-image.jpg` gerçek; sorun y
 - [ ] **`about_us/hikayemiz.webp` yerine gerçek bir fotoğraf.** Yapay zekâ
       üretimi bir kavurma makinesi; boşaltma oluğu havada duruyor, soğutma
       kolu gövdeye kaynamış, sol tarafta gövde hiçliğe karışıyor. Gerçek bir
-      model değil. "Hikayemiz" metninin yanında durduğu için **"bu bizim
-      kavurmahanemiz" diyor** — ve bu, yukarıdaki doğrulanacak iddialar
-      listesindeki "Mersin'deki tesisimizde kavuruyor" maddesiyle doğrudan
-      bağlantılı. Kavurma gerçekten yapılıyorsa oradan çekilmiş sıradan bir
-      fotoğraf; yapılmıyorsa hem görsel hem metin değişmeli.
+      model değil.
+      **Kavurma doğrulandı**, yani konu artık serbest — sorun görselin sahte
+      olması. En iyisi kendi kavurmanızdan telefonla çekilmiş sıradan bir kare;
+      gerçek makine, kusurlu ışık, hiç önemi yok. İkinci seçenek yeniden AI
+      üretimi (bu oturumda yazılan "B seçeneği" promptu buna göre hazırlandı).
 
 - [ ] **`about_us/farkimiz.webp` yerine gerçek bir fotoğraf.** Yapay zekâ
       üretimi bir tezgâh düzeni ve etiketleri bozuk ("THIBISCUS ROSEHIPS",
@@ -100,7 +100,7 @@ ama doğrulanmadan yayına çıkmamalı. Yanlışsa müşteriye verilmiş söz o
 | ~~`ortaklik.astro` SSS~~ | ~~"Mersin içinde aynı gün teslimat"~~ | ✅ **Çözüldü.** Böyle bir söz verilmiyormuş; süre siparişe göre değişiyor. Sabit süre taahhüdü kaldırıldı, yerine kendi aracıyla dağıtım yazıldı. |
 | `ortaklik.astro` SSS | "Eğitimi işletmenizde, kendi ekipmanınız üzerinde veriyoruz" | **Genişletildi.** Eskisi: "genel destek sağlıyoruz". Eğitim gerçekten yerinde mi veriliyor? |
 | `index.astro` + `ortaklik.astro` | "Makine seçiminde danışmanlık, **kurulum ve düzenli bakım**" | **Genişletildi.** Eskisi sadece "ekipman danışmanlığı"ydı. Kurulum ve bakım gerçekten veriliyor mu? |
-| `index.astro` | "Mersin'deki **tesisimizde** kavuruyor" | Kavurma iddiası eskiden de vardı ama "tesis" kelimesi yeni. Kendi kavurma tesisi var mı? |
+| ~~`index.astro`~~ | ~~"Mersin'deki tesisimizde kavuruyor"~~ | ✅ **Doğrulandı** — kahveyi Kervan kendisi kavuruyor. Yalnızca "tesis" kelimesi ölçek ima ediyor, atölye ölçeğindeyse yumuşatılabilir. |
 | `index.astro` + `ortaklik.astro` | "100'den fazla **kafe, restoran ve otelle** çalışıyoruz" | Sayı `hakkimizda`'dan geliyordu; segment ayrımı (otel dahil) yeni. |
 
 ### ✅ Eski metinlerin tonu — yapıldı
@@ -126,21 +126,18 @@ anlatmasını gerektirmiyor.
   için eskimişlerdi: "9 yıllık deneyim" iki yıl geride kalmıştı, "50+ farklı
   ürün" kataloğun yarısını saklıyordu (100 ürün var).
 
-### Açık kalan: kavurma iddiası ve sitedeki tutarsızlık
+### ✅ Kavurma — doğrulandı
 
-`hakkimizda` ve footer artık kavurmadan bahsetmiyor, ama **ana sayfa hâlâ
-bahsediyor** — "Kendi kavurduğumuz kahveler" başlıklı bir bölüm ve
-"Mersin'deki tesisimizde kavuruyor" cümlesi var. Doğru olabilir diye
-silmedim; cevap gelince iki yoldan biri seçilmeli:
+Kahveyi Kervan kendisi kavuruyor. Yani ana sayfadaki "Kendi kavurduğumuz
+kahveler" bölümü ve kavurma iddiaları yerinde duruyor; `hakkimizda`'ya da
+geri eklendi — ama sayfanın konusu olarak değil, dağıtım çerçevesi içinde
+"salt aracı değiliz" diyen madde olarak. Hikayemiz metni artık "kahveyle
+başladık ve kahveyi hâlâ kendimiz kavuruyoruz" diyor.
 
-- **Kavuruyorsanız:** ana sayfa olduğu gibi kalır, `hakkimizda`'ya da kavurma
-  geri eklenebilir ve `hikayemiz` görseli kavurmahane olabilir.
-- **Kavurmuyorsanız:** ana sayfadaki bölüm ve cümle değişmeli.
-
-Buna bağlı ikinci madde: `hakkimizda`'daki **"Özel Kahve Harmanları"**
-maddesi bu düzenlemede çıkarıldı, çünkü harman iddiası kavurma kontrolüne
-yaslanıyor. Fason bile olsa harmanı siz belirliyorsanız madde geri gelebilir
-(`ortaklik.astro` SSS'inde benzer bir soru duruyor).
+Küçük bir ayrıntı açık: ana sayfadaki cümle "Mersin'deki **tesisimizde**
+kavuruyor" diyor. Kavurma doğrulandı ama "tesis" kelimesi ölçek ima ediyor;
+kavurma küçük bir atölyede yapılıyorsa "kendi kavurmamızı yapıyoruz" gibi bir
+ifade daha doğru olur. Yanlış değil, sadece kelime seçimi.
 
 ### Küçük tutarsızlıklar
 

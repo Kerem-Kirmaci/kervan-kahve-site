@@ -19,14 +19,15 @@ const KURULUS = 2015;
 const yil = new Date().getFullYear() - KURULUS;
 const urunSayisi = products.length;
 
-// Sayfanın iddiası dağıtım üzerine kuruldu. Öncesinde dört madde vardı ve
-// ikisi sorunluydu: "Sürdürülebilir Tedarik" adil ticaret iddiası taşıyordu
-// (sertifikaya bağlı bir terim, sertifika yok — kaldırıldı), "Özel Kahve
-// Harmanları" ise kavurma iddiasına yaslanıyordu; kavurmanın nasıl yapıldığı
-// netleşene kadar beklemede (bkz. TODO.md).
+// Sayfanın iddiası dağıtım üzerine kurulu; kavurma o çerçevenin içinde
+// "salt aracı değiliz" diyen madde, sayfanın konusu değil.
+// Öncesindeki dört maddeden biri silindi: "Sürdürülebilir Tedarik" adil
+// ticaret iddiası taşıyordu ve sertifika yok.
 const farklar = [
   { ikon: 'canta', baslik: 'Tek elden tedarik',
     metin: 'Kahve, şurup, püre, tatlı, bitki çayı ve ekipman aynı listede, aynı faturada. Altı ayrı tedarikçiyle uğraşmazsınız.' },
+  { ikon: 'kahve', baslik: 'Kahveyi kendimiz kavuruyoruz',
+    metin: 'Kahve tarafı baştan sona bize ait: çekirdeği seçiyor, kavuruyor, harmanı menünüze ve müşteri profilinize göre ayarlıyoruz.' },
   { ikon: 'konum', baslik: 'Mersin içinde kendi aracımızla',
     metin: 'Siparişinizi kargoya vermiyoruz; şehir içinde kendi aracımızla, kendimiz getiriyoruz.' },
   { ikon: 'hedef', baslik: 'Menünüze göre seçim',
@@ -70,10 +71,11 @@ const farklar = [
                       üçüncüsünden alıyor, her biriyle ayrı ayrı uğraşıyordu.
                   </p>
                   <p class="mt-4 text-govde text-is leading-relaxed">
-                      Kahveyle başladık. Ama bir kafenin ihtiyacı kahveyle bitmiyordu; zamanla
-                      şurup, püre, tatlı, bitki çayı ve ekipman da listeye girdi. Bugün Mersin
-                      ve çevresinde 100'den fazla işletmeye tek elden tedarik yapıyoruz —
-                      siparişleri şehir içinde kendi aracımızla, kendimiz götürüyoruz.
+                      Kahveyle başladık ve kahveyi hâlâ kendimiz kavuruyoruz. Ama bir kafenin
+                      ihtiyacı kahveyle bitmiyordu; zamanla şurup, püre, tatlı, bitki çayı ve
+                      ekipman da listeye girdi. Bugün Mersin ve çevresinde 100'den fazla
+                      işletmeye tek elden tedarik yapıyoruz — siparişleri şehir içinde kendi
+                      aracımızla, kendimiz götürüyoruz.
                   </p>
                   <div class="mt-8 flex flex-col sm:flex-row gap-4">
                       <Buton href="ortaklik.html">İş Ortağımız Olun</Buton>
