@@ -137,6 +137,22 @@ logosundaki beyaz "KERVAN KAHVE" yazısı düz eşiklemeyle delinirdi.
 
 Rastgele veya renkli zeminler için yine `kesit.swift` gerekir.
 
+**Şeffaf ambalajlarda şeffaf kesim işlemez.** Beyaz zeminde çekilmiş şeffaf
+bir poşette opak beyaz etiketi şeffaf filmden ayırmanın yolu yok: ikisi de
+beyaz, ikisi de dış zemine bağlı. Hangi eşik seçilirse seçilsin ya etiket
+siliniyor ya gölge kalıyor — bilgi görselde yok. Böyle ürünlerde zemini
+kartın rengine boyayın:
+
+```bash
+node tools/beyaz-kes.mjs girdi.jpg cikti.webp --zemin '#FBF8F2'
+```
+
+Şeffaf poşet zaten arkasındaki yüzeyi göstermeli; kart zemini `kagit`
+olduğu için sonuç doğru görünür. **Karşılığı:** çıktı opak olur. Kart zemini
+değiştirilirse (`UrunKarti.astro` içindeki `bg-kagit`) bu görseller uyumsuz
+kalır ve sebebi kolay anlaşılmaz. Şu an yalnızca altı bitki çayı bu kipte;
+ürün opak ise şeffaf kesim her zaman daha sağlam.
+
 ## Test
 
 Testler **derlenmiş çıktı** üzerinde çalışır, bu yüzden önce build alın:
