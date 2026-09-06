@@ -27,3 +27,6 @@ docs/tasarim-oncesi-arsiv.html
 # derlenmiş araç ikilisi (kaynağından üretilir: swiftc -O tools/kesit.swift -o tools/kesit)
 tools/kesit
 docs/yenilenme-raporu.html
+
+# og kartı üretilirken oluşan geçici dosya
+tools/.og-kart-render.html

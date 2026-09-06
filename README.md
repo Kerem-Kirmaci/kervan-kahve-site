@@ -42,7 +42,8 @@ src/
                  kez işlenirdi.
 public/          Olduğu gibi kopyalanan dosyalar (robots.txt, favicon, og-image)
 tests/           İşlevsel test + görsel karşılaştırma araçları
-tools/           kesit.swift — ürün görseli zemin temizleyici
+tools/           kesit.swift (ürün görseli zemin temizleyici),
+                 og-kart-uret.mjs (sosyal paylaşım kartı)
 .claude/skills/  Tasarım sözleşmesi ve frontend-design skill'i
 ```
 
@@ -98,6 +99,23 @@ tools/kesit girdi.jpg cikti.png              # şeffaf zeminli kesit
 macOS Vision çerçevesini kullanır: model indirmez, cihaz üzerinde çalışır.
 Sonra 900px'e sığdırıp %5 şeffaf pay ekleyip WebP'ye çevirin. Orijinali
 `src/assets/_orijinal/` altına koyun.
+
+### Sosyal paylaşım kartı
+
+`public/og-image.jpg`, bağlantı WhatsApp / LinkedIn / X'te paylaşıldığında
+görünen görsel. Elle çizilmiş bir dosya değil: sitenin kendi paletinden ve
+Archivo'dan üretiliyor.
+
+```bash
+node tools/og-kart-uret.mjs
+```
+
+Metni veya tasarımı değiştirmek için `tools/og-kart.html`i düzenleyip komutu
+yeniden çalıştırın. Sistemdeki Chrome'u sürer, ayrı tarayıcı indirmez.
+
+Kart 1200×630; sohbet uygulamalarında ~320px genişlikte görüldüğü için
+başlık büyük tutuldu. **Not:** paylaşım platformları bu görseli agresif
+önbelleğe alır — değiştirdikten sonra eski kart bir süre daha görünebilir.
 
 ## Test
 
