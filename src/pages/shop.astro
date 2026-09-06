@@ -67,7 +67,7 @@ const itemList = {
   '@type': 'ItemList',
   name: 'Kervan Kahve Ürünleri',
   url: 'https://kervankahve.com/shop.html',
-  description: 'Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlılar',
+  description: 'Kahve, şurup, püre ve tatlandırıcı, hazır tatlı, bitki çayı ve kahve ekipmanı',
   numberOfItems: sorted.length,
   itemListElement: sorted.map((p, i) => ({
     '@type': 'ListItem',
@@ -85,8 +85,8 @@ import Ikon from '../components/Ikon.astro';
 ---
 
 <Base
-  title="Ürünlerimiz - Kervan Kahve"
-  description="Kervan Kahve Ürünlerimiz - Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlıları keşfedin. Türk kahvesi, filtre kahve ve espresso çeşitleri."
+  title="Ürünlerimiz — Kervan Kahve"
+  description={`Kafe, restoran ve otellere toptan tedarik ettiğimiz ${sorted.length} ürün: kahve, şurup, püre ve tatlandırıcı, hazır tatlı, bitki çayı ve ekipman.`}
   activePage="shop"
   mainClass="container mx-auto px-6 py-12"
 >

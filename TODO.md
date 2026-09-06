@@ -110,28 +110,29 @@ başladık ve kahveyi hâlâ kendimiz kavuruyoruz" diyor.
 "Tesis" kelimesi ölçek ima ettiği için yumuşatıldı: cümle artık "Mersin'de
 kendimiz kavuruyor" diyor.
 
-### Küçük tutarsızlıklar
+### ✅ Küçük tutarsızlıklar — yapıldı
 
-- **Sayfa başlıkları karışık:** `index` ve `ortaklik` artık "Kervan Kahve —
-  ..." biçiminde (uzun tire), diğerleri hâlâ "... - Kervan Kahve" (kısa tire).
-  Tek biçime indirilmeli.
-- **Tat notları dolgu olabiliyor:** `products.js` içinde Bubble Tea'nin notları
-  "modern / trend / çok amaçlı" — bunlar tat notu değil. Ürün föyünde artık
-  görünür oldukları için gözden geçirilmeli.
-- **Meta açıklamalar** bazı sayfalarda hâlâ eski konumlandırmayı anlatıyor.
-- **13 tatlının adı fotoğraftan okunarak değiştirildi, doğrulanmalı.**
-  "Premium/Deluxe" ekleri bilgi taşımıyordu; yerlerine görselde görünen ayırt
-  edici özellik yazıldı. Ürünlerin tadına bakılmadı, ad görsele bakılarak
-  verildi — yanlış olan varsa düzeltilmeli:
-  Kakaolu / Pudra Şekerli / Çifte Fıstıklı / Fıstık Kremalı Çikolatalı Pasta,
-  Çikolatalı Mus Bar, Frambuaz Jöleli Cheesecake, Frambuazlı Dilim Cheesecake,
-  Yaban Mersini Soslu Cheesecake, Orman Meyveli Kremalı Pasta,
-  Beyaz Çikolatalı Kare Pasta, Frambuazlı Çikolata Bar,
-  Çikolata Küreli Brownie, Orman Meyveli Cheesecake.
-- **"Çikolatalı Kurabiye"** önce "Brownie" olarak kayıtlıydı ama görselde
-  çatlak yüzeyli bir kurabiye var. D'ORO'nun resmî bir adı varsa o kullanılmalı
-  (`products.js` id=64, slug `doro-cake-cikolatali-kurabiye`).
+- ~~**Sayfa başlıkları karışık.**~~ Üç ayrı biçim vardı (uzun tire, kısa
+  tire, marka önde). Tek biçime indi: ana sayfa marka önde (site kimliği),
+  diğer sekizi `Sayfa — Kervan Kahve`.
+- ~~**Tat notları dolgu olabiliyor.**~~ Katalog tarandı. Bobaco Bubble Tea'nin
+  notları ("modern / trend / çok amaçlı") görselden okunan gerçek niteliklere
+  çevrildi: meyveli, tatlı, patlayan boba. Bir pastadaki "premium" da
+  "çikolatalı" oldu.
+- ~~**Meta açıklamalar eski konumlandırmayı anlatıyor.**~~ Tek kalan
+  `shop.astro`'ydu ("Premium kahve çekirdekleri..."), dağıtım diline çevrildi
+  ve ürün sayısı veriden geliyor artık — bir daha eskimeyecek.
 
+**Kalan judgment call — sende:** 11 üründe hâlâ tat bildirmeyen not var ama
+bunlar tartışmalı olduğu için dokunmadım:
+
+- **"klasik"** (5 ürün: üç vanilya şurubu, çikolatalı sos, karaorman,
+  mermer kek, mozaik). Tat notu değil ama bir profili tarif ediyor —
+  "klasik vanilya" gerçek bir ayrım. Kalabilir.
+- **"profesyonel"** (4 ekipman: buz makinesi, espresso makinesi, değirmen,
+  blender). Bu üründe alan tat notu değil teknik özellik taşıyor ("2 grup",
+  "3 Lt", "on demand"). Aralarında "profesyonel" dolgu duruyor ama yerine
+  gerçek bir özellik yazmak için ürünü bilmek gerek — uydurmadım.
 
 ### ✅ Tatlı adlarında marka riski — çözüldü
 

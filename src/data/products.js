@@ -497,7 +497,7 @@ export const products = [
     featured: true,
     volume: "700ml",
     usageArea: ["bubble tea", "soğuk içecekler", "smoothie"],
-    tastingNotes: ["modern", "trend", "çok amaçlı"]
+    tastingNotes: ["meyveli", "tatlı", "patlayan boba"]
   },
 
   // TATLI ÜRÜNLERİ
@@ -574,7 +574,7 @@ export const products = [
     featured: false,
     serving: "1 dilim",
     ingredients: ["premium çikolata", "fındık", "krema"],
-    tastingNotes: ["premium", "fındıklı", "yumuşak"]
+    tastingNotes: ["çikolatalı", "fındıklı", "yumuşak"]
   },
   {
     id: 27,
