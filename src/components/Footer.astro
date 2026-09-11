@@ -14,58 +14,64 @@ const legalLinks = [
   { href: '/cerez-politikasi.html', label: 'Çerez Politikası' },
   { href: '/kullanim-sartlari.html', label: 'Kullanım Şartları' },
 ];
+import Ikon from './Ikon.astro';
 ---
 
-<footer class="bg-gray-800 text-white">
+<footer class="bg-kavurma text-krem border-t border-cizgi-koyu">
   <div class="container mx-auto px-6 py-12">
     <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
       <div>
-        <h3 class="text-lg font-bold">Kervan Kahve</h3>
-        <p class="mt-4 text-sm text-gray-400">
-          Nitelikli kahve çekirdeklerini tutkuyla kavuruyor, işletmelere ve kahve severlere
-          ulaştırıyoruz.
+        <h3 class="text-govde font-bold">Kervan Kahve</h3>
+        {/* Her sayfanın altında duruyor, yani sitenin genel iddiası burada.
+            Öncesinde "nitelikli kahve çekirdeklerini tutkuyla kavuruyor,
+            işletmelere ve kahve severlere ulaştırıyoruz" yazıyordu: ana
+            sayfanın söylediğiyle aynı şeyi söylemiyordu ve doğrulanmamış bir
+            kavurma iddiası taşıyordu. */}
+        <p class="mt-4 text-kucuk text-krem-ikincil">
+          Mersin ve çevresinde kafe, restoran ve otellere tedarik yapıyoruz:
+          kahve, şurup, püre, tatlı, bitki çayı ve ekipman.
         </p>
       </div>
 
       <div>
-        <h3 class="text-lg font-bold">Hızlı Erişim</h3>
-        <ul class="mt-4 space-y-2 text-sm">
+        <h3 class="text-govde font-bold">Hızlı Erişim</h3>
+        <ul class="mt-4 space-y-2 text-kucuk">
           {quickLinks.map((l) => (
-            <li><a href={l.href} class="text-gray-400 hover:text-white">{l.label}</a></li>
+            <li><a href={l.href} class="text-krem-ikincil hover:text-krem">{l.label}</a></li>
           ))}
         </ul>
       </div>
 
       <div>
-        <h3 class="text-lg font-bold">Yasal</h3>
-        <ul class="mt-4 space-y-2 text-sm">
+        <h3 class="text-govde font-bold">Yasal</h3>
+        <ul class="mt-4 space-y-2 text-kucuk">
           {legalLinks.map((l) => (
-            <li><a href={l.href} class="text-gray-400 hover:text-white">{l.label}</a></li>
+            <li><a href={l.href} class="text-krem-ikincil hover:text-krem">{l.label}</a></li>
           ))}
         </ul>
       </div>
 
       <div>
-        <h3 class="text-lg font-bold">Bize Ulaşın</h3>
-        <ul class="mt-4 space-y-2 text-sm">
+        <h3 class="text-govde font-bold">Bize Ulaşın</h3>
+        <ul class="mt-4 space-y-2 text-kucuk">
           <li>
-            <a href="mailto:info@kervankahve.com" class="text-gray-400 hover:text-white"
+            <a href="mailto:info@kervankahve.com" class="text-krem-ikincil hover:text-krem"
               >info@kervankahve.com</a
             >
           </li>
           <li>
-            <a href="tel:+905453207713" class="text-gray-400 hover:text-white">+90 545 320 77 13</a>
+            <a href="tel:+905453207713" class="text-krem-ikincil hover:text-krem">+90 545 320 77 13</a>
           </li>
           <li>
             <div class="flex space-x-4 mt-2">
               <a
-                href="https://www.instagram.com/kervankahve_toptan__perakende/"
+                href="https://www.instagram.com/kervankahvetr/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-gray-400 hover:text-white"
+                class="text-krem-ikincil hover:text-krem"
                 aria-label="Kervan Kahve Instagram sayfası"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm48-136H80a56.06,56.06,0,0,0-56,56v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"></path></svg>
+                <Ikon ad="instagram" boyut={20} />
               </a>
             </div>
           </li>
@@ -73,7 +79,7 @@ const legalLinks = [
       </div>
     </div>
 
-    <div class="mt-12 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+    <div class="mt-12 pt-8 border-t border-cizgi-koyu text-center text-kucuk text-krem-ikincil">
       <p>&copy; {year} Kervan Kahve. Tüm hakları saklıdır.</p>
     </div>
   </div>

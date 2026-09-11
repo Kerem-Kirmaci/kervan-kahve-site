@@ -4,124 +4,208 @@
 
 /* ==========================================================================
    Kervan Kahve — tüm sayfalarda ortak stiller
-   (eskiden 8 HTML dosyasının her birinde ayrı ayrı tekrar ediyordu)
+
+   Renkler tailwind.config.mjs'te tanımlı; buradaki değişkenler sadece
+   Tailwind sınıfıyla ifade edilemeyen yerler (gradyan, gölge, keyframe) için.
+   Yeni renk EKLENMEZ — ikisi de aynı paletten okur.
    ========================================================================== */
 
 :root {
-  --brand-color: #6F4E37;       /* Coffee */
-  --brand-color-light: #BC987E; /* Latte */
-  --text-dark: #3B2A22;         /* Espresso */
-  --text-light: #6e5e51;
-  --bg-light: #F9F6F2;          /* Cream */
-  --bg-white: #ffffff;
+  --kavurma: #2E1D10;
+  --kabuk: #6B4526;
+  --altin: #E0A924;
+  --altin-koyu: #8A5B12;
+  --kum: #F1EADD;
+  --kagit: #FBF8F2;
+  --murekkep: #241509;
+  --is: #6A5644;
+  --krem: #F5EFE3;
+  --krem-ikincil: #CDBBA2;
+  --cizgi: #DED2BE;
+  --cizgi-koyu: #46301D;
+
+  --golge-kart: 0 1px 2px rgba(36, 21, 9, .06), 0 8px 20px -12px rgba(36, 21, 9, .22);
+  --golge-yuzen: 0 4px 8px rgba(36, 21, 9, .10), 0 24px 48px -16px rgba(36, 21, 9, .35);
 }
 
-/* Not: eskiden burada html ve body için overflow-x:hidden + max-width:100vw
-   vardı. Bunlar yatay kaydırmayı gizliyordu; asıl sebep, kapalıyken ekranın
-   320px sağında duran mobil menü panelidir. Panel artık .mobile-menu-shell
-   tarafından kırpıldığı için bu bastırmaya gerek kalmadı. Yamanın kalkması,
-   ileride oluşacak gerçek taşmaların da görünür olmasını sağlar. */
+/* Not: eskiden html ve body için overflow-x:hidden + max-width:100vw vardı.
+   Bunlar yatay kaydırmayı gizliyordu; sebebi kapalıyken ekranın 320px sağında
+   duran mobil menü paneliydi. Menü artık tam ekran ve yerinde duruyor, o
+   yüzden bastırmaya da kırpma kabuğuna da gerek yok. */
 body {
-  font-family: 'Inter', sans-serif;
-  color: var(--text-dark);
-  /* <body> etiketindeki bg-gray-50 sınıfı bu kuralı ezer; sitenin gerçek arka
-     planı gri-beyazdır. Kural, sınıf kaldırılırsa diye duruyor. */
-  background-color: var(--bg-light);
+  font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--murekkep);
+  background-color: var(--kum);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  /* Instagram kullanıcı adı gibi bölünemeyen uzun kelimeler dar ekranda
+     sütunu taşırıyordu. */
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Başlıklar gövdeyle aynı aileden, genişletilmiş eksende (Archivo'nun wdth
+   ekseni). Ayrı bir başlık ailesi yüklemeye gerek yok. */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  font-stretch: 112%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
-.brand-text { color: var(--brand-color); }
-.brand-bg { background-color: var(--brand-color); }
-.brand-bg-light { background-color: var(--brand-color-light); }
+/* Gövde metni satır uzunluğu tavanı — 68 karakteri geçmesin. */
+p { max-width: 68ch; }
+p.genis { max-width: none; }
 
-/* Navigasyon alt çizgi animasyonu */
+/* --------------------------------------------------------------------------
+   Menü bağlantısı ve aktif sayfa vurgusu
+
+   Eski kural `.nav-link::after`ı display:block olarak tanımlıyordu; bağlantı
+   inline-flex olduğu için sözde eleman metnin ALTINA değil YANINA bir flex
+   öğesi olarak yerleşiyor ve 17px'lik bir tire gibi görünüyordu. Aktif sayfa
+   vurgusu her sayfada bu yüzden bozuktu. Mutlak konumlandırma sözde elemanı
+   flex akışından tamamen çıkarır.
+   -------------------------------------------------------------------------- */
+.nav-link { position: relative; }
 .nav-link::after {
   content: '';
-  display: block;
-  width: 0;
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.35rem;
   height: 2px;
-  background: var(--brand-color);
-  transition: width .3s;
+  background: var(--altin-koyu);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
 }
 .nav-link:hover::after,
 .nav-link.active::after {
-  width: 100%;
+  transform: scaleX(1);
 }
-
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-/* Giriş animasyonları */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fade-in { animation: fadeIn 0.8s ease-out forwards; }
-.fade-in-delay-1 { animation-delay: 0.2s; }
-.fade-in-delay-2 { animation-delay: 0.4s; }
-.fade-in-delay-3 { animation-delay: 0.6s; }
 
 /* --------------------------------------------------------------------------
-   Mobil menü
-   Not: eski kodda bu değerler HTML'e inline style="... !important" olarak
-   gömülüydü ve buradaki class'ı eziyordu. Gerçekte ekrana basılan değerler
-   inline olanlardı, o yüzden görünümü korumak adına onlar buraya alındı.
+   Mobil menü — tam ekran
+
+   Öncesinde sağdan kayan 320px'lik bir paneldi; kapalıyken ekranın dışında
+   durduğu için sayfada yatay kaydırma yaratıyor ve bunu bastırmak için ayrı
+   bir kırpma kabuğu gerekiyordu. Tam ekran menüde öyle bir sorun yok: panel
+   yerinde duruyor, yalnızca görünürlüğü değişiyor.
    -------------------------------------------------------------------------- */
-/* Paneli kırpan kabuk: viewport'u kaplar, taşan paneli keser.
-   pointer-events:none sayesinde kapalıyken tıklamaları engellemez. */
-.mobile-menu-shell {
+.mobil-menu {
   position: fixed;
   inset: 0;
-  overflow: hidden;
-  pointer-events: none;
   z-index: 9999;
-}
-
-.mobile-menu {
-  position: absolute;
-  top: 0;
-  right: 0;
-  pointer-events: auto;
-  width: 320px;
-  height: 100%;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
-  border-left: 1px solid #e2e8f0;
-  transform: translateX(100%);
-  /* Kapalıyken visibility:hidden iki işi birden görüyor:
-     1) Ekranın 320px sağında duran panel sayfada yatay kaydırma yaratmıyor
-        (eskiden bunu bastırmak için html/body'ye overflow-x:hidden konmuştu).
-     2) Panelin içindeki bağlantılar klavyeyle sekme sırasına girmiyor;
-        eskiden görünmeyen menüye tab ile odaklanılabiliyordu.
-     visibility geçişi transform ile aynı sürede, ama kapanışta gecikmeli
-     uygulanıyor ki kayarak çıkma animasyonu görünür kalsın. */
-  visibility: hidden;
-  transition: transform 0.3s ease, visibility 0s linear 0.3s;
-  z-index: 9999;
-}
-.mobile-menu.active {
-  transform: translateX(0);
-  visibility: visible;
-  transition: transform 0.3s ease, visibility 0s linear 0s;
-}
-
-.mobile-menu-overlay {
+  display: flex;
+  flex-direction: column;
+  background: var(--kavurma);
+  color: var(--krem);
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
+  visibility: hidden;
+  /* visibility anında açılır, kapanışta gecikir — açılır açılmaz odak
+     taşınabilsin diye (gizli öğeye focus() sessizce başarısız oluyor). */
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
 }
-.mobile-menu-overlay.active {
+.mobil-menu.active {
   opacity: 1;
-  pointer-events: auto;
+  visibility: visible;
+  transition: opacity 0.2s ease, visibility 0s linear 0s;
 }
+
+.mobil-menu-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--cizgi-koyu);
+}
+
+.mobil-menu-kapat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -0.35rem;
+  border: 0;
+  background: none;
+  color: var(--krem);
+  cursor: pointer;
+}
+.mobil-menu-kapat:hover { color: var(--altin); }
+
+.mobil-menu-baglantilar {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  /* Dikeyde ortala: boşluk altta göllenmesin. `safe`, içerik sığmadığında
+     (küçük telefon, yatay ekran) ortalamayı bırakıp başa hizalar — yoksa
+     listenin üstü ekran dışında kalıp erişilemez oluyor. */
+  justify-content: safe center;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+  /* Geniş ekranda bağlantılar uçtan uca gerilmesin */
+  width: 100%;
+  max-width: 34rem;
+}
+
+.mobil-menu-baglanti {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--cizgi-koyu);
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  color: var(--krem);
+  transition: color 0.15s ease;
+}
+.mobil-menu-baglanti:last-child { border-bottom: 0; }
+.mobil-menu-baglanti:hover { color: var(--altin); }
+
+/* Bulunulan sayfa — altın, sistemdeki tek aksan kuralına göre */
+.mobil-menu-baglanti.aktif { color: var(--altin); }
+
+/* Kısa ekranlarda (küçük telefon, yatay tutuş) liste kaydırmaya girmesin */
+@media (max-height: 660px) {
+  .mobil-menu-baglanti { font-size: 1.4rem; padding: 0.75rem 0; }
+  .mobil-menu-alt { gap: 0.6rem; padding-block: 0.9rem; }
+}
+
+.mobil-menu-adet {
+  flex-shrink: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--krem-ikincil);
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 9999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.mobil-menu-alt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.25rem 1rem calc(1.25rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--cizgi-koyu);
+}
+.mobil-menu-alt > * { max-width: 34rem; }
+.mobil-menu-alt a {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1rem;
+  color: var(--krem-ikincil);
+}
+.mobil-menu-alt a:hover { color: var(--krem); }
 
 /* Mobil header ayarlamaları */
 @media (max-width: 768px) {
@@ -131,12 +215,8 @@ h1, h2, h3, h4, h5, h6 {
   }
   .mobile-search-bar {
     height: 2.5rem;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     padding-left: 2.5rem;
-  }
-  .mobile-search-icon {
-    left: 0.75rem;
-    font-size: 1.125rem;
   }
 
   /* Mobilde masaüstü navigasyonu ve arama çubuğu gizlenir */
@@ -144,161 +224,241 @@ h1, h2, h3, h4, h5, h6 {
   .mobile-simplified-header .header-search-container {
     display: none !important;
   }
-
-  /* Alt navigasyon çubuğu için sayfa altında boşluk */
-  body {
-    padding-bottom: 80px;
-  }
-}
-
-/* Mobil alt navigasyon */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  border-top: 1px solid #e5e7eb;
-  z-index: 50;
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .bottom-nav {
-    display: block;
-  }
 }
 
 /* --------------------------------------------------------------------------
-   Lightbox (ürün görseli büyütme) — index ve shop sayfalarında birebir aynıydı
+   Ürün föyü (kart görseline tıklanınca açılan modal)
+
+   Panel sabit ölçüde: görsel kendi alanında, bilgi kendi alanında. Eskiden
+   bilgi bloğu görselin altına asılıydı ve genişliği görselin genişliği
+   kadardı; ürün görselleri çok farklı boyutlarda olduğu için yazı her üründe
+   başka yere gidiyordu.
    -------------------------------------------------------------------------- */
-.image-lightbox {
+.urun-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.92);
+  inset: 0;
   z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  background: rgba(24, 14, 6, 0.82);
+  backdrop-filter: blur(6px);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  backdrop-filter: blur(8px);
+  /* visibility anında açılır, kapanışta gecikir — açılır açılmaz çağrılan
+     closeBtn.focus() öğe hâlâ gizliyse sessizce başarısız oluyordu. */
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
 }
-.image-lightbox.active {
+.urun-modal.active {
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.2s ease, visibility 0s linear 0s;
 }
 
-.lightbox-content {
+.urun-modal-panel {
   position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
-  transform: scale(0.9);
-  transition: transform 0.3s ease;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: min(920px, 100%);
+  max-height: min(88vh, 640px);
+  background: var(--kagit);
+  border-radius: 6px;
+  overflow: hidden;
+  transform: translateY(8px);
+  transition: transform 0.2s ease;
 }
-.image-lightbox.active .lightbox-content {
-  transform: scale(1);
+.urun-modal.active .urun-modal-panel { transform: translateY(0); }
+
+@media (min-width: 720px) {
+  .urun-modal-panel {
+    grid-template-rows: none;
+    grid-template-columns: 1.15fr 0.85fr;
+    /* Sabit yükseklik: ürünün en-boy oranına göre panel oynamasın. Yatık bir
+       pasta ile dikey bir şişe arasında 160px fark oluyordu. Bilgi sütunu
+       gerekirse kendi içinde kayar. */
+    height: min(460px, 80vh);
+  }
 }
 
-.lightbox-image {
-  max-width: 100%;
-  max-height: 85vh;
-  border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  object-fit: contain;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: -50px;
-  right: -10px;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 28px;
-  cursor: pointer;
+/* --- görsel alanı --- */
+.urun-modal-gorsel {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  background: var(--kagit);
+  min-height: 180px;
+  /* Dar ekranda görsel bütün paneli kaplayıp bilgiyi ekran dışına itiyordu */
+  max-height: 40vh;
+  overflow: hidden;
 }
-.lightbox-close:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
+@media (min-width: 720px) {
+  .urun-modal-gorsel {
+    padding: 2.5rem;
+    border-right: 1px solid var(--cizgi);
+    min-height: 0;
+    max-height: none;
+  }
+}
+/* Yüklenmemiş görsel gizli tutulur: <img> yeni src çözülene kadar eskisini
+   göstermeye devam ediyor ve modal beklemeden açıldığı için bir an önceki
+   ürün görünüyordu (bkz. scripts/lightbox.js). Kutu yerinde kaldığı için
+   sıçrama olmuyor, görsel hazır olunca beliriyor. */
+.urun-modal-gorsel img.yukleniyor { opacity: 0; }
+
+.urun-modal-gorsel img {
+  transition: opacity 0.15s ease;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
-.lightbox-product-info {
-  position: absolute;
-  bottom: -70px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  color: white;
+/* --- bilgi alanı --- */
+.urun-modal-bilgi {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.5rem 1.5rem;
+  background: var(--kum);
+  border-top: 1px solid var(--cizgi);
+  overflow-y: auto;
 }
-.lightbox-product-name {
-  font-family: 'Playfair Display', serif;
+@media (min-width: 720px) {
+  .urun-modal-bilgi {
+    padding: 2.5rem 2rem;
+    border-top: none;
+    justify-content: center;
+  }
+}
+
+.urun-modal-marka {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--is);
+}
+.urun-modal-marka:empty { display: none; }
+
+.urun-modal-ad {
+  margin: 0.25rem 0 0;
   font-size: 1.5rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  line-height: 1.2;
+  color: var(--murekkep);
+}
+
+.urun-modal-aciklama {
+  margin: 0.75rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--is);
+  max-width: none;
+}
+.urun-modal-aciklama:empty { display: none; }
+
+.urun-modal-notlar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.urun-modal-notlar:empty { display: none; }
+.urun-modal-notlar li {
+  font-size: 0.8125rem;
+  line-height: 1;
+  color: var(--is);
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 9999px;
+  padding: 0.4rem 0.7rem;
+}
+
+.urun-modal-alt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cizgi);
+}
+.urun-modal-baglanti {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9375rem;
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  color: var(--altin-koyu);
 }
-.lightbox-product-brand {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.urun-modal-baglanti:hover { color: var(--kabuk); }
+.urun-modal-teklif {
+  font-size: 0.9375rem;
+  color: var(--is);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.urun-modal-teklif:hover { color: var(--murekkep); }
+
+/* --- kapatma --- */
+.urun-modal-kapat {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 9999px;
+  color: var(--murekkep);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.urun-modal-kapat:hover { background: var(--kum); border-color: var(--kabuk); }
+
+@media (prefers-reduced-motion: reduce) {
+  .urun-modal-panel { transform: none; }
 }
 
-/* Büyütülebilir görseller */
-.zoomable-image {
-  cursor: zoom-in;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.zoomable-image:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
+/* Büyütülebilir görseller — tetikleyici bir <button> (klavyeyle de açılır) */
+.zoomable-image { cursor: zoom-in; border: 0; padding: 0; background: none; }
 
-.zoom-icon-wrapper {
-  position: relative;
-}
+.zoom-icon-wrapper { position: relative; }
 .zoom-icon {
   position: absolute;
   top: 8px;
   right: 8px;
   width: 32px;
   height: 32px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--kabuk);
   opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.3s ease;
+  transition: opacity 0.2s ease;
   pointer-events: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
-.zoom-icon-wrapper:hover .zoom-icon {
-  opacity: 1;
-  transform: scale(1);
-}
-.zoom-icon .material-icons {
-  font-size: 18px;
-  color: var(--brand-color);
-}
+.zoom-icon-wrapper:hover .zoom-icon,
+.zoom-icon-wrapper:focus-within .zoom-icon { opacity: 1; }
 
 /* Klavye ile gezinenler için görünür odak halkası (erişilebilirlik) */
 :focus-visible {
-  outline: 2px solid var(--brand-color);
+  outline: 2px solid var(--altin-koyu);
   outline-offset: 2px;
+}
+/* Koyu zeminde odak halkası altın renginde okunur kalsın */
+.koyu-zemin :focus-visible {
+  outline-color: var(--altin);
 }
 
 /* --------------------------------------------------------------------------
@@ -306,12 +466,14 @@ h1, h2, h3, h4, h5, h6 {
    en-boy oranını baştan bildirdiği için sayfa yüklenirken içeriğin zıplamasını
    (layout shift) önler — istediğimiz şey budur. Ancak width özniteliği aynı
    zamanda tarayıcıya bir genişlik dayatır; boyutu yalnızca CSS yüksekliğiyle
-   verilen görsellerde (ör. iş ortağı logolarındaki .h-10) bu, görselin yatayda
-   esnemesine yol açıyor.
-
-   Aşağıdaki kural genişlik dayatmasını kaldırır, en-boy oranı bilgisi kalır.
-   Element seçicisi olduğu için w-full / w-28 gibi her sınıf bunu ezer.
+   verilen görsellerde bu, görselin yatayda esnemesine yol açıyor.
    -------------------------------------------------------------------------- */
-img {
-  width: auto;
+img { width: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

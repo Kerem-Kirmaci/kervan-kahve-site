@@ -8,126 +8,84 @@ import farkimizImg from '../assets/images/about_us/farkimiz.webp';
 // Hero CSS arka planı olarak kullanılıyor; <Image> devreye giremediği için
 // optimize edilmiş sürümü getImage ile üretiyoruz.
 const heroImg = await getImage({ src: heroSrc, width: 1536, format: 'webp', quality: 72 });
+import Buton from '../components/Buton.astro';
+import Ikon from '../components/Ikon.astro';
+import { products } from '../data/products.js';
+
+// Sayılar veriden hesaplanıyor, elle yazılmıyor. Sayfada "9 yıllık deneyim"
+// ve "50+ farklı ürün" yazıyordu; ilki iki yıl eskimişti, ikincisi kataloğun
+// yarısını saklıyordu (100 ürün var). Elle yazılan sayı eskiyor.
+const KURULUS = 2015;
+const yil = new Date().getFullYear() - KURULUS;
+const urunSayisi = products.length;
+
+// Sayfanın iddiası dağıtım üzerine kurulu; kavurma o çerçevenin içinde
+// "salt aracı değiliz" diyen madde, sayfanın konusu değil.
+// Öncesindeki dört maddeden biri silindi: "Sürdürülebilir Tedarik" adil
+// ticaret iddiası taşıyordu ve sertifika yok.
+const farklar = [
+  { ikon: 'canta', baslik: 'Tek elden tedarik',
+    metin: 'Kahve, şurup, püre, tatlı, bitki çayı ve ekipman aynı listede, aynı faturada. Altı ayrı tedarikçiyle uğraşmazsınız.' },
+  { ikon: 'kahve', baslik: 'Kahveyi kendimiz kavuruyoruz',
+    metin: "Çekirdeği Brezilya başta olmak üzere Güney Amerika'dan getiriyor, kendimiz kavuruyor, harmanı menünüze ve müşteri profilinize göre ayarlıyoruz." },
+  { ikon: 'konum', baslik: 'Mersin içinde kendi aracımızla',
+    metin: 'Siparişinizi kargoya vermiyoruz; şehir içinde kendi aracımızla, kendimiz getiriyoruz.' },
+  { ikon: 'hedef', baslik: 'Menünüze göre seçim',
+    metin: 'Hangi ürünün işinize yarayacağını menünüze ve hacminize bakarak birlikte belirliyoruz.' },
+  { ikon: 'is', baslik: 'Kullanım desteği',
+    metin: 'Ürünlerin kullanımı ve temel hazırlık konularında personelinize destek veriyoruz.' },
+];
 ---
 
 <Base
-  title="Hakkımızda - Kervan Kahve"
-  description="Kervan Kahve hakkında - 2015'ten beri Mersin'de kaliteli kahve tedariki, işletmelere özel çözümler ve barista eğitimi. 100+ iş ortağı, 50+ farklı ürün."
+  title="Hakkımızda — Kervan Kahve"
+  description={`Mersin'de ${yil} yıldır kafe, restoran ve otellere tedarik yapıyoruz. Kahve, şurup, püre, tatlı, bitki çayı ve ekipman — ${urunSayisi} ürün, tek elden, kendi aracımızla.`}
   activePage="hakkimizda"
 >
-  <!-- Hero Section -->
-  <section class="relative bg-cover bg-center text-white py-16 md:py-32 px-6" style={`background-image: linear-gradient(rgba(111, 78, 55, 0.8), rgba(111, 78, 55, 0.8)), url('${heroImg.src}')`}>
-      <div class="container mx-auto text-center">
-          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight fade-in">Kahveye Olan <span class="text-yellow-300">Tutkumuz</span></h1>
-          <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto fade-in fade-in-delay-1">
-              2015 yılından bu yana, nitelikli kahve çekirdeklerini ustalıkla kavuruyor ve işletmelerin başarısına ortak oluyoruz.
+  {/* Hero. Eski başlık "Kahveye Olan Tutkumuz"du ve alt metni kavurmadan
+      bahsediyordu. Şirketin işi kahveyle başladı ama bugün yaptığı şey
+      dağıtım: kahvenin yanında şurup, püre, tatlı, çay ve ekipman da
+      gidiyor. İsimde kahve geçmesi sayfanın yalnızca kahveyi anlatmasını
+      gerektirmiyor. */}
+  <section class="koyu-zemin relative bg-cover bg-center text-krem py-16 md:py-24 px-4 md:px-6" style={`background-image: linear-gradient(rgba(107, 69, 38, 0.8), rgba(107, 69, 38, 0.8)), url('${heroImg.src}')`}>
+      <div class="container mx-auto">
+          <h1 class="text-buyuk font-extrabold leading-tight">Mersin'de kurulu bir dağıtım ağı</h1>
+          <p class="mt-6 text-govde md:text-alt max-w-okuma">
+              {KURULUS}'te kahveyle başladık. Bugün Mersin ve çevresinde 100'den fazla kafe,
+              restoran ve otele kahvenin yanında şurubunu, tatlısını ve ekipmanını da
+              götürüyoruz.
           </p>
       </div>
   </section>
 
   <!-- Hikayemiz Section -->
-  <section class="py-16 md:py-24 bg-white">
-      <div class="container mx-auto px-6">
+  <section class="py-16 md:py-24 bg-kagit">
+      <div class="container mx-auto px-4 md:px-6">
           <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-              <div class="fade-in">
-                  <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Hikayemiz</h2>
-                  <p class="mt-6 text-lg text-gray-600 leading-relaxed">
-                      Kervan Kahve, kahveye olan derin tutkuyla 2015 yılında kurucumuz Emre Kara tarafından Mersin'de kuruldu. Mersin'deki kafeleri ve restoranları gezerken, kaliteli kahve tedarikinde yaşanan eksiklikleri fark etti.
+              <div class="">
+                  <h2 class="text-orta text-murekkep">Hikayemiz</h2>
+                  <p class="mt-6 text-govde text-is leading-relaxed">
+                      Kervan Kahve {KURULUS} yılında Mersin'de kuruldu. Kurucumuz Emre Kara,
+                      şehirdeki kafeleri ve restoranları gezerken tekrar eden bir sorunu fark
+                      etti: işletmeler kahveyi bir yerden, şurubu başka yerden, tatlıyı bir
+                      üçüncüsünden alıyor, her biriyle ayrı ayrı uğraşıyordu.
                   </p>
-                  <p class="mt-4 text-lg text-gray-600 leading-relaxed">
-                      Bu ihtiyaçtan yola çıkarak, sadece ürün satan değil, aynı zamanda işletmelerin başarısına ortak olan bir marka yaratma hedefiyle yola çıktık. Bugün, 100'den fazla işletmeye hizmet veriyor ve her gün büyümeye devam ediyoruz.
+                  <p class="mt-4 text-govde text-is leading-relaxed">
+                      Kahveyle başladık ve kahveyi hâlâ kendimiz kavuruyoruz. Ama bir kafenin
+                      ihtiyacı kahveyle bitmiyordu; zamanla şurup, püre, tatlı, bitki çayı ve
+                      ekipman da listeye girdi. Bugün Mersin ve çevresinde 100'den fazla
+                      işletmeye tek elden tedarik yapıyoruz — siparişleri şehir içinde kendi
+                      aracımızla, kendimiz götürüyoruz.
                   </p>
                   <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                      <a href="ortaklik.html" class="brand-bg text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-transform hover:scale-105 text-center">İş Ortağımız Olun</a>
-                      <a href="shop.html" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-transform hover:scale-105 text-center">Ürünlerimizi Keşfedin</a>
+                      <Buton href="ortaklik.html">İş Ortağımız Olun</Buton>
+                      <Buton href="shop.html" variant="ikincil">Ürünlerimizi Keşfedin</Buton>
                   </div>
               </div>
-              <div class="fade-in fade-in-delay-1">
-                  <div class="rounded-xl overflow-hidden shadow-2xl hover-lift">
-                      <Image src={hikayemizImg} alt="Kervan Kahve Hikayemiz" class="w-full h-full object-cover" />
+              <div class="">
+                  <div class="rounded overflow-hidden border border-cizgi">
+                      <Image src={hikayemizImg} alt="Kavurma makinesinden soğutma teknesine dökülen kavrulmuş çekirdekler; önde açık bir çuval içinde henüz kavrulmamış yeşil çekirdekler" class="w-full h-full object-cover" />
                   </div>
-              </div>
-          </div>
-      </div>
-  </section>
-
-  <!-- Misyon & Vizyon Section -->
-  <section class="py-16 md:py-24">
-      <div class="container mx-auto px-6">
-          <div class="text-center mb-12 md:mb-16">
-              <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Misyonumuz ve Vizyonumuz</h2>
-              <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Geleceğe dair hedeflerimiz ve bugünkü sorumluluklarımız</p>
-          </div>
-          <div class="grid md:grid-cols-2 gap-8 md:gap-12">
-              <div class="bg-white p-8 rounded-xl shadow-lg hover-lift fade-in">
-                  <div class="inline-block p-4 brand-bg-light rounded-full mb-6">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="brand-text" viewBox="0 0 256 256">
-                          <path fill="currentColor" d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm40-68a28,28,0,0,1-28,28H116a8,8,0,0,1,0-16h24a12,12,0,0,0,0-24H116a28,28,0,0,1,0-56h24a8,8,0,0,1,0,16H116a12,12,0,0,0,0,24h24A28,28,0,0,1,168,148Z"/>
-                      </svg>
-                  </div>
-                  <h3 class="text-2xl font-bold text-gray-800 mb-4">Misyonumuz</h3>
-                  <p class="text-gray-600 leading-relaxed">
-                      İş ortaklarımızın misafirlerine eşsiz kahve deneyimleri sunabilmeleri için onlara en kaliteli kahve çekirdeklerini, şurupları ve tatlıları sağlamak. Sadece ürün tedarik etmek değil, işletmelerin başarısına gerçek anlamda ortak olmak.
-                  </p>
-              </div>
-              <div class="bg-white p-8 rounded-xl shadow-lg hover-lift fade-in fade-in-delay-1">
-                  <div class="inline-block p-4 brand-bg-light rounded-full mb-6">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="brand-text" viewBox="0 0 256 256">
-                          <path fill="currentColor" d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/>
-                      </svg>
-                  </div>
-                  <h3 class="text-2xl font-bold text-gray-800 mb-4">Vizyonumuz</h3>
-                  <p class="text-gray-600 leading-relaxed">
-                      Türkiye'nin en güvenilir ve en çok tercih edilen kafe ve içecek çözümleri ortağı olmak. Kalite, güvenilirlik ve müşteri memnuniyeti konularında sektörde standart belirleyen marka olmak.
-                  </p>
-              </div>
-          </div>
-      </div>
-  </section>
-
-  <!-- Değerlerimiz Section -->
-  <section class="py-16 md:py-24 bg-white">
-      <div class="container mx-auto px-6">
-          <div class="text-center mb-12 md:mb-16">
-              <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Değerlerimiz</h2>
-              <p class="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">İş yapış şeklimizi yönlendiren temel ilkelerimiz</p>
-          </div>
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-              <div class="text-center fade-in">
-                  <div class="inline-block p-4 brand-bg-light rounded-full mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="brand-text" viewBox="0 0 256 256">
-                          <path fill="currentColor" d="M223.45,40.07a8,8,0,0,0-7.52-7.52C139.8,28.08,78.82,51,52.82,94a87.09,87.09,0,0,0-12.76,49c.57,15.92,5.21,32,13.79,47.85l-19.51,19.5a8,8,0,0,0,11.32,11.32l19.5-19.51C81,210.73,97.09,215.37,113,215.94q1.67.06,3.33.06A86.93,86.93,0,0,0,162,203.18C205,177.18,227.93,116.21,223.45,40.07Z"/>
-                      </svg>
-                  </div>
-                  <h3 class="text-xl font-bold text-gray-800 mb-2">Kalite</h3>
-                  <p class="text-gray-600">En iyi çekirdekleri seçer, özenle kavururuz</p>
-              </div>
-              <div class="text-center fade-in fade-in-delay-1">
-                  <div class="inline-block p-4 brand-bg-light rounded-full mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="brand-text" viewBox="0 0 256 256">
-                          <path fill="currentColor" d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/>
-                      </svg>
-                  </div>
-                  <h3 class="text-xl font-bold text-gray-800 mb-2">Güvenilirlik</h3>
-                  <p class="text-gray-600">Sözümüzde dururuz, zamanında teslimat yaparız</p>
-              </div>
-              <div class="text-center fade-in fade-in-delay-2">
-                  <div class="inline-block p-4 brand-bg-light rounded-full mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="brand-text" viewBox="0 0 256 256">
-                          <path fill="currentColor" d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40Z"/>
-                      </svg>
-                  </div>
-                  <h3 class="text-xl font-bold text-gray-800 mb-2">Müşteri Odaklılık</h3>
-                  <p class="text-gray-600">Başarınız bizim başarımızdır</p>
-              </div>
-              <div class="text-center fade-in fade-in-delay-3">
-                  <div class="inline-block p-4 brand-bg-light rounded-full mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="brand-text" viewBox="0 0 256 256">
-                          <path fill="currentColor" d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"/>
-                      </svg>
-                  </div>
-                  <h3 class="text-xl font-bold text-gray-800 mb-2">Yenilikçilik</h3>
-                  <p class="text-gray-600">Sürekli gelişir, yenilikleri takip ederiz</p>
               </div>
           </div>
       </div>
@@ -135,52 +93,25 @@ const heroImg = await getImage({ src: heroSrc, width: 1536, format: 'webp', qual
 
   <!-- Bizi Farklı Kılan Section -->
   <section class="py-16 md:py-24">
-      <div class="container mx-auto px-6">
+      <div class="container mx-auto px-4 md:px-6">
           <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-              <div class="fade-in">
-                  <div class="rounded-xl overflow-hidden shadow-2xl hover-lift">
-                      <Image src={farkimizImg} alt="Bizi Farklı Kılan" class="w-full h-full object-cover" />
+              <div class="">
+                  <div class="rounded overflow-hidden border border-cizgi">
+                      <Image src={farkimizImg} alt="Bir kafe tezgâhında yan yana duran ürünler: DaVinci Gourmet karamel ve vanilya şurupları, FO çilek şurubu, kahve torbası ve çekirdekler, espresso, çikolata sosu, dilim pasta, bitki çayı ve kahve değirmeni" class="w-full h-full object-cover" />
                   </div>
               </div>
-              <div class="fade-in fade-in-delay-1">
-                  <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Bizi <span class="brand-text">Farklı Kılan</span> Nedir?</h2>
+              <div class="">
+                  <h2 class="text-orta text-murekkep">Bizi Farklı Kılan Nedir?</h2>
                   <div class="mt-8 space-y-6">
-                      <div class="flex gap-4">
-                          <div class="flex-shrink-0 w-8 h-8 brand-bg rounded-full flex items-center justify-center">
-                              <span class="text-white font-bold text-sm">1</span>
+                      {farklar.map((f) => (
+                          <div class="flex gap-4">
+                              <span class="flex-shrink-0 mt-0.5 text-kabuk"><Ikon ad={f.ikon} boyut={22} /></span>
+                              <div>
+                                  <h4 class="font-bold text-govde text-murekkep">{f.baslik}</h4>
+                                  <p class="text-is">{f.metin}</p>
+                              </div>
                           </div>
-                          <div>
-                              <h4 class="font-bold text-lg text-gray-800">Özel Kahve Harmanları</h4>
-                              <p class="text-gray-600">İşletmenizin karakterine uygun, size özel kahve karışımları geliştiriyoruz.</p>
-                          </div>
-                      </div>
-                      <div class="flex gap-4">
-                          <div class="flex-shrink-0 w-8 h-8 brand-bg rounded-full flex items-center justify-center">
-                              <span class="text-white font-bold text-sm">2</span>
-                          </div>
-                          <div>
-                              <h4 class="font-bold text-lg text-gray-800">Genel Destek ve Eğitim</h4>
-                              <p class="text-gray-600">İş ortaklarımıza ürün kullanımı ve temel kahve hazırlama konularında destek sağlıyoruz.</p>
-                          </div>
-                      </div>
-                      <div class="flex gap-4">
-                          <div class="flex-shrink-0 w-8 h-8 brand-bg rounded-full flex items-center justify-center">
-                              <span class="text-white font-bold text-sm">3</span>
-                          </div>
-                          <div>
-                              <h4 class="font-bold text-lg text-gray-800">Teknik Destek ve Danışmanlık</h4>
-                              <p class="text-gray-600">Ekipman seçiminden menü geliştirmeye kadar her konuda yanınızdayız.</p>
-                          </div>
-                      </div>
-                      <div class="flex gap-4">
-                          <div class="flex-shrink-0 w-8 h-8 brand-bg rounded-full flex items-center justify-center">
-                              <span class="text-white font-bold text-sm">4</span>
-                          </div>
-                          <div>
-                              <h4 class="font-bold text-lg text-gray-800">Sürdürülebilir Tedarik</h4>
-                              <p class="text-gray-600">Çevre dostu ambalajlar ve adil ticaret ilkeleriyle çalışıyoruz.</p>
-                          </div>
-                      </div>
+                      ))}
                   </div>
               </div>
           </div>
@@ -188,41 +119,44 @@ const heroImg = await getImage({ src: heroSrc, width: 1536, format: 'webp', qual
   </section>
 
   <!-- Sayılarla Kervan Section -->
-  <section class="py-16 md:py-24 bg-white">
-      <div class="container mx-auto px-6 text-center">
-          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-12 md:mb-16">Sayılarla Kervan Kahve</h2>
+  <section class="py-16 md:py-24 bg-kagit">
+      <div class="container mx-auto px-4 md:px-6">
+          <h2 class="text-orta text-murekkep mb-12 md:mb-16">Sayılarla Kervan Kahve</h2>
+          {/* Yıl ve ürün sayısı veriden geliyor. Elle yazıldıkları için ikisi de
+              eskimişti: "9 yıllık deneyim" iki yıl geride kalmıştı, "50+ farklı
+              ürün" kataloğun yarısını saklıyordu. */}
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-              <div class="fade-in">
-                  <div class="text-4xl font-bold brand-text mb-2">100+</div>
-                  <p class="text-gray-600 font-semibold">İş Ortağımız</p>
+              <div class="">
+                  <div class="text-orta font-bold text-murekkep mb-2 tabular-nums">100+</div>
+                  <p class="text-is font-semibold">İş ortağımız</p>
               </div>
-              <div class="fade-in fade-in-delay-1">
-                  <div class="text-4xl font-bold brand-text mb-2">9</div>
-                  <p class="text-gray-600 font-semibold">Yıllık Deneyim</p>
+              <div class="">
+                  <div class="text-orta font-bold text-murekkep mb-2 tabular-nums">{yil}</div>
+                  <p class="text-is font-semibold">Yıllık deneyim</p>
               </div>
-              <div class="fade-in fade-in-delay-2">
-                  <div class="text-4xl font-bold brand-text mb-2">50+</div>
-                  <p class="text-gray-600 font-semibold">Farklı Ürün</p>
+              <div class="">
+                  <div class="text-orta font-bold text-murekkep mb-2 tabular-nums">{urunSayisi}</div>
+                  <p class="text-is font-semibold">Katalogdaki ürün</p>
               </div>
-              <div class="fade-in fade-in-delay-3">
-                  <div class="text-4xl font-bold brand-text mb-2">Mersin</div>
-                  <p class="text-gray-600 font-semibold">Hizmet Bölgemiz</p>
+              <div class="">
+                  <div class="text-orta font-bold text-murekkep mb-2">Mersin</div>
+                  <p class="text-is font-semibold">Hizmet bölgemiz</p>
               </div>
           </div>
       </div>
   </section>
 
   <!-- CTA Section -->
-  <section class="py-16 md:py-24 brand-bg text-white">
-      <div class="container mx-auto px-6 text-center">
-          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">Bizimle Çalışmaya Hazır Mısınız?</h2>
-          <p class="text-xl mb-8 max-w-2xl mx-auto">
-              İşletmenizin kahve deneyimini bir üst seviyeye taşımak için bugün bizimle iletişime geçin.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="ortaklik.html" class="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-transform hover:scale-105">İş Ortaklığı Başvurusu</a>
-              <a href="iletisim.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-white hover:text-gray-800 transition-colors">İletişime Geçin</a>
-          </div>
+  <section class="koyu-zemin py-16 md:py-24 bg-kavurma text-krem">
+    <div class="container mx-auto px-4 md:px-6">
+      <h2 class="text-orta text-krem">Bizimle Çalışmaya Hazır Mısınız?</h2>
+      <p class="mt-4 text-govde text-krem-ikincil max-w-okuma">
+        İşletmenizin kahve deneyimini bir üst seviyeye taşımak için bugün bizimle iletişime geçin.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4">
+        <Buton href="ortaklik.html" variant="vurgu" boyut="buyuk">İş Ortaklığı Başvurusu</Buton>
+        <Buton href="iletisim.html" variant="ikincil-koyu" boyut="buyuk">İletişime Geçin</Buton>
       </div>
+    </div>
   </section>
 </Base>

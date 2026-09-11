@@ -1,168 +1,153 @@
 ---
 import Base from '../layouts/Base.astro';
+import Ikon from '../components/Ikon.astro';
+import Buton from '../components/Buton.astro';
+
+// Sayfanın işi: ziyaretçiyi en kısa yoldan bir kanala yönlendirmek. Bu yüzden
+// dört kanal üstte, her biri tıklanabilir bir kart. Gömülü Google Maps
+// çerçevesi kaldırıldı — tek başına ~1,7 MB getiriyordu ve ekranın yarısını
+// boş bir "haritayı göster" kutusuna veriyordu. Yol tarifi bağlantısı aynı
+// işi tek tıkla, sayfayı hiç ağırlaştırmadan görüyor.
+
+const kanallar = [
+  { ikon: 'telefon', etiket: 'Telefon', deger: '+90 545 320 77 13',
+    not: 'En hızlısı. Her gün 08:00–19:00 arası açığız.',
+    href: 'tel:+905453207713', yeniSekme: false },
+  { ikon: 'whatsapp', etiket: 'WhatsApp', deger: 'Mesaj gönderin',
+    not: 'Sipariş listesi ve fotoğraf paylaşımı için.',
+    href: 'https://wa.me/905453207713', yeniSekme: true },
+  { ikon: 'eposta', etiket: 'E-posta', deger: 'info@kervankahve.com',
+    not: 'Teklif ve fatura yazışmaları için.',
+    href: 'mailto:info@kervankahve.com', yeniSekme: false },
+  { ikon: 'instagram', etiket: 'Instagram', deger: '@kervankahvetr',
+    not: 'Yeni ürünler ve duyurular.',
+    href: 'https://www.instagram.com/kervankahvetr', yeniSekme: true },
+];
+
+const adres = ['Cami Şerif, İstiklal Cd. 26-1', '33060 Akdeniz / Mersin'];
+// Hedef, Google Haritalar'daki "KERVAN KAHVE" kaydının adı ve adresi —
+// koordinat verince Google en yakın işaretli yere (bir otoparka) yapıştırıyordu.
+// Eski gömülü haritadan miras kalan 36.858/34.629 koordinatı ise altı
+// kilometre kuzeyde bir mezarlığa düşüyordu. Kaydın gerçek konumu 36.7994, 34.6283.
+const yolTarifi = 'https://www.google.com/maps/dir/?api=1&destination=KERVAN+KAHVE%2C+Cami+%C5%9Eerif%2C+%C4%B0stiklal+Cd.+26-1%2C+33060+Akdeniz%2FMersin';
+const haritadaGor = 'https://www.google.com/maps/search/?api=1&query=KERVAN+KAHVE+%C4%B0stiklal+Cd.+26-1+Cami+%C5%9Eerif+Akdeniz+Mersin';
 ---
 
 <Base
-  title="İletişim - Kervan Kahve"
-  description="Kervan Kahve iletişim - Bize ulaşın, sorularınızı sorun. Telefon, e-posta, adres bilgileri ve Google Maps konum."
+  title="İletişim — Kervan Kahve"
+  description="Kervan Kahve iletişim - Telefon, WhatsApp, e-posta ve Instagram. Mersin Akdeniz'deki kafemizin adresi, çalışma saatleri ve yol tarifi."
   activePage="iletisim"
 >
-  <section class="py-12 md:py-16 lg:py-24 bg-white">
-      <div class="container mx-auto px-6 text-center">
-          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-gray-900 leading-tight">Bize <span class="brand-text">Ulaşın</span></h1>
-          <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Soru, öneri veya iş birliği teklifleriniz için her zaman buradayız.</p>
-      </div>
+  <!-- ==================================================================
+       Kanallar — dört tıklanabilir kart
+       =================================================================== -->
+  <section class="container mx-auto px-4 md:px-6 py-10 md:py-14">
+    <h1 class="text-buyuk text-murekkep">Bize ulaşın</h1>
+    <p class="mt-3 text-govde text-is max-w-okuma">
+      Sipariş, teklif veya soru için size en uygun kanalı seçin.
+      Telefon ve WhatsApp'a mesai saatlerinde hemen dönüyoruz.
+    </p>
+
+    <ul class="mt-8 md:mt-10 grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      {kanallar.map((k) => (
+        <li>
+          <a
+            href={k.href}
+            class="kanal-karti group flex h-full flex-col rounded border border-cizgi bg-kagit p-5 transition-colors hover:border-kabuk"
+            {...k.yeniSekme ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+          >
+            <span class="inline-flex w-fit rounded-tam border border-cizgi bg-kum p-2.5 text-kabuk">
+              <Ikon ad={k.ikon} boyut={22} />
+            </span>
+            <span class="mt-4 text-mini text-is">{k.etiket}</span>
+            <span class="mt-1 text-govde font-semibold text-murekkep group-hover:text-kabuk [overflow-wrap:anywhere]">
+              {k.deger}
+            </span>
+            <span class="mt-2 text-kucuk text-is">{k.not}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </section>
 
-  <section class="container mx-auto px-6 py-8 md:py-16">
-      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg fade-in">
-              <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">İletişim Bilgileri</h2>
-              <div class="space-y-6 text-gray-700">
+  <!-- ==================================================================
+       Kafe — adres, saatler, yol tarifi
+       =================================================================== -->
+  <section class="bg-kagit border-y border-cizgi py-14 md:py-20">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-14 items-start">
+        <div>
+          <h2 class="text-orta text-murekkep">Kafemize uğrayın</h2>
+          <p class="mt-4 text-govde text-is max-w-okuma">
+            Mersin'in merkezinde, İstiklal Caddesi'ndeki kafemiz her gün açık.
+            Kahvenizi yerinde için ya da yanınıza alın; kiloyla Türk kahvesi,
+            filtre kahve ve çaylarımız paketli olarak tezgâhta.
+          </p>
 
-                  <div class="flex items-start gap-4 contact-item">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                      <div>
-                          <h3 class="font-bold text-lg">Telefon</h3>
-                          <a href="tel:+905453207713" class="hover:text-[var(--brand-color)]">+90 545 320 77 13</a>
-                      </div>
-                  </div>
+          <dl class="mt-8 grid sm:grid-cols-2 gap-6 max-w-okuma">
+            <div>
+              <dt class="text-mini text-is">Adres</dt>
+              <dd class="mt-1 text-govde font-semibold text-murekkep">
+                {adres[0]}<br />{adres[1]}
+              </dd>
+            </div>
+            <div>
+              <dt class="text-mini text-is">Çalışma saatleri</dt>
+              <dd class="mt-1 text-govde font-semibold text-murekkep">
+                Her gün 08:00–19:00
+              </dd>
+            </div>
+          </dl>
 
-                  <div class="flex items-start gap-4 contact-item">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" stroke="currentColor"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
-                      <div>
-                          <h3 class="font-bold text-lg">E-posta</h3>
-                          <a href="mailto:info@kervankahve.com" class="hover:text-[var(--brand-color)]">info@kervankahve.com</a>
-                      </div>
-                  </div>
-
-                  <div class="flex items-start gap-4 contact-item">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                      <div>
-                          <h3 class="font-bold text-lg">Sosyal Medya</h3>
-                          <a href="https://www.instagram.com/kervankahve_toptan__perakende" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--brand-color)]">Instagram: @kervankahve_toptan__perakende</a>
-                      </div>
-                  </div>
-
-                  <div class="flex items-start gap-4 contact-item">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                      <div>
-                          <h3 class="font-bold text-lg">Adres</h3>
-                          <p>Cami Şerif, İstiklal Cd. 26-1,<br>33060 Akdeniz/Mersin</p>
-                      </div>
-                  </div>
-              </div>
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <Buton href={yolTarifi} ikon="konum" yeniSekme>Yol tarifi al</Buton>
+            <Buton href={haritadaGor} variant="ikincil" yeniSekme>Haritada gör</Buton>
           </div>
-          <div class="w-full h-80 md:h-96 lg:h-full rounded-xl overflow-hidden shadow-lg fade-in fade-in-delay-1">
-              <!-- Harita tıklanınca yükleniyor. Gömülü Google Maps çerçevesi tek
-                   başına ~1,7 MB JavaScript getiriyor ve sayfayı açan herkese
-                   iniyordu; loading="lazy" masaüstünde görüş alanında kaldığı
-                   için işe yaramıyordu. -->
-              <div id="map-embed" class="map-facade">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="map-facade-pin" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  <p class="map-facade-adres">Cami Şerif, İstiklal Cd. 26-1<br>33060 Akdeniz/Mersin</p>
-                  <button type="button" id="map-load" class="map-facade-cta">Haritayı göster</button>
-                  <a
-                      href="https://www.google.com/maps/dir/?api=1&destination=36.8581680%2C34.6293883"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="map-facade-link">Yol tarifi al</a>
-                  <p class="map-facade-not">Haritayı açtığınızda Google Haritalar yüklenir.</p>
-              </div>
-              <template id="map-template">
-                  <iframe
-                      title="Kervan Kahve konumu — Cami Şerif, İstiklal Cd. 26-1, Akdeniz/Mersin"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3192.343493921354!2d34.629388315281!3d36.8581679799365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1527f4d1c9031737%3A0x133a84944f378946!2zQ2FtaSDFn2VyaWYsIMSwc3Rpa2xhbCBDZC4gMjYtMSwgMzMwNjAgQWtkZW5pei9NZXJzaW4!5e0!3m2!1str!2str!4v1672521600001"
-                      width="100%"
-                      height="100%"
-                      style="border:0;"
-                      allowfullscreen=""
-                      referrerpolicy="no-referrer-when-downgrade"></iframe>
-              </template>
+        </div>
+
+        <!-- Adres kartı — koyu zeminde, kartvizit gibi -->
+        <div class="koyu-zemin rounded bg-kavurma text-krem p-6 md:p-8">
+          <div class="flex items-start gap-4">
+            <span class="shrink-0 text-krem-ikincil"><Ikon ad="konum" boyut={28} /></span>
+            <div>
+              <p class="text-kucuk text-krem-ikincil">Kervan Kahve · Kafe</p>
+              <p class="mt-1 text-alt font-semibold leading-snug text-krem">
+                {adres[0]}<br />{adres[1]}
+              </p>
+            </div>
           </div>
+
+          <div class="mt-6 border-t border-cizgi-koyu pt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 text-kucuk">
+            <span class="text-krem-ikincil">Telefon</span>
+            <a href="tel:+905453207713" class="font-semibold text-krem hover:underline">+90 545 320 77 13</a>
+            <span class="text-krem-ikincil">E-posta</span>
+            <a href="mailto:info@kervankahve.com" class="font-semibold text-krem hover:underline [overflow-wrap:anywhere]">info@kervankahve.com</a>
+            <span class="text-krem-ikincil">Saatler</span>
+            <span class="text-krem">Her gün 08:00–19:00</span>
+          </div>
+        </div>
       </div>
+    </div>
   </section>
-  <script>
-    import '../scripts/map-embed.js';
-  </script>
+
+  <!-- ==================================================================
+       İşletmeler — teklif sayfasına köprü
+       =================================================================== -->
+  <section class="koyu-zemin bg-kavurma text-krem py-14 md:py-20">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="grid lg:grid-cols-[1.4fr_1fr] gap-8 items-end">
+        <div>
+          <h2 class="text-orta text-krem">Bir işletme için mi yazıyorsunuz?</h2>
+          <p class="mt-4 text-govde text-krem-ikincil max-w-okuma">
+            Kafe, restoran ve oteller için kahve, şurup, tatlı ve ekipmanı tek
+            faturada tedarik ediyoruz. Menünüzü anlatın, hacminize göre fiyat çıkaralım.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row lg:justify-end gap-3">
+          <Buton href="/ortaklik.html" variant="vurgu" boyut="buyuk">Teklif isteyin</Buton>
+          <Buton href="/shop.html" variant="ikincil-koyu" boyut="buyuk">Ürünlere bakın</Buton>
+        </div>
+      </div>
+    </div>
+  </section>
 </Base>
-
-<style>
-  /* Bu sayfaya özgü tek kural */
-  .contact-item .icon {
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    stroke: var(--brand-color);
-    margin-top: 5px;
-  }
-
-  /* Harita cephesi — gerçek harita yüklenene kadar duran yer tutucu */
-  .map-facade {
-    width: 100%;
-    height: 100%;
-    min-height: 20rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    background-color: #f3f4f6;
-    background-image: linear-gradient(#e5e7eb 1px, transparent 1px),
-      linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
-    background-size: 2.5rem 2.5rem;
-  }
-
-  .map-facade-pin {
-    width: 2.5rem;
-    height: 2.5rem;
-    color: var(--brand-color);
-  }
-
-  .map-facade-adres {
-    font-weight: 600;
-    color: #374151;
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  .map-facade-cta {
-    background: var(--brand-color);
-    color: #fff;
-    font-weight: 600;
-    padding: 0.6rem 1.5rem;
-    border: none;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: filter 0.2s ease, transform 0.2s ease;
-  }
-
-  .map-facade-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
-
-  .map-facade-cta:focus-visible,
-  .map-facade-link:focus-visible {
-    outline: 2px solid var(--brand-color);
-    outline-offset: 3px;
-  }
-
-  .map-facade-link {
-    font-size: 0.9rem;
-    color: #4b5563;
-    text-decoration: underline;
-  }
-
-  .map-facade-link:hover { color: var(--brand-color); }
-
-  .map-facade-not {
-    font-size: 0.75rem;
-    color: #6b7280;
-    margin: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .map-facade-cta { transition: none; }
-    .map-facade-cta:hover { transform: none; }
-  }
-</style>

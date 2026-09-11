@@ -11,26 +11,27 @@
 const grid = document.getElementById('product-grid');
 
 if (grid) {
-  const cards = Array.from(grid.querySelectorAll('.modern-product-card'));
+  const cards = Array.from(grid.querySelectorAll('.urun-karti'));
   const searchInput = document.getElementById('product-search');
   const countEl = document.getElementById('product-count');
-  const clearBtn = document.getElementById('clear-filters');
   const loader = document.getElementById('infinite-scroll-loader');
   const endMsg = document.getElementById('end-of-products');
   const noResults = document.getElementById('no-results');
-  const checkboxes = Array.from(document.querySelectorAll('.category-checkbox'));
+  const sekmeler = Array.from(document.querySelectorAll('.kategori-sekme'));
 
   const BATCH = Number(grid.dataset.initialVisible) || 24;
 
-  let selectedCategories = [];
+  // Tek kategori seçilir; boş dize "Tümü" demektir. Öncesinde onay kutularıyla
+  // çoklu seçim vardı ama altı ilgisiz kategoriyi birleştirmek pratikte
+  // kullanılmıyordu; kategoriler arası arama zaten arama kutusuyla yapılıyor.
+  let selectedCategory = '';
   let searchQuery = '';
   let visibleLimit = BATCH;
   let matching = cards;
 
   function computeMatching() {
     matching = cards.filter((card) => {
-      const categoryOk =
-        selectedCategories.length === 0 || selectedCategories.includes(card.dataset.category);
+      const categoryOk = selectedCategory === '' || card.dataset.category === selectedCategory;
       const searchOk = searchQuery === '' || (card.dataset.search || '').includes(searchQuery);
       return categoryOk && searchOk;
     });
@@ -88,14 +89,32 @@ if (grid) {
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // ---- Filtre girdileri ---------------------------------------------------
-  checkboxes.forEach((box) => {
-    box.addEventListener('change', () => {
-      selectedCategories = checkboxes
-        .filter((b) => b.checked)
-        .map((b) => b.dataset.category);
-      applyFilters();
-    });
+  // ---- Kategori sekmeleri -------------------------------------------------
+  function sekmeyiIsaretle(kategori) {
+    for (const s of sekmeler) {
+      s.setAttribute('aria-selected', String(s.dataset.category === kategori));
+    }
+  }
+
+  function kategoriSec(kategori, { kaydir = true } = {}) {
+    selectedCategory = kategori;
+    sekmeyiIsaretle(kategori);
+    applyFilters();
+
+    // Adres çubuğu paylaşılabilir kalsın
+    const url = new URL(window.location.href);
+    if (kategori) url.searchParams.set('category', kategori);
+    else url.searchParams.delete('category');
+    window.history.replaceState({}, '', url);
+
+    // Derinlerdeyken kategori değiştirince boş ekrana bakmayalım
+    if (kaydir && window.scrollY > grid.offsetTop) {
+      window.scrollTo({ top: grid.offsetTop - 120, behavior: 'smooth' });
+    }
+  }
+
+  sekmeler.forEach((s) => {
+    s.addEventListener('click', () => kategoriSec(s.dataset.category));
   });
 
   let searchTimer;
@@ -108,25 +127,14 @@ if (grid) {
     }, 150);
   });
 
-  clearBtn?.addEventListener('click', () => {
-    checkboxes.forEach((b) => (b.checked = false));
-    if (searchInput) searchInput.value = '';
-    selectedCategories = [];
-    searchQuery = '';
-    applyFilters();
-  });
-
   // ---- URL parametreleri (?category= / ?search=) --------------------------
   const params = new URLSearchParams(window.location.search);
   const urlCategory = params.get('category');
   const urlSearch = params.get('search');
 
-  if (urlCategory) {
-    const box = checkboxes.find((b) => b.dataset.category === urlCategory);
-    if (box) {
-      box.checked = true;
-      selectedCategories = [urlCategory];
-    }
+  if (urlCategory && sekmeler.some((s) => s.dataset.category === urlCategory)) {
+    selectedCategory = urlCategory;
+    sekmeyiIsaretle(urlCategory);
   }
 
   if (urlSearch) {
@@ -135,41 +143,4 @@ if (grid) {
   }
 
   applyFilters();
-}
-
-// ---- Mobil filtre paneli --------------------------------------------------
-// Eskiden mobil menü modülünün sonundan çağrılıyordu; artık bağımsız.
-const filterToggle = document.getElementById('mobile-filter-toggle');
-const sidebar = document.querySelector('aside.lg\\:col-span-1');
-
-if (filterToggle && sidebar) {
-  const filterClose = document.getElementById('mobile-filter-close');
-  const filterOverlay = document.getElementById('mobile-filter-overlay');
-
-  const openFilter = () => {
-    sidebar.classList.remove('hidden');
-    sidebar.classList.add('mobile-filter-visible');
-    filterOverlay?.classList.add('mobile-filter-overlay-visible');
-    document.body.style.overflow = 'hidden';
-    filterToggle.setAttribute('aria-expanded', 'true');
-  };
-
-  const closeFilter = () => {
-    sidebar.classList.remove('mobile-filter-visible');
-    sidebar.classList.add('hidden');
-    filterOverlay?.classList.remove('mobile-filter-overlay-visible');
-    document.body.style.overflow = '';
-    filterToggle.setAttribute('aria-expanded', 'false');
-  };
-
-  filterToggle.setAttribute('aria-expanded', 'false');
-  filterToggle.addEventListener('click', () =>
-    sidebar.classList.contains('mobile-filter-visible') ? closeFilter() : openFilter()
-  );
-  filterClose?.addEventListener('click', closeFilter);
-  filterOverlay?.addEventListener('click', closeFilter);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar.classList.contains('mobile-filter-visible')) closeFilter();
-  });
 }

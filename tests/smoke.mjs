@@ -56,13 +56,13 @@ for (const [slug, label] of Object.entries(activeMap)) {
   check(`${slug}: masaüstü menüde "${label}" aktif`, active?.trim() === label, `bulunan: ${active}`);
 }
 await page.goto(`${BASE}/iletisim.html`, { waitUntil: 'domcontentloaded' });
-const bottomActive = await page.locator('.bottom-nav a[aria-current="page"]').count();
-check('iletisim: alt menüde yanlış öğe vurgulanmıyor', bottomActive === 0,
-  `${bottomActive} öğe vurgulu`);
+const yanlisAktif = await page.locator('nav.desktop-nav a.active').count();
+check('iletisim: menüde yanlış öğe vurgulanmıyor', yanlisAktif === 0,
+  `${yanlisAktif} öğe vurgulu`);
 
 // ------------------------------------------------------------------ mobil menü
 console.log('\n[3] Mobil menü (hamburger ikonu dahil)');
-const mobileCtx = await browser.newContext({ viewport: { width: 820, height: 900 } });
+const mobileCtx = await browser.newContext({ viewport: { width: 375, height: 760 } });
 const mpage = await mobileCtx.newPage();
 mpage.on('pageerror', (e) => consoleErrors.push(`${mpage.url()} :: ${e.message}`));
 for (const p of ['index', 'shop', 'gizlilik-politikasi', 'kullanim-sartlari']) {
@@ -83,22 +83,25 @@ for (const p of ['index', 'shop', 'gizlilik-politikasi', 'kullanim-sartlari']) {
 console.log('\n[4] Mağaza: filtre, arama, sonsuz kaydırma');
 await page.goto(`${BASE}/shop.html`, { waitUntil: 'networkidle' });
 
-const visible = () => page.locator('.modern-product-card:not(.product-hidden)').count();
+const visible = () => page.locator('.urun-karti:not(.product-hidden)').count();
 const countText = () => page.locator('#product-count').textContent();
 
 check('başlangıçta 24 ürün görünür', (await visible()) === 24, `${await visible()}`);
 check('sayaç 100 ürün diyor', (await countText())?.includes('100'), await countText());
 
-await page.check('.category-checkbox[data-category="espresso"]');
-await page.waitForTimeout(300);
-check('Kahveler filtresi 8 ürüne indiriyor', (await visible()) === 8, `${await visible()}`);
-check('sayaç filtreyle güncelleniyor', (await countText())?.includes('8'), await countText());
+await page.click('.kategori-sekme[data-category="espresso"]');
+await page.waitForTimeout(200);
+check('Kahveler sekmesi 8 ürüne indiriyor', (await visible()) === 8, `${await visible()}`);
+check('sayaç sekmeyle güncelleniyor', (await countText())?.includes('8'), await countText());
 
-await page.check('.category-checkbox[data-category="cay"]');
-await page.waitForTimeout(300);
-check('iki kategori birlikte 14 ürün', (await visible()) === 14, `${await visible()}`);
+await page.click('.kategori-sekme[data-category="cay"]');
+await page.waitForTimeout(200);
+check('Bitki Çayları sekmesi 6 ürüne indiriyor', (await visible()) === 6, `${await visible()}`);
 
-await page.click('#clear-filters');
+const aktif = await page.locator('.kategori-sekme[aria-selected="true"]').count();
+check('tek sekme aktif kalıyor', aktif === 1, `${aktif} sekme aktif`);
+
+await page.click('.kategori-sekme[data-category=""]');
 await page.waitForTimeout(300);
 check('filtre temizleme 24 görünüre dönüyor', (await visible()) === 24, `${await visible()}`);
 
@@ -145,6 +148,46 @@ await page.keyboard.press('Escape');
 await page.waitForTimeout(400);
 check('ESC ile kapanıyor', (await page.locator('#image-lightbox.active').count()) === 0);
 
+// İkinci bir ürüne tıklandığında bir an ÖNCEKİ ürünün fotoğrafı görünüyordu:
+// img.src'ye atama yüklemeyi başlatır ama <img> yeni görsel çözülene kadar
+// eskisini göstermeye devam eder, modal ise beklemeden açılıyordu. Yükleme
+// yavaşlatılıp yakalanıyor — hızlı bağlantıda hata görünmez.
+await page.route('**/_astro/**.webp', async (route) => {
+  await new Promise((r) => setTimeout(r, 600));
+  // unroute çağrıldığında bekleyen yönlendiriciler kalabiliyor; onların
+  // continue() çağrısı "Route is already handled" ile patlıyor.
+  try {
+    await route.continue();
+  } catch {}
+});
+const kartlar = page.locator('.zoomable-image');
+await kartlar.nth(0).click();
+await page.waitForTimeout(1200); // ilk görsel tam yüklensin
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+await kartlar.nth(1).click();
+await page.waitForTimeout(150); // yeni görsel daha yüklenmedi
+// currentSrc'ye bakmak işe yaramaz: src atanır atanmaz güncelleniyor ama
+// ekranda hâlâ eski görselin pikselleri duruyor. Asıl hatalı durum şu —
+// modal açık, görsel henüz yüklenmemiş VE gizlenmemiş. Tarayıcı o aralıkta
+// bir öncekini çiziyor.
+const durum = await page.evaluate(() => {
+  const i = document.getElementById('lightbox-image');
+  return {
+    modalAcik: document.getElementById('image-lightbox').classList.contains('active'),
+    yuklendi: i.complete && i.naturalWidth > 0,
+    gizli: i.classList.contains('yukleniyor'),
+  };
+});
+check(
+  'ikinci açılışta önceki ürünün fotoğrafı görünmüyor',
+  !durum.modalAcik || durum.gizli || durum.yuklendi,
+  'modal açık, görsel yüklenmemiş ve gizlenmemiş — eski görsel çiziliyor'
+);
+await page.unroute('**/_astro/**.webp');
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+
 // ------------------------------------------------------ ana sayfa slider okları
 console.log('\n[6] Ana sayfa slider okları (çift kayma bug\'ı)');
 await page.goto(`${BASE}/index.html`, { waitUntil: 'networkidle' });
@@ -177,25 +220,20 @@ const validAfter = await page.evaluate(() =>
   document.getElementById('partnership-form').checkValidity());
 check('onay kutusu işaretliyken form geçerli', validAfter === true);
 
-// -------------------------------------------------------------- harita cephesi
-console.log('\n[7b] İletişim haritası (tıklayınca yükleniyor)');
+// ----------------------------------------------------------- iletişim sayfası
+console.log('\n[7b] İletişim sayfası (gömülü harita yok)');
 const haritaIstekleri = [];
 const haritaDinleyici = (req) => {
   if (req.url().includes('google.com/maps')) haritaIstekleri.push(req.url());
 };
 page.on('request', haritaDinleyici);
 await page.goto(`${BASE}/iletisim.html`, { waitUntil: 'networkidle' });
-check('başlangıçta harita cephesi görünüyor', await page.locator('#map-embed').isVisible());
-check('başlangıçta iframe yok', await page.locator('iframe').count() === 0);
+check('sayfada iframe yok', await page.locator('iframe').count() === 0);
 check('sayfa açılışında Google Maps isteği yok', haritaIstekleri.length === 0,
   `${haritaIstekleri.length} istek`);
-check('yol tarifi bağlantısı var', await page.locator('.map-facade-link').count() === 1);
-await page.click('#map-load');
-await page.waitForTimeout(1500);
-check('tıklayınca iframe yükleniyor', await page.locator('iframe').count() === 1);
-const haritaSrc = await page.locator('iframe').getAttribute('src');
-check('iframe doğru adrese bakıyor', (haritaSrc || '').includes('google.com/maps/embed'));
-check('cephe kayboluyor', await page.locator('#map-embed').count() === 0);
+check('yol tarifi bağlantısı var', await page.locator('a[href*="google.com/maps/dir"]').count() === 1);
+check('dört kanal kartı var', await page.locator('.kanal-karti').count() === 4);
+check('WhatsApp bağlantısı var', await page.locator('.kanal-karti[href*="wa.me"]').count() === 1);
 page.off('request', haritaDinleyici);
 
 // --------------------------------------------------------- görsel öznitelikleri

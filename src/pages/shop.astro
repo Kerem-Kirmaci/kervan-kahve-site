@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import ProductCard from '../components/ProductCard.astro';
+import UrunKarti from '../components/UrunKarti.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { products } from '../data/products.js';
 import { getImage } from 'astro:assets';
@@ -27,7 +27,9 @@ const sorted = [...products].sort((a, b) => {
 // İlk parti kaç ürün görünür başlasın (kalanı kaydırdıkça açılır)
 const INITIAL_VISIBLE = 24;
 
-const filterCategories = [
+// Kategori sekmeleri. Sayılar veriden hesaplanıyor — ürün eklendiğinde
+// kendiliğinden güncellenir.
+const kategoriTanimlari = [
   { key: 'surup', label: 'Şuruplar' },
   { key: 'pure-tatlandirici', label: 'Püre ve Tatlandırıcılar' },
   { key: 'tatli', label: 'Tatlılar' },
@@ -36,8 +38,16 @@ const filterCategories = [
   { key: 'aksesuar', label: 'Ekipmanlar' },
 ];
 
+const sekmeler = [
+  { key: '', label: 'Tümü', adet: sorted.length },
+  ...kategoriTanimlari.map((k) => ({
+    ...k,
+    adet: sorted.filter((p) => p.category === k.key).length,
+  })),
+];
+
 // Ürün kataloğu yapılandırılmış verisi (arama motorları için).
-// Görsel yolları ProductCard'ın lightbox sürümüyle birebir aynı parametrelerle
+// Görsel yolları UrunKarti'nın lightbox sürümüyle birebir aynı parametrelerle
 // üretiliyor (900px webp, kalite 78); Astro aynı dosyayı yeniden üretmiyor.
 const yapisalGorseller = await Promise.all(
   sorted.map(async (p) => {
@@ -57,7 +67,7 @@ const itemList = {
   '@type': 'ItemList',
   name: 'Kervan Kahve Ürünleri',
   url: 'https://kervankahve.com/shop.html',
-  description: 'Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlılar',
+  description: 'Kahve, şurup, püre ve tatlandırıcı, hazır tatlı, bitki çayı ve kahve ekipmanı',
   numberOfItems: sorted.length,
   itemListElement: sorted.map((p, i) => ({
     '@type': 'ListItem',
@@ -71,11 +81,12 @@ const itemList = {
     },
   })),
 };
+import Ikon from '../components/Ikon.astro';
 ---
 
 <Base
-  title="Ürünlerimiz - Kervan Kahve"
-  description="Kervan Kahve Ürünlerimiz - Premium kahve çekirdekleri, şuruplar, aksesuarlar ve tatlıları keşfedin. Türk kahvesi, filtre kahve ve espresso çeşitleri."
+  title="Ürünlerimiz — Kervan Kahve"
+  description={`Kafe, restoran ve otellere toptan tedarik ettiğimiz ${sorted.length} ürün: kahve, şurup, püre ve tatlandırıcı, hazır tatlı, bitki çayı ve ekipman.`}
   activePage="shop"
   mainClass="container mx-auto px-6 py-12"
 >
@@ -83,91 +94,53 @@ const itemList = {
 
   <Lightbox />
 
-  <!-- Mobil filtre arka planı -->
-  <div id="mobile-filter-overlay" class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"></div>
+  <div class="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div>
+      <h1 class="text-buyuk font-bold text-murekkep">Ürünlerimiz</h1>
+      <p id="product-count" class="mt-2 text-govde text-is" aria-live="polite">
+        {sorted.length} ürün bulundu
+      </p>
+    </div>
 
-  <div class="grid lg:grid-cols-4 gap-8">
-    <!-- Kenar çubuğu -->
-    <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm h-fit hidden lg:block">
-      <div class="lg:hidden flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800">Filtreler</h3>
-        <button
-          id="mobile-filter-close"
-          type="button"
-          class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all rounded-full"
-          aria-label="Filtreleri kapat"
-        >
-          <span class="material-icons" aria-hidden="true">close</span>
-        </button>
-      </div>
+    <div class="relative w-full md:w-72 shrink-0">
+      <Ikon ad="ara" boyut={18} sinif="absolute left-3 top-1/2 -translate-y-1/2 text-is pointer-events-none" />
+      <label for="product-search" class="sr-only">Ürün ara</label>
+      <input type="search" id="product-search" placeholder="Ürün ara..." class="form-alan form-alan--aramali" />
+    </div>
+  </div>
 
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold mb-4 text-gray-800">Ürün Ara</h3>
-        <label for="product-search" class="sr-only">Ürün ara</label>
-        <input
-          type="text"
-          id="product-search"
-          placeholder="Ürün ara..."
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-color focus:border-transparent"
-        />
-      </div>
-
-      <div>
-        {/* Sayfanın tek h1'i. Eskiden h3'tü ve sayfada hiç h1 yoktu. */}
-        <h1 class="text-3xl font-bold mb-6 brand-text">Ürünlerimiz</h1>
-        <h2 class="text-lg font-semibold mb-4 text-gray-800">Kategori Filtreleri</h2>
-        <ul class="space-y-3">
-          {
-            filterCategories.map((c) => (
-              <li>
-                <label class="flex items-center">
-                  <input
-                    type="checkbox"
-                    class="category-checkbox h-4 w-4 rounded border-gray-300 text-brand-color focus:ring-brand-color"
-                    data-category={c.key}
-                  />
-                  <span class="ml-3 text-gray-600 hover:brand-text cursor-pointer">{c.label}</span>
-                </label>
-              </li>
-            ))
-          }
-        </ul>
-
-        <div class="mt-4">
-          <button id="clear-filters" type="button" class="text-sm brand-text hover:underline">
-            Tüm Filtreleri Temizle
+  {/* Kategori sekmeleri.
+      Öncesinde soldaki kenar çubuğunda onay kutuları vardı; sayfanın dörtte
+      birini altı onay kutusu için harcıyor, mobilde de tamamen ayrı bir
+      çekmece bileşenine dönüşüyordu. Sekmeler her genişlikte aynı çalışıyor
+      ve kaydırırken üstte kalıyor. */}
+  <div class="kategori-serit-sarmal">
+    <div class="kategori-sekmeler" role="tablist" aria-label="Ürün kategorileri">
+      {
+        sekmeler.map((k) => (
+          <button
+            type="button"
+            role="tab"
+            class="kategori-sekme"
+            data-category={k.key}
+            aria-selected={k.key === '' ? 'true' : 'false'}
+          >
+            <span>{k.label}</span>
+            <span class="kategori-adet">{k.adet}</span>
           </button>
-        </div>
-      </div>
+        ))
+      }
+    </div>
+  </div>
 
-      <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-        <p id="product-count" class="text-sm text-gray-600" aria-live="polite">
-          {sorted.length} ürün bulundu
-        </p>
-      </div>
-    </aside>
-
-    <!-- Ürün listesi -->
-    <div class="lg:col-span-3">
-      <div class="lg:hidden mb-6">
-        <button
-          id="mobile-filter-toggle"
-          type="button"
-          class="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
-        >
-          <span class="material-icons" aria-hidden="true">filter_list</span>
-          <span>Filtrele</span>
-        </button>
-      </div>
-
-      <div
-        id="product-grid"
-        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8"
+  <div
+    id="product-grid"
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5"
         data-initial-visible={INITIAL_VISIBLE}
       >
         {
           sorted.map((product, i) => (
-            <ProductCard product={product} eager={i < 6} hidden={i >= INITIAL_VISIBLE} index={i} />
+            <UrunKarti product={product} eager={i < 6} hidden={i >= INITIAL_VISIBLE} />
           ))
         }
       </div>
@@ -177,57 +150,110 @@ const itemList = {
         class="mt-12 flex flex-col items-center justify-center py-8 hidden"
       >
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin"></div>
-          <span class="text-gray-600 font-medium">Daha fazla ürün yükleniyor...</span>
+          <div class="w-8 h-8 border-4 border-cizgi border-t-kabuk rounded-tam animate-spin"></div>
+          <span class="text-is font-medium">Daha fazla ürün yükleniyor...</span>
         </div>
       </div>
 
       <div id="end-of-products" class="mt-12 text-center py-8 hidden">
-        <p class="text-gray-500 font-medium">Tüm ürünler yüklendi</p>
+        <p class="text-is font-medium">Tüm ürünler yüklendi</p>
       </div>
 
       <div id="no-results" class="mt-12 text-center py-8 hidden">
-        <p class="text-gray-500 font-medium">Aramanıza uygun ürün bulunamadı.</p>
+        <p class="text-is font-medium">Aramanıza uygun ürün bulunamadı.</p>
       </div>
-    </div>
-  </div>
 </Base>
 
 <style>
   /* Mağaza sayfasına özgü stiller */
 
-  /* Mobil filtre paneli */
-  .mobile-filter-visible {
-    display: block !important;
-    position: fixed;
-    top: auto;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 50;
-    overflow-y: auto;
-    background: white;
-    padding: 1.5rem;
-    animation: slideUp 0.3s ease-out;
-    max-height: 85vh;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+  /* Arama alanı — ortaklık formundaki alanla aynı görünüm */
+  .form-alan {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    background: var(--kum);
+    border: 1px solid var(--cizgi);
+    border-radius: 6px;
+    color: var(--murekkep);
+    font-size: 0.9375rem;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  /* Soldaki büyüteç ikonuna yer aç. Tailwind'in pl-10 sınıfı burada işe
+     yaramıyor: .form-alan kapsamlı (scoped) olduğu için özgüllüğü daha yüksek. */
+  .form-alan--aramali { padding-left: 2.5rem; }
+  .form-alan::placeholder { color: var(--is); opacity: 0.75; }
+  .form-alan:focus {
+    border-color: var(--kabuk);
+    background: var(--kagit);
+    box-shadow: 0 0 0 3px rgba(107, 69, 38, 0.12);
   }
 
-  @keyframes slideUp {
-    from {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
+  /* --- Kategori sekmeleri --- */
+  .kategori-serit-sarmal {
+    position: sticky;
+    /* Header de sticky; şerit onun ALTINA yapışmalı, yoksa arkasında kalıyor.
+       Header yüksekliği logo ölçeğiyle birlikte kırılımlarda değişiyor:
+       <640px 69, 640–767px 81, >=768px 89. */
+    top: 69px;
+    z-index: 20;
+    margin-bottom: 1.75rem;
+    background: var(--kum);
+    border-bottom: 1px solid var(--cizgi);
+    /* container padding'ini aşıp kenarlara uzansın */
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) { .kategori-serit-sarmal { top: 81px; } }
+  @media (min-width: 768px) {
+    .kategori-serit-sarmal { top: 89px; margin-inline: -1.5rem; padding-inline: 1.5rem; }
   }
 
-  .mobile-filter-overlay-visible {
-    display: block !important;
+  .kategori-sekmeler {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .kategori-sekmeler::-webkit-scrollbar { display: none; }
+
+  .kategori-sekme {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    padding: 0.85rem 0.9rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--is);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .kategori-sekme:hover { color: var(--murekkep); }
+  .kategori-sekme[aria-selected='true'] {
+    color: var(--murekkep);
+    border-bottom-color: var(--kabuk);
+  }
+
+  .kategori-adet {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--is);
+    background: var(--kagit);
+    border: 1px solid var(--cizgi);
+    border-radius: 9999px;
+    padding: 0.1rem 0.45rem;
+  }
+  .kategori-sekme[aria-selected='true'] .kategori-adet {
+    color: var(--krem);
+    background: var(--kabuk);
+    border-color: var(--kabuk);
   }
 
   /* Filtreye uymayan / henüz açılmamış kartlar */

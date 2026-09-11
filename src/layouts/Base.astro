@@ -1,7 +1,6 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import BottomNav from '../components/BottomNav.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -55,15 +54,14 @@ const socialImage = new URL(ogImage ?? '/og-image.jpg', Astro.site).href;
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Yazı tipleri -->
+    <!-- Yazı tipi: tek aile (Archivo değişken — hem gövde hem başlık).
+         Öncesinde Playfair Display + Inter + Material Icons fontu, yani üç ayrı
+         istek yükleniyordu. Başlıklar Archivo'nun wdth eksenini kullanıyor;
+         ikonlar artık Ikon.astro içinde SVG olarak geliyor. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap"
       rel="stylesheet"
     />
 
@@ -71,14 +69,17 @@ const socialImage = new URL(ogImage ?? '/og-image.jpg', Astro.site).href;
     <slot name="head" />
   </head>
 
-  <body class="bg-gray-50">
+  <body>
     <Header activePage={activePage} />
 
-    <main class={mainClass} style="z-index: 1; position: relative;">
+    {/* Not: burada eskiden `z-index: 1; position: relative` vardı (eski HTML
+        sürümünden kalma). Bir yığın bağlamı yaratıyordu ve içindeki ürün
+        föyü modalı z-index:10000 olmasına rağmen header'ın (z-50) ALTINDA
+        kalıyordu — modal açıkken header pırıl pırıl görünüyordu. */}
+    <main class={mainClass}>
       <slot />
     </main>
 
-    <BottomNav activePage={activePage} />
     <Footer />
 
     <script>

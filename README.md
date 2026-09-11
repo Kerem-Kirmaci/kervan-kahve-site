@@ -28,7 +28,7 @@ src/
   pages/         Her dosya bir sayfa: index.astro → /index.html
   layouts/
     Base.astro   Ortak <head>, header, footer, alt menü
-  components/    Header, Footer, BottomNav, ProductCard, SliderCard, Lightbox
+  components/    Header, Footer, BottomNav, Ikon, Buton, UrunKarti, Lightbox
   data/
     products.js       Ürün kataloğu (100 ürün)
     home-sliders.js   Ana sayfadaki kategori slider'larının içeriği
@@ -37,9 +37,31 @@ src/
   styles/
     global.css   Tüm sayfalarda ortak stiller
   assets/images/ Kaynak görseller (build sırasında optimize edilir)
+  assets/_orijinal/  Ürün görsellerinin zemin temizliği öncesi hâlleri.
+                 Astro'nun glob'unun DIŞINDA — içeride olsa her görsel iki
+                 kez işlenirdi.
 public/          Olduğu gibi kopyalanan dosyalar (robots.txt, favicon, og-image)
 tests/           İşlevsel test + görsel karşılaştırma araçları
+tools/           kesit.swift (zemin temizleyici, macOS),
+                 beyaz-kes.mjs (beyaz stüdyo zemini temizleyici),
+                 og-kart-uret.mjs (sosyal paylaşım kartı)
+.claude/skills/  Tasarım sözleşmesi ve frontend-design skill'i
 ```
+
+## Tasarım sistemi
+
+Renk, tipografi, ölçek, ikon ve ürün görseli kuralları
+`.claude/skills/kervan-tasarim-sistemi/SKILL.md` içinde. **Sayfa veya bileşen
+yazmadan önce okuyun.**
+
+Özet:
+- Tek kaynak `tailwind.config.mjs`. Tailwind'in `amber/gray/blue/green`
+  skalaları bilinçli olarak kaldırıldı; yazarsanız sınıf üretilmez.
+- Tek yazı tipi ailesi: Archivo (değişken).
+- Tek ikon kaynağı: `src/components/Ikon.astro`. Sitedeki tek `<svg>` orada.
+- Altı adımlı punto ölçeği, üç yarıçap, iki gölge.
+- Altın (`altin`) tek aksan ve yalnızca tıklanabilir öğelerde: buton, bağlantı,
+  aktif sayfa işareti, odak halkası. Süs ikonu veya istatistik sayısı altın olmaz.
 
 ### URL'ler neden `.html` uzantılı?
 
@@ -64,6 +86,73 @@ Görselleri elle küçültmeye gerek yok: Astro build sırasında WebP'ye çevir
 kart ve büyütme (lightbox) için ayrı boyutlar üretir, `width`/`height`
 özniteliklerini kendisi ekler.
 
+### Ürün görselinin zeminini temizlemek
+
+Katalogdaki bütün ürün görselleri şeffaf zeminli; kartın kendi zemini arkada
+görünüyor. Tedarikçiden gelen görsellerin her biri kendi renkli stüdyo zemini
+ile geldiği için katalog eskiden yamalı duruyordu.
+
+```bash
+swiftc -O tools/kesit.swift -o tools/kesit   # bir kez derlenir
+tools/kesit girdi.jpg cikti.png              # şeffaf zeminli kesit
+```
+
+macOS Vision çerçevesini kullanır: model indirmez, cihaz üzerinde çalışır.
+Sonra 900px'e sığdırıp %5 şeffaf pay ekleyip WebP'ye çevirin. Orijinali
+`src/assets/_orijinal/` altına koyun.
+
+### Beyaz zeminli görseller için (her yerde çalışır)
+
+`kesit.swift` yalnızca macOS'ta derleniyor. Ürün görseli **düz beyaz** stüdyo
+zeminiyle geliyorsa — AI üretimi mockup'lar ve çoğu tedarikçi çekimi öyle —
+bu araç aynı işi her işletim sisteminde yapar:
+
+```bash
+node tools/beyaz-kes.mjs girdi.jpg cikti.webp --genislik 900
+```
+
+Ürünü bulup kırpar, beyaz zemini şeffaflaştırır, kenarı yumuşatır ve WebP
+yazar. Doğrudan `src/assets/images/<kategori>/` altına üretebilirsiniz.
+
+Eşikleme yapmaz, **kenardan taşma-doldurma** yapar: yalnızca kadrajın
+kenarına bağlı beyaz bölge silinir. Ürünün içindeki beyaz korunur — Kervan
+logosundaki beyaz "KERVAN KAHVE" yazısı düz eşiklemeyle delinirdi.
+
+Rastgele veya renkli zeminler için yine `kesit.swift` gerekir.
+
+**Şeffaf ambalajlarda şeffaf kesim işlemez.** Beyaz zeminde çekilmiş şeffaf
+bir poşette opak beyaz etiketi şeffaf filmden ayırmanın yolu yok: ikisi de
+beyaz, ikisi de dış zemine bağlı. Hangi eşik seçilirse seçilsin ya etiket
+siliniyor ya gölge kalıyor — bilgi görselde yok. Böyle ürünlerde zemini
+kartın rengine boyayın:
+
+```bash
+node tools/beyaz-kes.mjs girdi.jpg cikti.webp --zemin '#FBF8F2'
+```
+
+Şeffaf poşet zaten arkasındaki yüzeyi göstermeli; kart zemini `kagit`
+olduğu için sonuç doğru görünür. **Karşılığı:** çıktı opak olur. Kart zemini
+değiştirilirse (`UrunKarti.astro` içindeki `bg-kagit`) bu görseller uyumsuz
+kalır ve sebebi kolay anlaşılmaz. Şu an yalnızca altı bitki çayı bu kipte;
+ürün opak ise şeffaf kesim her zaman daha sağlam.
+
+### Sosyal paylaşım kartı
+
+`public/og-image.jpg`, bağlantı WhatsApp / LinkedIn / X'te paylaşıldığında
+görünen görsel. Elle çizilmiş bir dosya değil: sitenin kendi paletinden ve
+Archivo'dan üretiliyor.
+
+```bash
+node tools/og-kart-uret.mjs
+```
+
+Metni veya tasarımı değiştirmek için `tools/og-kart.html`i düzenleyip komutu
+yeniden çalıştırın. Sistemdeki Chrome'u sürer, ayrı tarayıcı indirmez.
+
+Kart 1200×630; sohbet uygulamalarında ~320px genişlikte görüldüğü için
+başlık büyük tutuldu. **Not:** paylaşım platformları bu görseli agresif
+önbelleğe alır — değiştirdikten sonra eski kart bir süre daha görünebilir.
+
 ## Test
 
 Testler **derlenmiş çıktı** üzerinde çalışır, bu yüzden önce build alın:
@@ -76,7 +165,7 @@ npm test
 
 71 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
 filtreleri ve arama, sonsuz kaydırma, lightbox, slider okları, ortaklık formu
-ve KVKK onayı, iletişim haritasının tıklanınca yüklenmesi, görsel öznitelikleri,
+ve KVKK onayı, iletişim sayfası (gömülü harita yok), görsel öznitelikleri,
 yatay taşma ve konsol hataları.
 
 Sistemdeki Chrome'u kullanır; ayrıca tarayıcı indirmez.
@@ -110,3 +199,8 @@ altına yazar. `docs/` klasörü git'e girmez.
   kırılmasın diye adres, iletişim bağlantıları içeren bir sayfa gösteriyor.
 - **Analytics kurulu değil.** Eklenirse çerez banner'ı da gerekir; çerez
   politikası sayfası buna göre güncellenmeli.
+- **Tailwind Typography eklentisi kurulu değil.** Yasal sayfalarda bir dönem
+  `prose` sınıfları vardı ama hiçbir şey yapmıyorlardı; kaldırıldı.
+- **İş ortağı logoları krem tonuna indiriliyor** (`filter: brightness(0)
+  invert(1)`). Koyu zeminde altı farklı marka rengi paleti dağıtıyordu. Tam
+  renk gerekiyorsa `index.astro` içindeki `.ortak-logo img` filtresi kaldırılır.

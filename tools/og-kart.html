@@ -1,0 +1,82 @@
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap" rel="stylesheet" />
+<style>
+  /* Paletin tamamı tailwind.config.mjs'ten — yeni renk yok */
+  :root {
+    --kavurma: #2E1D10;
+    --kagit: #FBF8F2;
+    --krem: #F5EFE3;
+    --krem-ikincil: #CDBBA2;
+    --cizgi-koyu: #46301D;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: var(--kavurma);
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--krem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 64px 72px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- üst: logo + kelime markası --- */
+  .ust { display: flex; align-items: center; gap: 20px; }
+  /* Logonun dış halkası koyu kahve; kavurma zeminde kaybolur. Header'daki
+     gibi açık bir plaka üstünde duruyor. */
+  .logo-plaka {
+    width: 96px; height: 96px;
+    border-radius: 9999px;
+    background: var(--kagit);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-plaka img { width: 84px; height: 84px; object-fit: contain; }
+  .kelime {
+    font-size: 32px;
+    font-weight: 700;
+    font-stretch: 112%;
+    letter-spacing: -0.02em;
+  }
+
+  /* --- orta: konumlandırma cümlesi, sayfanın h1'iyle aynı --- */
+  h1 {
+    font-size: 82px;
+    font-weight: 700;
+    font-stretch: 112%;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    /* İki satır: "…her şey," / "tek tedarikçiden." Üç satıra bölününce
+       sağ üçte bir tamamen boş kalıyor ve kart sola devriliyor. */
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  /* --- alt: yük ve adres --- */
+  .alt {
+    border-top: 1px solid var(--cizgi-koyu);
+    padding-top: 26px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .yuk { font-size: 26px; color: var(--krem-ikincil); letter-spacing: -0.01em; }
+  .adres { font-size: 26px; font-weight: 600; color: var(--krem); white-space: nowrap; }
+</style>
+
+<div class="ust">
+  <span class="logo-plaka"><img src="LOGO_SRC" alt="" /></span>
+  <span class="kelime">Kervan Kahve</span>
+</div>
+
+<h1>Bir kafenin ihtiyacı olan her şey, tek tedarikçiden.</h1>
+
+<div class="alt">
+  <span class="yuk">Kahve · Şurup · Püre · Tatlı · Bitki çayı · Ekipman</span>
+  <span class="adres">kervankahve.com</span>
+</div>

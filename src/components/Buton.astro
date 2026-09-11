@@ -1,0 +1,63 @@
+---
+import Ikon from './Ikon.astro';
+
+/**
+ * Sitedeki tek buton tanımı.
+ *
+ * Öncesinde her sayfa kendi butonunu elle yazıyordu: 15 farklı dolgu, kenar
+ * boşluğu, geçiş ve hover davranışı. Ölçek burada tek yerde duruyor.
+ *
+ * Varyantlar:
+ *   birincil — sayfanın ana eylemi (kahve dolgulu)
+ *   ikincil  — yanındaki ikinci seçenek (kenarlıklı, dolgusuz)
+ *   vurgu    — altın. Sayfa başına EN FAZLA BİR kez; tek aksan kuralı.
+ */
+interface Props {
+  href: string;
+  variant?: 'birincil' | 'ikincil' | 'ikincil-koyu' | 'vurgu';
+  boyut?: 'orta' | 'buyuk';
+  /** Ikon.astro'daki ikon adı */
+  ikon?: string;
+  /** İkon metnin sonuna gelsin (yön bildiren oklar için) */
+  ikonSonda?: boolean;
+  /** Kapsayıcının tamamını kaplasın (mobilde yan yana iki buton için) */
+  tam?: boolean;
+  sinif?: string;
+  yeniSekme?: boolean;
+}
+
+const {
+  href, variant = 'birincil', boyut = 'orta',
+  ikon, ikonSonda = false, tam = false, sinif = '', yeniSekme = false,
+} = Astro.props;
+
+const varyantlar = {
+  birincil: 'bg-kabuk text-krem hover:bg-kavurma',
+  ikincil: 'bg-kagit text-murekkep border border-kabuk hover:bg-kum',
+  // Koyu zeminde: dolgusuz, krem kenarlıklı
+  'ikincil-koyu': 'bg-transparent text-krem border border-krem-ikincil hover:bg-kabuk hover:border-kabuk',
+  vurgu: 'bg-altin text-kavurma hover:bg-altin-koyu hover:text-krem',
+};
+
+const boyutlar = {
+  orta: 'h-11 px-5 text-kucuk',
+  buyuk: 'h-14 px-7 text-govde',
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex items-center justify-center gap-2 rounded font-semibold',
+    'transition-colors whitespace-nowrap',
+    varyantlar[variant],
+    boyutlar[boyut],
+    tam && 'w-full',
+    sinif,
+  ]}
+  {...yeniSekme ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+>
+  {ikon && !ikonSonda && <Ikon ad={ikon} boyut={boyut === 'buyuk' ? 20 : 18} />}
+  <slot />
+  {ikon && ikonSonda && <Ikon ad={ikon} boyut={boyut === 'buyuk' ? 20 : 18} />}
+</a>
