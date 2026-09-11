@@ -4,82 +4,49 @@ Tasarım yenilenmesi (Faz 1–6) tamamlandı ve **11 Eylül 2026'da yayına
 alındı** — işletme sahibi onayladı, `tasarim-yenileme` `main`'e birleşti
 (bkz. "Yayına alma"). Sıradaki iş QR menü.
 
-## 1. ÖNCELİK: QR menü
+## 1. ÖNCELİK: QR menü — kafenin menüsü
 
-**Sıradaki oturum buradan başlıyor.** Ama önce aşağıdaki "bu kimin menüsü?"
-sorusunun cevabı lazım — üç senaryo bambaşka işler doğuruyor, cevap gelmeden
-kod yazmak boşa gider. İşletme sahibiyle görüşülürken sorulacak somut soru en
-altta: basılı QR kodlar kaç tane ve nerede duruyor?
+**Taslak yapıldı (11 Eylül 2026), `kafe-menu` dalında.** İşletme sahibi
+toptan işinin yanına bir kafe açıyor; menü o kafeye ait. Sayfa `/kafe`
+(`src/pages/kafe.astro`), içerik `src/data/menu/kafe.js`, araştırma ve
+tasarım gerekçeleri `docs/qr-menu-arastirma.md`.
 
-`/menu` şu an "yenileniyor" yer tutucusu. Eski QR menü uygulamasının kaynağı
-yok; sayfa, basılı QR kodlar kırılmasın diye duruyor (`noindex`, sitemap
-dışında). WhatsApp ve telefon bağlantısı veriyor.
+Verilen kararlar:
 
-### Önce şu netleşmeli: bu kimin menüsü?
+- Takeaway dükkânı kalıyor; `/menu` onun basılı QR'larına ait, dokunulmadı.
+- Yalnızca menü; masadan sipariş yok.
+- Kafenin adı, açılış tarihi ve gerçek kalem listesi yok. Sayfadaki her şey
+  yer tutucu ve sayfa bunu bir bantla söylüyor (`taslak: true`).
+- Gösterim: `main`'e taslak PR → Netlify Deploy Preview adresi + `npm run qr`
+  ile QR. PR birleştirilmeyecek.
 
-Her şey buna bağlı. Üç ihtimal var ve üçü bambaşka iş:
+### Sıradaki adımlar
 
-**A — Kervan'ın kendi dükkânı.** Cami Şerif'teki kuru kahveci tezgâhındaki QR.
-Gelen müşteri ne satıldığını görsün. En basiti; katalog zaten var, fiyat
-eklenip kategorilere bölünmesi yeterli.
+- [ ] Taslağı işletme sahibine göster (önizleme adresi + QR; telefonla
+      tarayıp gerçekten denesin).
+- [ ] Ondan gelecekler: kafenin **adı**, gerçek **kalem listesi ve fiyatlar**,
+      Türk kahvesi çeşitleri, yiyecek olup olmayacağı, QR'ların masada mı
+      tezgâhta mı duracağı. Hepsi `kafe.js`'e girer; kod değişmez.
+- [ ] Ad kesinleşince: `kafe.js` `ad`/`slug`, sayfa başlığı ve OG görseli;
+      adres `/kafe` kalacak mı yoksa `/menu/<ad>` mı (ikincisi `netlify.toml`
+      `/menu/*` yönlendirmesini değiştirir); `noindex` ve sitemap kararı.
+- [ ] Tedarikçiden (DORO, Gusse, Bobaco) **bileşen ve alerjen** bilgisi —
+      alerjen bildirimi 2020'den beri zorunlu, bileşen listesi 31.12.2026'ya
+      kadar, kalori 31.12.2027'ye kadar zorunlu oluyor. Alanlar hazır, veri
+      yer tutucu.
+- [ ] Açılışa yakın: `taslak: false`, gerçek `gecerlilik` tarihi, masa QR
+      baskısı (`npm run qr -- https://kervankahve.com/kafe docs/qr/masa.svg`;
+      mat, en az 3×3 cm, yanında "Menü" yazısı).
+- [ ] Basılı menü: `@media print` çıktısı istenince verilecek liste için
+      yeter; tasarlanmış bir kâğıt menü ayrı iş.
 
-**B — Tedarik ettiğimiz kafelerin masalarındaki menü.** Yani Kervan, kafeye
-kahveyi de menüyü de veriyor. Stratejik olarak en güçlüsü:
-- Sitenin yeni konumlandırması zaten "tek tedarikçi + biz destekliyoruz".
-  Ana sayfada "Özel karışım / Barista eğitimi / Ekipman ve servis" var;
-  "Menünüzü de biz kuralım" doğal dördüncü madde.
-- Kafenin menüsü Kervan'ın sisteminde çalışıyorsa tedarikçi değiştirmek
-  zorlaşır.
-- Her masada küçük bir "Kervan Kahve" imzası olur — tam hedef kitlenin
-  (diğer kafe sahiplerinin) gözü önünde, bedava tanıtım.
+### Eski notlardan hâlâ geçerli olanlar
 
-**C — Saha ekibinin kataloğu.** Kafeye giden temsilcinin tablette gösterdiği
-ürün listesi. Aslında `/shop` bunu zaten yapıyor; ayrı bir menüye gerek yok.
-
-**Sorulacak:** Şu an basılı olan QR kodlar nerede duruyor? Dükkânda mı,
-kafelerde mi? Kaç tane?
-
-### B seçilirse: altyapı gerekmiyor
-
-Site statik Astro; çok kiracılı bir menü sistemi kurmaya gerek yok:
-- Kafe başına bir veri dosyası: `src/data/menuler/<kafe-slug>.js`
-- Build çıktısı: `/menu/<kafe-slug>.html`
-- Güncellemeyi Kervan yapar (self-servis değil, hizmetin parçası)
-- Veritabanı yok, giriş yok, aylık maliyet yok
-
-2-3 kafeyle pilot; talep gelirse self-servise o zaman bakılır.
-
-### Çözülmesi gereken teknik konu: fiyat
-
-`products.js` içinde fiyat alanı **yok** ve olmamalı da — toptan fiyat
-müşteriye göre pazarlıkla belirleniyor, siteye açık yazılamaz. Ama bir kafe
-menüsünün fiyata ihtiyacı var ve o fiyat kafenin kendi perakende fiyatı,
-Kervan'ınki değil.
-
-Yani menü verisi ürün kataloğundan **ayrı** tutulmalı: ürün adı ve görseli
-katalogdan gelir, fiyat ve menü sıralaması kafeye ait olur.
-
-### Tasarım notları (hangi yön seçilirse seçilsin)
-
-Kafe masasında, kötü Wi-Fi'da, tek elle, güneş altında açılan bir sayfa:
-
-- **Hız her şeyden önemli.** Statik HTML, çerçeve yok, görseller tembel
-  yüklensin. Hedef: 3G'de 2 saniyenin altında ilk görünüm.
-- **Tek elle kullanılabilsin.** Kategori gezinme başparmağın ulaştığı yerde
-  (üstte değil altta ya da yapışkan şerit), tek uzun kaydırma değil.
-- **Yakınlaştırma gerektirmesin.** Punto en az 16px; mevcut `text-govde` (18px)
-  zaten uygun.
-- **Güneş altında okunsun.** Kontrast tarafı hâlihazırda iyi (hepsi AA).
-- **Uygulama indirme, çerez banner'ı, giriş yok.** Sıfır sürtünme.
-- Fiyatlar sağa dayalı ve `tabular-nums` ile hizalı (token zaten var).
-- Sayfa açıldığında ne olduğu belli olsun: kafenin adı ve logosu üstte,
-  Kervan imzası altta küçük.
-
-### Ne olursa olsun
-
-`/menu` adresi çalışmaya devam etmeli — basılı QR kodların kaç tane ve nerede
-olduğunu bilmiyoruz. Yeni yapı `/menu/<kafe>` ise, `/menu` bir seçim sayfası
-ya da mevcut yer tutucu olarak kalır.
+- Menü verisi ürün kataloğundan **ayrı**; ad, görsel, bileşen ve tat notu
+  katalogdan (`katalog` slug'ı), fiyat ve sıra menüden.
+- B senaryosu ("menünüzü de biz kuralım") ölmedi: kendi kafe ilk vitrin.
+  Sayfanın altındaki cümle bunu söylüyor. İkinci kafe gelirse ikinci veri
+  dosyası + ikinci sayfa; çok kiracılı altyapı gerekmiyor.
 
 ## Karar bekleyenler
 
@@ -270,19 +237,25 @@ Bunlar hata değil, verilmiş kararlar. Yanlış geldiyse geri almak kolay.
 ## Başka bilgisayardan devam etmek
 
 Yenilenmiş site `main` dalında ve canlıda; `tasarim-yenileme` dalı işini
-bitirdi. QR menü işi `kafe-menu` dalında sürüyor (bu yazıldığında henüz
-yalnızca yerelde; GitHub'a çıkınca `git checkout kafe-menu`).
+bitirdi. QR menü işi `kafe-menu` dalında sürüyor ve GitHub'da; `main`'in
+üstüne rebase edilmiş, yani `main`'deki her şeyi içeriyor.
 
 ### Kurulum
 
 ```bash
 git clone https://github.com/Kerem-Kirmaci/kervan-kahve-site.git
 cd kervan-kahve-site
-npm install
-npm run dev          # http://localhost:4321
+git checkout kafe-menu
+npm install          # qrcode devDependency'si bu dalda eklendi
+npm run dev          # http://localhost:4321/kafe
 ```
 
-Depo zaten varsa: `git fetch && git checkout main && git pull`
+Depo zaten varsa: `git fetch && git checkout kafe-menu && git pull && npm install`
+
+Menü işinde dokunulacak dosyalar: `src/data/menu/kafe.js` (içerik),
+`src/pages/kafe.astro` (sayfa ve stil), `src/scripts/kafe-menu.js` (şerit
+işaretleme), `tests/smoke.mjs` [8b] (kontroller). Araştırma ve gerekçeler
+`docs/qr-menu-arastirma.md`.
 
 ### Depoyla birlikte gelenler
 

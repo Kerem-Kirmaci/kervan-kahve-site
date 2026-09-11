@@ -33,7 +33,7 @@ page.on('pageerror', (e) => consoleErrors.push(`${page.url()} :: ${e.message}`))
 
 const pages = [
   'index', 'shop', 'hakkimizda', 'ortaklik', 'iletisim',
-  'gizlilik-politikasi', 'cerez-politikasi', 'kullanim-sartlari', 'menu',
+  'gizlilik-politikasi', 'cerez-politikasi', 'kullanim-sartlari', 'menu', 'kafe',
 ];
 
 // ---------------------------------------------------------------- sayfa yapısı
@@ -257,6 +257,79 @@ check('tüm görsellerde alt var', imgStats.withAlt === imgStats.total,
   `${imgStats.withAlt}/${imgStats.total}`);
 check('görseller WebP olarak sunuluyor', imgStats.webp === imgStats.total,
   `${imgStats.webp}/${imgStats.total}`);
+
+// ------------------------------------------------------------ kafe menüsü
+console.log('\n[8b] Kafe QR menüsü');
+{
+  // Masadaki telefon: 390 genişlik, şerit yapışkan, JS bulunulan bölümü işaretler
+  const c = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const pg = await c.newPage();
+  pg.on('console', (m) => {
+    if (m.type() === 'error') consoleErrors.push(`${pg.url()} :: ${m.text()}`);
+  });
+  pg.on('pageerror', (e) => consoleErrors.push(`${pg.url()} :: ${e.message}`));
+  await pg.goto(`${BASE}/kafe.html`, { waitUntil: 'networkidle' });
+
+  check('kafe: noindex', await pg.locator('meta[name="robots"][content*="noindex"]').count() === 1);
+  check('kafe: site gezinmesi ve arama yok',
+    await pg.locator('nav.desktop-nav, #mobile-menu, form[role="search"], #mobile-menu-btn').count() === 0);
+
+  const serit = await pg.evaluate(() => {
+    const cipler = [...document.querySelectorAll('.serit a[href^="#"]')];
+    return {
+      cip: cipler.length,
+      bolum: document.querySelectorAll('main section[id]').length,
+      kirik: cipler.filter((a) => !document.getElementById(a.hash.slice(1))).length,
+    };
+  });
+  check('kafe: her kategorinin çipi var ve hedefini buluyor',
+    serit.cip > 0 && serit.cip === serit.bolum && serit.kirik === 0, JSON.stringify(serit));
+
+  const fiyat = await pg.evaluate(() => {
+    const kalemler = [...document.querySelectorAll('.kalem')];
+    const fiyatlar = [...document.querySelectorAll('.fiyat')];
+    return {
+      kalem: kalemler.length,
+      fiyatsiz: kalemler.filter((k) => !k.querySelector('.fiyat')).length,
+      bozuk: fiyatlar.filter((f) => !/\d\s?₺$/.test(f.textContent.trim())).length,
+    };
+  });
+  check('kafe: her kalemde fiyat var', fiyat.kalem > 0 && fiyat.fiyatsiz === 0,
+    `${fiyat.fiyatsiz}/${fiyat.kalem} fiyatsız`);
+  check('kafe: her fiyat ₺ ile bitiyor', fiyat.bozuk === 0, `${fiyat.bozuk} bozuk`);
+
+  // Tatlı görselleri: shop'taki [8] ile aynı ölçüt
+  const kafeImg = await pg.evaluate(() => {
+    const imgs = [...document.querySelectorAll('main img')];
+    return {
+      total: imgs.length,
+      ok: imgs.filter((i) => i.getAttribute('width') && i.getAttribute('height')
+        && i.hasAttribute('alt') && (i.getAttribute('src') || '').endsWith('.webp')).length,
+    };
+  });
+  check('kafe: tatlı görsellerinde width+height, alt ve WebP var',
+    kafeImg.total > 0 && kafeImg.ok === kafeImg.total, `${kafeImg.ok}/${kafeImg.total}`);
+
+  await pg.locator('details summary').first().click();
+  check('kafe: alerjen/bileşen detayı açılıyor', await pg.locator('details[open]').count() === 1);
+
+  // Gözlemci: ikinci bölüme kaydırınca çipi işaretlenmeli (son bölüm sayfa
+  // sonunda banda giremeyebilir, o yüzden ikinci)
+  const ikinci = await pg.evaluate(() => document.querySelectorAll('main section[id]')[1].id);
+  await pg.evaluate((id) => document.getElementById(id).scrollIntoView(), ikinci);
+  await pg.waitForTimeout(600);
+  check('kafe: kaydırınca bulunulan kategori şeritte işaretleniyor',
+    await pg.locator('.serit a[aria-current="true"]').getAttribute('href') === `#${ikinci}`);
+
+  await pg.emulateMedia({ media: 'print' });
+  check('kafe: baskıda şerit gizli', !(await pg.locator('.serit').isVisible()));
+  await pg.emulateMedia({ media: null });
+
+  const html = await pg.content();
+  check('kafe: HTML 80 KB altında', html.length < 80_000, `${html.length} karakter`);
+
+  await c.close();
+}
 
 // -------------------------------------------------------------- yatay taşma
 console.log('\n[9] Yatay taşma (mobil/tablet/masaüstü)');

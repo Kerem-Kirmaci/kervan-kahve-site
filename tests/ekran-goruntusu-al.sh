@@ -12,7 +12,7 @@ OUT="$1"
 BASE="$2"
 mkdir -p "$OUT"
 
-PAGES="index shop hakkimizda ortaklik iletisim gizlilik-politikasi cerez-politikasi kullanim-sartlari"
+PAGES="index shop hakkimizda ortaklik iletisim gizlilik-politikasi cerez-politikasi kullanim-sartlari kafe"
 
 shoot() { # ad, url, genişlik, yükseklik, etiket
   local name="$1" url="$2" w="$3" h="$4" tag="$5"

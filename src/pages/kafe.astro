@@ -1,0 +1,311 @@
+---
+/**
+ * Kafe QR menüsü — masadaki karekodun açtığı sayfa.
+ *
+ * Site iskeleti yok (Base `sade`): masadaki müşteriye Ortaklık, Mağaza ya da
+ * arama kutusu gerekmiyor. Sayfa kendi başlığını, yapışkan kategori şeridini
+ * ve altbilgisini taşıyor. Tek uzun kaydırma; çipler bölümlere atlar,
+ * `kafe-menu.js` yalnızca bulunulan bölümü işaretler.
+ *
+ * Veri: src/data/menu/kafe.js (şema sema.js, normalize hazirla.js). Hatalı
+ * veri build'i burada durdurur. Tasarım gerekçeleri: docs/qr-menu-arastirma.md
+ */
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import Ikon from '../components/Ikon.astro';
+import { productImage } from '../data/product-images.js';
+import { kafe } from '../data/menu/kafe.js';
+import { hazirla, fiyatYazisi, tarihYazisi } from '../data/menu/hazirla.js';
+
+const menu = hazirla(kafe);
+const tarih = tarihYazisi(kafe.gecerlilik);
+const kalemSayisi = menu.kategoriler.reduce((t, k) => t + k.kalemler.length, 0);
+---
+
+<Base
+  title={`${kafe.ad} — Menü${kafe.taslak ? ' (taslak)' : ''}`}
+  description={`${kafe.ad} menüsü: kahve, çay, soğuk içecek ve tatlı — ${kalemSayisi} kalem, fiyat ve alerjen bilgisiyle.`}
+  noindex
+  sade
+>
+  <header class="max-w-okuma mx-auto px-4 pt-8 pb-5">
+    {kafe.taslak && (
+      <p class="inline-block text-mini text-is bg-kagit border border-cizgi rounded-tam px-3 py-1">
+        Taslak — kafe adı, fiyatlar ve besin bilgileri yer tutucu
+      </p>
+    )}
+    <h1 class="text-buyuk text-murekkep mt-3">{kafe.ad}</h1>
+    <p class="text-kucuk text-is mt-1">Menü · {kafe.altBaslik}</p>
+  </header>
+
+  <nav class="serit" aria-label="Menü kategorileri">
+    <ul class="serit-ic">
+      {menu.kategoriler.map((k) => (
+        <li>
+          <a href={`#${k.id}`} class="cip">{k.ad}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <main class="max-w-okuma mx-auto px-4 pb-10">
+    {menu.kategoriler.map((k) => (
+      <section id={k.id} class="bolum" aria-labelledby={`${k.id}-baslik`}>
+        <h2 id={`${k.id}-baslik`} class="text-orta text-murekkep">{k.ad}</h2>
+        {k.aciklama && <p class="text-kucuk text-is mt-1">{k.aciklama}</p>}
+        {k.boylar && (
+          <p class="boylar text-mini text-is" aria-hidden="true">
+            {k.boylar.map((b) => <span class="boy">{b}</span>)}
+          </p>
+        )}
+
+        <ul class="mt-2 divide-y divide-cizgi">
+          {k.kalemler.map((m) => (
+            <li class="kalem">
+              {k.gorsel && m.urun && (
+                <Image
+                  src={productImage(m.urun.image)}
+                  alt=""
+                  width={160}
+                  class="w-20 h-20 object-contain shrink-0 rounded bg-kagit"
+                  loading="lazy"
+                />
+              )}
+
+              <div class="kalem-metin">
+                <p class="kalem-ad">
+                  {m.ad}
+                  {m.etiketler.map((e) => <span class="etiket">{e}</span>)}
+                </p>
+                {m.not && <p class="text-kucuk text-is">{m.not}</p>}
+
+                {m.detayVar && (
+                  <details class="detay">
+                    <summary>
+                      <Ikon ad="chevron-sag" boyut={14} />
+                      {m.alerjenler.length > 0
+                        ? `Alerjen: ${m.alerjenler.join(', ')}`
+                        : 'Bileşenler'}
+                    </summary>
+                    <div class="detay-govde">
+                      {m.bilesenler.length > 0 && (
+                        <p class="genis">{m.bilesenler.join(', ')}</p>
+                      )}
+                      {m.kcal != null && <p class="genis">{m.kcal} kcal</p>}
+                    </div>
+                  </details>
+                )}
+              </div>
+
+              <p class="fiyatlar tabular-nums">
+                {m.fiyatlar.map((f) => (
+                  <span class="fiyat">
+                    {f.boy && (
+                      <span class={m.boyUyumlu ? 'sr-only' : 'sessiz'}>{f.boy} </span>
+                    )}
+                    {fiyatYazisi(f.fiyat)}<span class="sessiz"> ₺</span>
+                  </span>
+                ))}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        {k.ekler.length > 0 && (
+          <p class="ekler text-kucuk text-is">
+            <span class="font-semibold">Ekler:</span>
+            {k.ekler.map((e) => (
+              <span class="ek">
+                {e.ad}{' '}
+                <span class="tabular-nums whitespace-nowrap">
+                  +{fiyatYazisi(e.fiyat)}<span class="sessiz"> ₺</span>
+                </span>
+              </span>
+            ))}
+          </p>
+        )}
+      </section>
+    ))}
+  </main>
+
+  <footer class="max-w-okuma mx-auto px-4 py-8 border-t border-cizgi text-kucuk text-is">
+    <p>
+      Fiyatlar TL, KDV dahil; <time datetime={kafe.gecerlilik}>{tarih}</time> itibarıyla geçerlidir.
+    </p>
+    <p class="mt-2">Alerjilerinizi lütfen bildirin. Basılı menü isteyebilirsiniz.</p>
+    <p class="mt-6">
+      Bu menüdeki kahveyi, şurubu ve tatlıyı Mersin'deki kafelere{' '}
+      <a href="https://kervankahve.com" class="text-altin-koyu underline underline-offset-2">Kervan Kahve</a>
+      {' '}getiriyor.
+    </p>
+  </footer>
+
+  <script>
+    import '../scripts/kafe-menu.js';
+  </script>
+</Base>
+
+<style>
+  /* --- Kategori şeridi: sütunun dışında tam genişlik, en üste yapışır.
+         Yatay kaydırma yalnızca iç listede; yapışkan atada overflow
+         olursa sticky bozulur. --- */
+  .serit {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--kum);
+    border-bottom: 1px solid var(--cizgi);
+  }
+  .serit-ic {
+    position: relative; /* çiplerin offsetLeft'i şeride göre ölçülsün */
+    max-width: 68ch;
+    margin-inline: auto;
+    padding: 0.6rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-padding-inline: 1rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .serit-ic::-webkit-scrollbar { display: none; }
+  /* Geniş ekranda kaydırmak yerine iki satıra sar; bölümler o kadar aşağı insin */
+  @media (min-width: 768px) {
+    .serit-ic { flex-wrap: wrap; }
+    .bolum { scroll-margin-top: 7rem; }
+  }
+
+  .cip {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--cizgi);
+    border-radius: 9999px;
+    background: var(--kagit);
+    color: var(--is);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .cip:hover { color: var(--murekkep); border-color: var(--kabuk); }
+  /* Bulunulan sayfanın işareti — sözleşmede altına izin verilen tek yer */
+  .cip[aria-current='true'] {
+    color: var(--altin-koyu);
+    border-color: var(--altin-koyu);
+  }
+
+  /* --- Bölümler ve kalemler --- */
+  .bolum {
+    padding-block: 1.5rem;
+    scroll-margin-top: 4rem; /* şerit ~3.5rem + pay */
+  }
+  .boylar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem 0.75rem; /* .fiyatlar ile aynı: sütunlar üst üste gelsin */
+    margin-top: 0.75rem;
+    margin-bottom: -0.25rem;
+    max-width: none;
+  }
+  .boy {
+    min-width: 3.25rem; /* .fiyat ile aynı */
+    text-align: right;
+  }
+
+  .kalem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding-block: 0.7rem;
+  }
+  .kalem-metin {
+    flex: 1 1 auto;
+    min-width: 0; /* uzun ad fiyat sütununu itmesin, sarsın */
+  }
+  .kalem-ad {
+    font-weight: 600;
+    color: var(--murekkep);
+    max-width: none;
+  }
+  .etiket {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+    padding: 0.05rem 0.5rem;
+    border: 1px solid var(--cizgi);
+    border-radius: 9999px;
+    background: var(--kagit);
+    color: var(--is);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .fiyatlar {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem 0.75rem;
+    max-width: none;
+    padding-top: 0.05rem;
+  }
+  .fiyat {
+    min-width: 3.25rem;
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--murekkep);
+  }
+  /* ₺ ve satır içi boy adı: mevzuat simgeyi istiyor, tipografi bağırmasın */
+  .sessiz {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--is);
+  }
+
+  .ekler {
+    margin-top: 0.75rem;
+    max-width: none;
+  }
+  .ek { display: inline; }
+  .ek + .ek::before { content: ' · '; }
+  .ekler > .font-semibold + .ek::before { content: ' '; }
+
+  /* --- Detay: alerjen özet satırda görünür, açılınca bileşen ve kcal --- */
+  .detay { margin-top: 0.15rem; }
+  .detay summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    cursor: pointer;
+    color: var(--is);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+  .detay summary::-webkit-details-marker { display: none; }
+  /* Ikon ayrı bir bileşen: svg'si bu sayfanın scope işaretini taşımaz */
+  .detay summary :global(svg) { flex-shrink: 0; transition: transform 0.15s ease; }
+  .detay[open] summary :global(svg) { transform: rotate(90deg); }
+  .detay-govde {
+    margin-top: 0.15rem;
+    color: var(--is);
+    font-size: 0.9375rem;
+  }
+
+  /* --- Basılı menü: istenince verilmesi zorunlu; aynı kaynaktan çıkar --- */
+  @media print {
+    .serit { display: none; }
+    :global(body) { background: none; }
+    /* Satır ortadan kırılmasın; bölümü bütün tutmaya çalışmak ise ilk sayfayı
+       boş bırakıyordu (bölüm sayfaya sığmayınca sonrakine atlıyor). */
+    .kalem { break-inside: avoid; }
+    h2 { break-after: avoid; }
+    .bolum { padding-block: 0.75rem; }
+    .kalem { padding-block: 0.35rem; }
+    .detay summary :global(svg) { display: none; }
+    a[href^='http']::after { content: ' (' attr(href) ')'; }
+  }
+</style>

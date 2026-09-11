@@ -12,8 +12,9 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      // Menü yer tutucusu geçici bir sayfa, dizine girmesin
-      filter: (page) => !page.includes('/menu'),
+      // Menü yer tutucusu geçici bir sayfa, kafe menüsü henüz taslak —
+      // ikisi de dizine girmesin (sayfalar zaten noindex)
+      filter: (page) => !['/menu', '/kafe'].some((yol) => page.includes(yol)),
 
       // Sitemap varsayılan olarak uzantısız URL üretiyor (/shop). Sayfalardaki
       // canonical etiketleri ise /shop.html diyor. İkisi çelişmesin diye

@@ -159,6 +159,12 @@ içeride olsa her görsel iki kez işlenirdi).
   değildir (`span`).
 - Mobil ve masaüstü için **ayrı DOM ağacı yazma**. Duyarlılık CSS ile çözülür.
   `index.astro` bu yüzden 1133 satırdı; birleştirilince 420'ye indi.
+- **Kafe QR menüsü (`/kafe`) site iskeletini taşımaz** — `Base`'e `sade`
+  geçilir, sayfa kendi header/nav/footer'ını verir. Sözleşmenin geri kalanı
+  aynen geçerli; menüye özgü kurallar (fiyat sağda `tabular-nums`, `₺` küçük
+  ve `is` renginde, bulunulan kategori çipi `altin-koyu`, içecekte görsel
+  yok) `src/pages/kafe.astro` başındaki yorumda ve `docs/qr-menu-arastirma.md`
+  7. bölümde.
 
 ## Hareket
 
@@ -170,7 +176,7 @@ eylemine cevap veren hareket (açılma, genişleme) hoş karşılanır.
 ## Değişiklikten sonra
 
 ```bash
-npm run build && npm test          # 71 kontrol
+npm run build && npm test          # 83 kontrol
 ```
 
 Görsel değişiklik yaptıysan ayrıca:

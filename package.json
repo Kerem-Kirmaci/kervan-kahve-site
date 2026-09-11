@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "node tests/smoke.mjs",
-    "serve:dist": "python3 -m http.server 8900 --directory dist --bind 127.0.0.1"
+    "serve:dist": "python3 -m http.server 8900 --directory dist --bind 127.0.0.1",
+    "qr": "node tools/qr-uret.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -22,6 +23,7 @@
     "autoprefixer": "^10.5.4",
     "playwright": "^1.62.1",
     "postcss": "^8.5.26",
+    "qrcode": "^1.5.4",
     "sharp": "^0.35.3",
     "tailwindcss": "^3.4.19",
     "typescript": "^6.0.3"

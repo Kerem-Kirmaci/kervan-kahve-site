@@ -14,9 +14,23 @@ interface Props {
   mainClass?: string;
   /** Arama motorlarının dizine almaması gereken geçici sayfalar için */
   noindex?: boolean;
+  /**
+   * Site iskeleti olmayan bağımsız sayfa (kafe QR menüsü): Header, Footer
+   * ve <main> sarmalayıcısı basılmaz; sayfa kendi header/main/footer'ını
+   * verir. <head> (canonical, OG, yazı tipi, noindex) olduğu gibi kalır.
+   */
+  sade?: boolean;
 }
 
-const { title, description, activePage, ogImage, mainClass, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  activePage,
+  ogImage,
+  mainClass,
+  noindex = false,
+  sade = false,
+} = Astro.props;
 
 // Ana sayfanın kanonik adresi /index.html değil kök adres olmalı
 const path = Astro.url.pathname === '/index.html' ? '/' : Astro.url.pathname;
@@ -70,18 +84,25 @@ const socialImage = new URL(ogImage ?? '/og-image.jpg', Astro.site).href;
   </head>
 
   <body>
-    <Header activePage={activePage} />
+    {!sade && <Header activePage={activePage} />}
 
     {/* Not: burada eskiden `z-index: 1; position: relative` vardı (eski HTML
         sürümünden kalma). Bir yığın bağlamı yaratıyordu ve içindeki ürün
         föyü modalı z-index:10000 olmasına rağmen header'ın (z-50) ALTINDA
         kalıyordu — modal açıkken header pırıl pırıl görünüyordu. */}
-    <main class={mainClass}>
+    {sade ? (
       <slot />
-    </main>
+    ) : (
+      <main class={mainClass}>
+        <slot />
+      </main>
+    )}
 
-    <Footer />
+    {!sade && <Footer />}
 
+    {/* Sade sayfada da yüklenir: mobile-menu.js `#mobile-menu` yoksa hemen
+        çıkıyor (1,2 KB). Koşula almak Astro'nun script hoisting'ini
+        değiştirirdi; buna değmez. */}
     <script>
       import '../scripts/mobile-menu.js';
     </script>

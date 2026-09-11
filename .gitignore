@@ -30,3 +30,6 @@ docs/yenilenme-raporu.html
 
 # og kartı üretilirken oluşan geçici dosya
 tools/.og-kart-render.html
+
+# Yerel önizleme adresleri için üretilen QR kodlar (npm run qr)
+docs/qr/

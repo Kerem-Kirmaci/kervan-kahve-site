@@ -20,6 +20,7 @@ npm run dev        # http://localhost:4321
 | `npm run serve:dist` | `dist/` klasörünü 8900 portundan sunar (test için) |
 | `npm test` | Tarayıcıda işlevsel kontrol (aşağıya bakın) |
 | `npm run check` | Astro tip/şablon denetimi |
+| `npm run qr -- <adres> [çıktı.svg]` | Adres için QR kod üretir (SVG + terminale küçük kopya) |
 
 ## Klasör yapısı
 
@@ -33,6 +34,8 @@ src/
     products.js       Ürün kataloğu (100 ürün)
     home-sliders.js   Ana sayfadaki kategori slider'larının içeriği
     product-images.js Görsel yolunu Astro görsel nesnesine çevirir
+    menu/             Kafe QR menüsü: kafe.js (içerik), sema.js (sözlükler +
+                      build'i durduran doğrulama), hazirla.js (render verisi)
   scripts/       Sayfaya özel tarayıcı JS'i (modüller)
   styles/
     global.css   Tüm sayfalarda ortak stiller
@@ -44,7 +47,10 @@ public/          Olduğu gibi kopyalanan dosyalar (robots.txt, favicon, og-image
 tests/           İşlevsel test + görsel karşılaştırma araçları
 tools/           kesit.swift (zemin temizleyici, macOS),
                  beyaz-kes.mjs (beyaz stüdyo zemini temizleyici),
-                 og-kart-uret.mjs (sosyal paylaşım kartı)
+                 og-kart-uret.mjs (sosyal paylaşım kartı),
+                 qr-uret.mjs (QR kod üretici)
+docs/            qr-menu-arastirma.md — kafe menüsü için sektör, kullanılabilirlik
+                 ve mevzuat araştırması; menünün tasarım gerekçeleri burada
 .claude/skills/  Tasarım sözleşmesi ve frontend-design skill'i
 ```
 
@@ -163,10 +169,12 @@ npm run serve:dist        # ayrı bir terminalde
 npm test
 ```
 
-71 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
+83 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
 filtreleri ve arama, sonsuz kaydırma, lightbox, slider okları, ortaklık formu
 ve KVKK onayı, iletişim sayfası (gömülü harita yok), görsel öznitelikleri,
-yatay taşma ve konsol hataları.
+kafe QR menüsü (çip–bölüm eşleşmesi, her kalemde fiyat, alerjen detayı,
+kaydırınca bulunulan kategori, baskı görünümü, sayfa ağırlığı), yatay taşma
+ve konsol hataları.
 
 Sistemdeki Chrome'u kullanır; ayrıca tarayıcı indirmez.
 
@@ -197,6 +205,16 @@ altına yazar. `docs/` klasörü git'e girmez.
 - **`/menu` geçici bir yer tutucudur.** Eski QR menü uygulaması kaynağı olmadan
   yalnızca build çıktısı olarak duruyordu; kaldırıldı. Basılı QR kodlar
   kırılmasın diye adres, iletişim bağlantıları içeren bir sayfa gösteriyor.
+  Takeaway dükkânına ait; kafe menüsüyle karıştırılmamalı.
+- **`/kafe` kafenin QR menüsü (taslak).** Site iskeleti olmayan tek sayfa:
+  `Base`'e `sade` prop'u geçilir, sayfa kendi header/nav/footer'ını verir.
+  İçerik `src/data/menu/kafe.js`; hatalı veri (fiyatsız kalem, sözlük dışı
+  alerjen, katalogda olmayan slug) build'i durdurur. Kalem başına bileşen,
+  alerjen ve kcal alanları var — alerjen bildirimi zaten zorunlu, bileşen
+  2026 sonu, kalori 2027 sonu itibarıyla zorunlu oluyor. `noindex` ve
+  sitemap dışı; kafe adı kesinleşince başlık, adres ve dizin kararı verilir.
+  `@media print` ile aynı sayfa basılı liste olarak da çıkar (istenince
+  basılı menü vermek zorunlu).
 - **Analytics kurulu değil.** Eklenirse çerez banner'ı da gerekir; çerez
   politikası sayfası buna göre güncellenmeli.
 - **Tailwind Typography eklentisi kurulu değil.** Yasal sayfalarda bir dönem
