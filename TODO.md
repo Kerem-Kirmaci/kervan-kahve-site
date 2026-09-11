@@ -1,8 +1,8 @@
 # Yapılacaklar
 
-Tasarım yenilenmesi (Faz 1–6) tamamlandı, `tasarim-yenileme` dalında duruyor.
-Site yayına hazır ama **işletme sahibinin onayını bekliyor** (bkz. "Yayına
-alma"). Sıradaki iş QR menü.
+Tasarım yenilenmesi (Faz 1–6) tamamlandı ve **11 Eylül 2026'da yayına
+alındı** — işletme sahibi onayladı, `tasarim-yenileme` `main`'e birleşti
+(bkz. "Yayına alma"). Sıradaki iş QR menü.
 
 ## 1. ÖNCELİK: QR menü
 
@@ -269,20 +269,20 @@ Bunlar hata değil, verilmiş kararlar. Yanlış geldiyse geri almak kolay.
 
 ## Başka bilgisayardan devam etmek
 
-Çalışma `tasarim-yenileme` dalında ve GitHub'da. Canlı site etkilenmedi;
-`origin/main` hâlâ redesign öncesinde duruyor.
+Yenilenmiş site `main` dalında ve canlıda; `tasarim-yenileme` dalı işini
+bitirdi. QR menü işi `kafe-menu` dalında sürüyor (bu yazıldığında henüz
+yalnızca yerelde; GitHub'a çıkınca `git checkout kafe-menu`).
 
 ### Kurulum
 
 ```bash
 git clone https://github.com/Kerem-Kirmaci/kervan-kahve-site.git
 cd kervan-kahve-site
-git checkout tasarim-yenileme
 npm install
 npm run dev          # http://localhost:4321
 ```
 
-Depo zaten varsa: `git fetch && git checkout tasarim-yenileme`
+Depo zaten varsa: `git fetch && git checkout main && git pull`
 
 ### Depoyla birlikte gelenler
 
@@ -310,23 +310,20 @@ Depo zaten varsa: `git fetch && git checkout tasarim-yenileme`
 diğeri commit alışkanlığı. İlkine ihtiyaç olursa teşhis sayfası:
 https://claude.ai/code/artifact/a2c72641-0e36-483c-8487-0d01a61388b9
 
-### Canlıya çıkarken dikkat
+## ✅ Yayına alma — yapıldı (11 Eylül 2026)
 
-*(Eski uyarı — "yerel main 4 commit önünde" — artık geçerli değil; o commit'ler
-GitHub'a girdi. `main` ile `origin/main` aynı noktada, yayınlanmamış commit yok.
-`tasarim-yenileme` `origin/main`'in 28 commit önünde.)*
+İşletme sahibi yeni sürümü görüp onayladı. `tasarim-yenileme` `main`'e
+birleştirilip push edildi; Netlify `main`'i yayınlıyor. Yayın öncesi son
+kontrol, onaylı commit'in (`8c7336d`) temiz bir worktree kopyasında yapıldı:
+build 9 sayfa, 71/71 tarayıcı testi geçti.
 
-## Yayına alma — işletme onayı bekliyor
+- [x] Yeni sürümü işletme sahibine göster.
+- [x] `tasarim-yenileme` → `main` birleştirmesi ve push.
 
-Teknik olarak hazır: açık iddia kalmadı, marka riski çözüldü, testler
-geçiyor. **Ama yayına işletme sahibi görüp onaylamadan alınmayacak.**
-
-- [ ] Yeni sürümü işletme sahibine göster.
-- [ ] Onay gelince `tasarim-yenileme` dalını `main`'e birleştir. Netlify
-      `main`'i yayınlıyor; birleştirene kadar canlıda eski sürüm duruyor.
-      ```bash
-      git checkout main && git merge tasarim-yenileme
-      ```
+Düzeltme: buradaki eski "yerel `main` 4 commit önündeydi, GitHub'a girdi" notu
+yanlıştı — o dört commit (logo şeridi ayarları, `0a2db36`…`1e5e73b`) GitHub'a
+hiç gitmemişti; zaten `tasarim-yenileme`'nin içindeydiler ve bu
+birleştirmeyle çıktılar.
 
 ## Sonraki adımlar (öneri)
 
@@ -337,6 +334,10 @@ geçiyor. **Ama yayına işletme sahibi görüp onaylamadan alınmayacak.**
       sayfası buna göre güncellenmeli (şu an "çerez kullanmıyoruz" diyor).
 - [ ] **Tailwind v4 geçişi.** README'de bilinçli olarak v3'te tutuluyor;
       ayrı bir iş olarak ele alınmalı.
+- [ ] **`astro check` temizliği.** Beş tip hatası veriyor; build'i
+      etkilemiyor (Netlify yalnızca `npm run build` çalıştırıyor):
+      `Buton.astro` varyant/boyut indekslemesi, `index.astro`
+      `kategoriSayilari` indekslemesi, `ortaklik.astro` `type={a.tur}`.
 
 ## Referans
 
