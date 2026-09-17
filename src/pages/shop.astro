@@ -62,6 +62,12 @@ const yapisalGorseller = await Promise.all(
   })
 );
 
+// Liste elemanları bilinçli olarak `Product` değil. Google, Product verisini
+// tek ürünlük sayfalar için istiyor ve fiyat (offers) ya da yorum olmadan
+// "geçersiz" sayıyor — Search Console 100 ürün × 2 adres = 200 kritik hata
+// gösteriyordu, oysa toptan satışta liste fiyatı yok. Ürün detay sayfaları
+// (/urun/<slug>, bkz. TODO) gelince Product verisi oraya, buradaki
+// elemanlara da `url` eklenir.
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -72,13 +78,8 @@ const itemList = {
   itemListElement: sorted.map((p, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    item: {
-      '@type': 'Product',
-      name: p.name,
-      description: p.description,
-      image: yapisalGorseller[i],
-      brand: { '@type': 'Brand', name: p.brand },
-    },
+    name: p.name,
+    image: yapisalGorseller[i],
   })),
 };
 import Ikon from '../components/Ikon.astro';

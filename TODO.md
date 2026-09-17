@@ -83,6 +83,24 @@ ya da mevcut yer tutucu olarak kalır.
 
 ## Karar bekleyenler
 
+- [ ] **Google Haritalar kaydı sahipsiz — işletme sahibi sahiplenmeli.**
+      17 Eylül 2026 Search Console denetiminde görüldü: "KERVAN KAHVE"
+      (Cami Şerif, İstiklal Cd. 26-1; 4,4 ★, 7 yorum) kaydı Google'da var ama
+      sahiplenilmemiş, kategorisi "Bakkal", telefonu ve web sitesi boş.
+      "kervan kahve" aramasında Mardin'deki Kervan Kurukahve (1957) ve Trendyol
+      Kervan Türk Kahvesi öne çıkıyor; site yalnızca Mersin'den arayanlara
+      4-5. sırada görünüyor (3 ayda 140 gösterim). Google'ın markayı siteyle
+      eşlemesinin en kısa yolu bu kayıt.
+      *Yapılacak (yalnızca işletme hesabından):*
+      <https://www.google.com/maps?cid=15673801697818329687> → "Bu işletmeyi
+      sahiplenin" → doğrulama; sonra web sitesi `https://kervankahve.com/`,
+      telefon `+90 545 320 77 13`, saatler `08:00–19:00`, kategori
+      "Kahve dükkanı" / "Kahve toptancısı". Yanındaki "Kervan Kahve &
+      Kuruyemiş" (4,7 ★, 9 yorum, Kuruyemişçi) kaydı aynı işletmeyse
+      birleştirme istenmeli.
+      Sitedeki yapısal veri bu kayda `hasMap` ile bağlandı, ad "Kervan Kahve"
+      olarak eşitlendi (eski "Kervan Kuru Kahvecisi" `alternateName`).
+
 - [ ] **İş ortağı logoları krem tonuna indirildi.** Koyu zeminde altı farklı
       marka rengi (pembe HARIO, kırmızı La Cimbali, siyah D'ORO) paleti
       dağıtıyordu; hepsi tek tona getirildi.

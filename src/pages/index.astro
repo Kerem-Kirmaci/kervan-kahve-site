@@ -8,13 +8,20 @@ import { Image } from 'astro:assets';
 import { assetImage } from '../data/product-images.js';
 import { homeSliders } from '../data/home-sliders.js';
 import { products } from '../data/products.js';
+import logo from '../assets/images/logo.png';
 
+// Google'ın işletmeyle siteyi eşleştirmesi için ad, adres ve telefon
+// Google Haritalar kaydıyla ("KERVAN KAHVE", İstiklal Cd. 26-1) birebir aynı
+// tutuluyor. `name` eskiden "Kervan Kuru Kahvecisi" idi; sayfa başlığı, harita
+// kaydı ve Instagram hepsi "Kervan Kahve" dediği için ona çekildi, eski ad
+// alternateName olarak kaldı.
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'Kervan Kuru Kahvecisi',
-  url: 'https://kervankahve.com',
-  logo: 'https://kervankahve.com/og-image.jpg',
+  name: 'Kervan Kahve',
+  alternateName: 'Kervan Kuru Kahvecisi',
+  url: 'https://kervankahve.com/',
+  logo: new URL(logo.src, Astro.site).href,
   image: 'https://kervankahve.com/og-image.jpg',
   description:
     'Mersin merkezli toptan kafe ve restoran tedarikçisi. Kahve, şurup, püre, hazır tatlı, bitki çayı ve ekipman — tek tedarikçiden.',
@@ -26,8 +33,12 @@ const localBusiness = {
     postalCode: '33060',
     addressCountry: 'TR',
   },
+  // Harita kaydının kalıcı kimliği (CID); adres/isim değişse de aynı kalır.
+  hasMap: 'https://www.google.com/maps?cid=15673801697818329687',
   telephone: '+905453207713',
   email: 'info@kervankahve.com',
+  openingHours: 'Mo-Su 08:00-19:00',
+  areaServed: 'Mersin',
   foundingDate: '2015',
   sameAs: ['https://www.instagram.com/kervankahvetr/'],
 };
@@ -102,7 +113,7 @@ const destekKalemleri = [
 ---
 
 <Base
-  title="Kervan Kahve — Kafe ve restoranlara toptan tedarik"
+  title="Kervan Kahve — Mersin'de kafe ve restoranlara toptan tedarik"
   description="Mersin merkezli toptan tedarikçi. Kahve, şurup, püre, hazır tatlı, bitki çayı ve ekipman — 100'den fazla işletme tek tedarikçiden alıyor."
   activePage="index"
 >
