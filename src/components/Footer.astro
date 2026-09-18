@@ -1,4 +1,6 @@
 ---
+import { kategoriler, kategoriYolu } from '../data/kategoriler.js';
+
 const year = new Date().getFullYear();
 
 const quickLinks = [
@@ -8,6 +10,10 @@ const quickLinks = [
   { href: '/hakkimizda.html', label: 'Hakkımızda' },
   { href: '/iletisim.html', label: 'İletişim' },
 ];
+
+// Her sayfanın altında kategori sayfalarına bağlantı: ziyaretçi için kısa
+// yol, Google için "bu adresler önemli" işareti.
+const kategoriLinkleri = kategoriler.map((k) => ({ href: kategoriYolu(k.key), label: k.ad }));
 
 const legalLinks = [
   { href: '/gizlilik-politikasi.html', label: 'Gizlilik Politikası' },
@@ -19,7 +25,7 @@ import Ikon from './Ikon.astro';
 
 <footer class="bg-kavurma text-krem border-t border-cizgi-koyu">
   <div class="container mx-auto px-6 py-12">
-    <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+    <div class="grid lg:grid-cols-5 md:grid-cols-2 gap-8">
       <div>
         <h3 class="text-govde font-bold">Kervan Kahve</h3>
         {/* Her sayfanın altında duruyor, yani sitenin genel iddiası burada.
@@ -37,6 +43,15 @@ import Ikon from './Ikon.astro';
         <h3 class="text-govde font-bold">Hızlı Erişim</h3>
         <ul class="mt-4 space-y-2 text-kucuk">
           {quickLinks.map((l) => (
+            <li><a href={l.href} class="text-krem-ikincil hover:text-krem">{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-govde font-bold">Ürünler</h3>
+        <ul class="mt-4 space-y-2 text-kucuk">
+          {kategoriLinkleri.map((l) => (
             <li><a href={l.href} class="text-krem-ikincil hover:text-krem">{l.label}</a></li>
           ))}
         </ul>

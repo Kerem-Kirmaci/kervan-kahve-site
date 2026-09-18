@@ -28,9 +28,10 @@ src/
   pages/         Her dosya bir sayfa: index.astro → /index.html
   layouts/
     Base.astro   Ortak <head>, header, footer, alt menü
-  components/    Header, Footer, BottomNav, Ikon, Buton, UrunKarti, Lightbox
+  components/    Header, Footer, Ikon, Buton, UrunKarti, Lightbox, KategoriSeridi
   data/
     products.js       Ürün kataloğu (100 ürün)
+    kategoriler.js    Altı kategori: adres, başlık, giriş metni (tek kaynak)
     home-sliders.js   Ana sayfadaki kategori slider'larının içeriği
     product-images.js Görsel yolunu Astro görsel nesnesine çevirir
   scripts/       Sayfaya özel tarayıcı JS'i (modüller)
@@ -68,6 +69,28 @@ yazmadan önce okuyun.**
 `astro.config.mjs` içinde `build.format: 'file'` ayarlı. Site yıllardır
 `/shop.html` gibi adreslerle indekslendiği için bu adresler korunuyor; sayfa
 eklerken de aynı biçimi kullanın.
+
+### Kategori sayfaları
+
+Her kategorinin kendi adresi var: `/toptan-surup.html`, `/toptan-kahve.html`,
+`/kafe-ekipmanlari.html`… Altısını da `src/pages/[kategori].astro` üretiyor;
+adres, sayfa başlığı, meta açıklama ve giriş paragrafları
+`src/data/kategoriler.js`'te. `/shop.html` "Tümü" görünümü olarak kalıyor
+(100 ürün, arama, kaydırdıkça açılan partiler); üstteki şerit artık filtre
+değil, kategori sayfalarına giden bağlantı.
+
+Sebep: sekmeler JavaScript'le filtrelerken adres ve başlık değişmiyordu,
+dolayısıyla Google'ın "toptan şurup mersin" gibi bir aramada gösterebileceği
+tek konulu bir sayfa yoktu.
+
+Eski `/shop.html?category=surup` bağlantıları `netlify.toml`'daki 301'lerle
+yeni adreslere gidiyor; yerelde aynı işi `shop.js` yapıyor. Kategori slug'ı
+değişirse üç yer birlikte güncellenmeli: `kategoriler.js`, `netlify.toml`,
+`tests/smoke.mjs`.
+
+Giriş paragrafları yalnızca sitede zaten doğrulanmış iddiaları ve ürün
+verisini kullanıyor; yeni bir iş iddiası eklenecekse önce işletmeye sorulur
+(bkz. `TODO.md`, "İş iddiaları").
 
 ## Ürün eklemek / düzenlemek
 
@@ -163,10 +186,11 @@ npm run serve:dist        # ayrı bir terminalde
 npm test
 ```
 
-71 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
-filtreleri ve arama, sonsuz kaydırma, lightbox, slider okları, ortaklık formu
-ve KVKK onayı, iletişim sayfası (gömülü harita yok), görsel öznitelikleri,
-yatay taşma ve konsol hataları.
+94 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
+şeridi ve arama, sonsuz kaydırma, lightbox, kategori sayfaları (ürün sayısı,
+canonical, başlık, yapısal veri), slider okları, ortaklık formu ve KVKK
+onayı, iletişim sayfası (gömülü harita yok), görsel öznitelikleri, yatay
+taşma ve konsol hataları.
 
 Sistemdeki Chrome'u kullanır; ayrıca tarayıcı indirmez.
 

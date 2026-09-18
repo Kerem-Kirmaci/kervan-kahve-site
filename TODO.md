@@ -96,8 +96,12 @@ ya da mevcut yer tutucu olarak kalır.
       sahiplenin" → doğrulama; sonra web sitesi `https://kervankahve.com/`,
       telefon `+90 545 320 77 13`, saatler `08:00–19:00`, kategori
       "Kahve dükkanı" / "Kahve toptancısı". Yanındaki "Kervan Kahve &
-      Kuruyemiş" (4,7 ★, 9 yorum, Kuruyemişçi) kaydı aynı işletmeyse
-      birleştirme istenmeli.
+      Kuruyemiş" (4,7 ★, 9 yorum, Kuruyemişçi) **başka bir işletme** —
+      sahiplenme ya da birleştirme istenmeyecek (17 Eylül 2026'da
+      netleşti; buradaki eski "aynı işletmeyse birleştirme" notu yanlıştı).
+      18 Eylül itibarıyla sahiplenme hâlâ yapılmadı; işletme sahibiyle
+      buluşmak gerekmiyor, telefonda yönlendirmeyle de olur (bkz.
+      `docs/google-gorunurluk-raporu.pdf`, bölüm 3.1).
       Sitedeki yapısal veri bu kayda `hasMap` ile bağlandı, ad "Kervan Kahve"
       olarak eşitlendi (eski "Kervan Kuru Kahvecisi" `alternateName`).
 
@@ -345,6 +349,15 @@ birleştirmeyle çıktılar.
 
 ## Sonraki adımlar (öneri)
 
+- [x] **Kategori sayfaları** — 18 Eylül 2026, `kategori-sayfalari` dalı.
+      Altı kategori kendi adresine taşındı (`/toptan-surup.html` …,
+      `src/pages/[kategori].astro`, veri `src/data/kategoriler.js`).
+      Amaç "toptan şurup mersin", "kafe ekipmanları mersin" tipi aramalar;
+      17 Eylül denetiminde bu aramalarda hiç çıkmıyorduk. Yayına girince:
+      Search Console'a `sitemap-index.xml` yeniden gönderilir, altı adres
+      için tarama istenir; etki 2-3 ay sonra "Performans → Sayfalar"
+      raporunda görülür. Giriş metinleri işletme sahibi tarafından
+      okunmalı — yeni iddia yok ama son söz onun.
 - [ ] **Ürün detay sayfaları.** `products.js` içinde her üründe `slug` var ve
       README'ye göre `/urun/<slug>` adresleri bunun için ayrılmış. Kataloğun
       SEO'su ve iş ortağının ürünü paylaşabilmesi için değerli.

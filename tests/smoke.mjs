@@ -31,9 +31,20 @@ page.on('console', (m) => {
 });
 page.on('pageerror', (e) => consoleErrors.push(`${page.url()} :: ${e.message}`));
 
+// Kategori sayfaları: slug → beklenen ürün sayısı (src/data/kategoriler.js)
+const kategoriSayfalari = {
+  'toptan-surup': 15,
+  'toptan-sos-ve-pure': 10,
+  'toptan-hazir-tatli': 53,
+  'toptan-kahve': 8,
+  'toptan-bitki-cayi': 6,
+  'kafe-ekipmanlari': 8,
+};
+
 const pages = [
   'index', 'shop', 'hakkimizda', 'ortaklik', 'iletisim',
   'gizlilik-politikasi', 'cerez-politikasi', 'kullanim-sartlari', 'menu',
+  ...Object.keys(kategoriSayfalari),
 ];
 
 // ---------------------------------------------------------------- sayfa yapısı
@@ -55,6 +66,10 @@ for (const [slug, label] of Object.entries(activeMap)) {
   const active = await page.locator('nav.desktop-nav a.active').first().textContent();
   check(`${slug}: masaüstü menüde "${label}" aktif`, active?.trim() === label, `bulunan: ${active}`);
 }
+await page.goto(`${BASE}/toptan-kahve.html`, { waitUntil: 'domcontentloaded' });
+const kategoriAktif = await page.locator('nav.desktop-nav a.active').first().textContent();
+check('kategori sayfasında menüde "Ürünlerimiz" aktif', kategoriAktif?.trim() === 'Ürünlerimiz',
+  `bulunan: ${kategoriAktif}`);
 await page.goto(`${BASE}/iletisim.html`, { waitUntil: 'domcontentloaded' });
 const yanlisAktif = await page.locator('nav.desktop-nav a.active').count();
 check('iletisim: menüde yanlış öğe vurgulanmıyor', yanlisAktif === 0,
@@ -89,21 +104,24 @@ const countText = () => page.locator('#product-count').textContent();
 check('başlangıçta 24 ürün görünür', (await visible()) === 24, `${await visible()}`);
 check('sayaç 100 ürün diyor', (await countText())?.includes('100'), await countText());
 
-await page.click('.kategori-sekme[data-category="espresso"]');
-await page.waitForTimeout(200);
-check('Kahveler sekmesi 8 ürüne indiriyor', (await visible()) === 8, `${await visible()}`);
-check('sayaç sekmeyle güncelleniyor', (await countText())?.includes('8'), await countText());
+// Kategori şeridi: sekme değil bağlantı — her kategori kendi sayfasına gider
+const seritBaglantilari = await page.locator('.kategori-baglanti').count();
+check('şeritte 7 bağlantı var (Tümü + 6 kategori)', seritBaglantilari === 7, `${seritBaglantilari}`);
+check('mağazada "Tümü" işaretli', (await page.locator('.kategori-baglanti[aria-current="page"][data-category=""]').count()) === 1);
 
-await page.click('.kategori-sekme[data-category="cay"]');
-await page.waitForTimeout(200);
-check('Bitki Çayları sekmesi 6 ürüne indiriyor', (await visible()) === 6, `${await visible()}`);
+await page.click('.kategori-baglanti[data-category="espresso"]');
+await page.waitForLoadState('networkidle');
+check('Kahveler bağlantısı /toptan-kahve.html\'e gidiyor', page.url().endsWith('/toptan-kahve.html'), page.url());
+check('kategori sayfasında 8 kart', (await visible()) === 8, `${await visible()}`);
+const aktif = await page.locator('.kategori-baglanti[aria-current="page"]').count();
+const aktifKategori = await page.locator('.kategori-baglanti[aria-current="page"]').getAttribute('data-category');
+check('şeritte tek öğe işaretli ve o kategori', aktif === 1 && aktifKategori === 'espresso',
+  `${aktif} işaretli, ${aktifKategori}`);
 
-const aktif = await page.locator('.kategori-sekme[aria-selected="true"]').count();
-check('tek sekme aktif kalıyor', aktif === 1, `${aktif} sekme aktif`);
-
-await page.click('.kategori-sekme[data-category=""]');
-await page.waitForTimeout(300);
-check('filtre temizleme 24 görünüre dönüyor', (await visible()) === 24, `${await visible()}`);
+await page.click('.kategori-baglanti[data-category=""]');
+await page.waitForLoadState('networkidle');
+check('"Tümü" mağazaya dönüyor, 24 görünür', page.url().endsWith('/shop.html') && (await visible()) === 24,
+  `${page.url()} ${await visible()}`);
 
 await page.fill('#product-search', 'vanilya');
 await page.waitForTimeout(400);
@@ -129,8 +147,11 @@ await page.waitForTimeout(900);
 check('ikinci kaydırmada 72', (await visible()) === 72, `${await visible()}`);
 
 // URL parametresi
+// Eski bağlantı biçimi: canlıda Netlify 301 (netlify.toml), burada JS yedeği
 await page.goto(`${BASE}/shop.html?category=surup`, { waitUntil: 'networkidle' });
-check('?category=surup çalışıyor', (await visible()) === 15, `${await visible()}`);
+await page.waitForURL('**/toptan-surup.html', { timeout: 3000 }).catch(() => {});
+check('?category=surup kategori sayfasına yönleniyor', page.url().endsWith('/toptan-surup.html'), page.url());
+check('yönlenen sayfada 15 kart', (await visible()) === 15, `${await visible()}`);
 await page.goto(`${BASE}/shop.html?search=kahve`, { waitUntil: 'networkidle' });
 check('?search=kahve çalışıyor', (await visible()) > 0, `${await visible()}`);
 
@@ -144,6 +165,8 @@ const lbSrc = await page.locator('#lightbox-image').getAttribute('src');
 check('lightbox görseli dolu', Boolean(lbSrc && lbSrc.length > 5), lbSrc ?? '');
 const lbName = await page.locator('#lightbox-name').textContent();
 check('lightbox ürün adı dolu', Boolean(lbName?.trim()), lbName ?? '');
+const lbHref = await page.locator('#lightbox-link').getAttribute('href');
+check('föydeki kategori bağlantısı kategori sayfasına gidiyor', lbHref === '/toptan-surup.html', lbHref ?? '');
 await page.keyboard.press('Escape');
 await page.waitForTimeout(400);
 check('ESC ile kapanıyor', (await page.locator('#image-lightbox.active').count()) === 0);
@@ -187,6 +210,33 @@ check(
 await page.unroute('**/_astro/**.webp');
 await page.keyboard.press('Escape');
 await page.waitForTimeout(300);
+
+// ------------------------------------------------------------ kategori sayfaları
+console.log('\n[5b] Kategori sayfaları');
+for (const [slug, adet] of Object.entries(kategoriSayfalari)) {
+  await page.goto(`${BASE}/${slug}.html`, { waitUntil: 'networkidle' });
+  const kart = await page.locator('.urun-karti').count();
+  const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
+  const title = await page.title();
+  const yapisal = await page.evaluate(() =>
+    [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => JSON.parse(s.textContent)));
+  const liste = yapisal.find((y) => y['@type'] === 'ItemList');
+  const kirinti = yapisal.find((y) => y['@type'] === 'BreadcrumbList');
+  const sorunlar = [];
+  if (kart !== adet) sorunlar.push(`${kart} kart (beklenen ${adet})`);
+  if (canonical !== `https://kervankahve.com/${slug}.html`) sorunlar.push(`canonical ${canonical}`);
+  if (!title.includes('Mersin') || !title.endsWith('Kervan Kahve')) sorunlar.push(`başlık "${title}"`);
+  if (!liste || liste.numberOfItems !== adet) sorunlar.push('ItemList eksik/yanlış');
+  if (!kirinti || kirinti.itemListElement?.length !== 3) sorunlar.push('BreadcrumbList eksik');
+  if ((await page.locator('.kategori-baglanti[aria-current="page"]').count()) !== 1) sorunlar.push('şerit işareti');
+  if ((await page.locator('a[href="/ortaklik.html"]').count()) === 0) sorunlar.push('teklif bağlantısı yok');
+  check(`${slug}: ${adet} kart, canonical, başlık, yapısal veri, şerit`, sorunlar.length === 0, sorunlar.join(', '));
+}
+await page.goto(`${BASE}/index.html`, { waitUntil: 'networkidle' });
+const footerKategori = await page.locator('footer a[href="/toptan-surup.html"]').count();
+const manifestoKategori = await page.locator('main a[href="/toptan-surup.html"]').count();
+check('ana sayfa footer ve manifesto kategori sayfasına bağlanıyor', footerKategori === 1 && manifestoKategori >= 1,
+  `footer ${footerKategori}, main ${manifestoKategori}`);
 
 // ------------------------------------------------------ ana sayfa slider okları
 console.log('\n[6] Ana sayfa slider okları (çift kayma bug\'ı)');

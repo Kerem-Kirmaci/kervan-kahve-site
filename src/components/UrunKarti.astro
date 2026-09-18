@@ -2,6 +2,7 @@
 import { Image, getImage } from 'astro:assets';
 import { productImage } from '../data/product-images.js';
 import Ikon from './Ikon.astro';
+import { kategoriHaritasi, kategoriYolu } from '../data/kategoriler.js';
 
 /**
  * Katalogdaki tek ürün kartı.
@@ -32,16 +33,11 @@ const large = await getImage({ src: img, width: 900, format: 'webp', quality: 78
 
 const markaVar = Boolean(product.brand && product.productName);
 
-// Föy, kategoriye götüren bir bağlantı gösteriyor.
-const KATEGORI_ADI: Record<string, string> = {
-  surup: 'Şuruplar',
-  'pure-tatlandirici': 'Püre ve Tatlandırıcılar',
-  tatli: 'Tatlılar',
-  espresso: 'Kahveler',
-  cay: 'Bitki Çayları',
-  aksesuar: 'Ekipmanlar',
-};
-const kategoriAdi = KATEGORI_ADI[product.category] ?? 'Tüm ürünler';
+// Föy, kategorinin kendi sayfasına götüren bir bağlantı gösteriyor
+// (/toptan-surup.html gibi; eskiden /shop.html?category=... idi).
+const kategori = kategoriHaritasi[product.category];
+const kategoriAdi = kategori?.ad ?? 'Tüm ürünler';
+const kategoriBaglantisi = kategori ? kategoriYolu(product.category) : '/shop.html';
 const baslik = markaVar ? product.productName : product.name;
 // Etiketler yalnızca ızgarada: şerit bir gezinme yüzeyi, orada satırı
 // gereksiz yükseltiyorlar.
@@ -79,7 +75,7 @@ const aramaMetni = [
     data-lightbox-desc={product.description ?? ''}
     data-lightbox-notes={(product.tastingNotes ?? []).join('|')}
     data-lightbox-category={kategoriAdi}
-    data-lightbox-href={`/shop.html?category=${product.category}`}
+    data-lightbox-href={kategoriBaglantisi}
   >
     <Image
       src={img}

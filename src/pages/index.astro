@@ -8,6 +8,7 @@ import { Image } from 'astro:assets';
 import { assetImage } from '../data/product-images.js';
 import { homeSliders } from '../data/home-sliders.js';
 import { products } from '../data/products.js';
+import { kategoriYolu } from '../data/kategoriler.js';
 import logo from '../assets/images/logo.png';
 
 // Google'ın işletmeyle siteyi eşleştirmesi için ad, adres ve telefon
@@ -72,7 +73,7 @@ for (const u of products) {
 const manifesto = kategoriler.map((k) => ({
   ad: k.ad,
   adet: kategoriSayilari[k.kategoriParam],
-  href: `/shop.html?category=${k.kategoriParam}`,
+  href: kategoriYolu(k.kategoriParam),
 }));
 
 // İş ortakları. Logo dosyaları şeffaf payından kırpıldı (bkz. _orijinal/),
@@ -233,7 +234,7 @@ const destekKalemleri = [
                 <p class="text-kucuk text-is">{k.altyazi}</p>
               </div>
             </div>
-            <a href={`/shop.html?category=${k.kategoriParam}`}
+            <a href={kategoriYolu(k.kategoriParam)}
                class="shrink-0 text-kucuk font-semibold text-altin-koyu hover:text-kabuk whitespace-nowrap">
               Hepsini gör
             </a>

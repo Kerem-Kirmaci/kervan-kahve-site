@@ -14,6 +14,54 @@
   status = 301
   force = true
 
+# Kategoriler kendi sayfalarına taşındı (src/pages/[kategori].astro).
+# Eski /shop.html?category=... adresleri ana sayfadan, ürün föyünden ve
+# dışarıya paylaşılmış bağlantılardan geliyor olabilir; Google'ın da eski
+# adresi yenisine bağlaması için 301. Eşleme src/data/kategoriler.js ile
+# aynı olmalı. `force` şart: /shop.html gerçek bir dosya ve Netlify, dosya
+# varken yönlendirmeyi ancak force ile uygular.
+[[redirects]]
+  from = "/shop.html"
+  to = "/toptan-surup.html"
+  status = 301
+  force = true
+  query = { category = "surup" }
+
+[[redirects]]
+  from = "/shop.html"
+  to = "/toptan-sos-ve-pure.html"
+  status = 301
+  force = true
+  query = { category = "pure-tatlandirici" }
+
+[[redirects]]
+  from = "/shop.html"
+  to = "/toptan-hazir-tatli.html"
+  status = 301
+  force = true
+  query = { category = "tatli" }
+
+[[redirects]]
+  from = "/shop.html"
+  to = "/toptan-kahve.html"
+  status = 301
+  force = true
+  query = { category = "espresso" }
+
+[[redirects]]
+  from = "/shop.html"
+  to = "/toptan-bitki-cayi.html"
+  status = 301
+  force = true
+  query = { category = "cay" }
+
+[[redirects]]
+  from = "/shop.html"
+  to = "/kafe-ekipmanlari.html"
+  status = 301
+  force = true
+  query = { category = "aksesuar" }
+
 # Sitemap adresi Astro'ya geçişte /sitemap.xml'den /sitemap-index.xml'e taşındı.
 # robots.txt yenisini gösteriyor, ama eski adrese dışarıdan referans kalmışsa
 # boşa düşmesin.

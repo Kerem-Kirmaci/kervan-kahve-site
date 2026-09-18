@@ -1,0 +1,117 @@
+---
+import { products } from '../data/products.js';
+import { kategoriler, kategoriYolu } from '../data/kategoriler.js';
+
+/**
+ * Katalog gezinmesi: "Tümü" + altı kategori. Mağazada ve her kategori
+ * sayfasında aynı yerde, aynı görünümde durur; kaydırırken header'ın altına
+ * yapışır.
+ *
+ * Öncesinde bu şerit mağaza sayfasında JavaScript'le filtreleyen sekmelerdi:
+ * tıklayınca adres ve başlık değişmiyor, dolayısıyla Google için "şurup"
+ * diye bir sayfa var olmuyordu. Şimdi her öğe bir bağlantı ve her kategori
+ * kendi adresine gidiyor (/toptan-surup.html gibi). Sayılar veriden
+ * hesaplanıyor — ürün eklendiğinde kendiliğinden güncellenir.
+ */
+interface Props {
+  /** Bulunulan kategori anahtarı; mağaza (Tümü) için boş dize */
+  aktif: string;
+}
+
+const { aktif } = Astro.props;
+
+const ogeler = [
+  { key: '', href: '/shop.html', ad: 'Tümü', adet: products.length },
+  ...kategoriler.map((k) => ({
+    key: k.key,
+    href: kategoriYolu(k.key),
+    ad: k.ad,
+    adet: products.filter((p) => p.category === k.key).length,
+  })),
+];
+---
+
+<nav class="kategori-serit-sarmal" aria-label="Ürün kategorileri">
+  <ul class="kategori-serit">
+    {
+      ogeler.map((o) => (
+        <li>
+          <a
+            href={o.href}
+            class="kategori-baglanti"
+            data-category={o.key}
+            aria-current={o.key === aktif ? 'page' : undefined}
+          >
+            <span>{o.ad}</span>
+            <span class="kategori-adet">{o.adet}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .kategori-serit-sarmal {
+    position: sticky;
+    /* Header de sticky; şerit onun ALTINA yapışmalı, yoksa arkasında kalıyor.
+       Header yüksekliği logo ölçeğiyle birlikte kırılımlarda değişiyor:
+       <640px 69, 640–767px 81, >=768px 89. */
+    top: 69px;
+    z-index: 20;
+    margin-bottom: 1.75rem;
+    background: var(--kum);
+    border-bottom: 1px solid var(--cizgi);
+    /* container padding'ini aşıp kenarlara uzansın */
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) { .kategori-serit-sarmal { top: 81px; } }
+  @media (min-width: 768px) {
+    .kategori-serit-sarmal { top: 89px; margin-inline: -1.5rem; padding-inline: 1.5rem; }
+  }
+
+  .kategori-serit {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .kategori-serit::-webkit-scrollbar { display: none; }
+  .kategori-serit li { flex-shrink: 0; }
+
+  .kategori-baglanti {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 0.9rem;
+    border-bottom: 2px solid transparent;
+    color: var(--is);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .kategori-baglanti:hover { color: var(--murekkep); }
+  .kategori-baglanti[aria-current='page'] {
+    color: var(--murekkep);
+    border-bottom-color: var(--kabuk);
+  }
+
+  .kategori-adet {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--is);
+    background: var(--kagit);
+    border: 1px solid var(--cizgi);
+    border-radius: 9999px;
+    padding: 0.1rem 0.45rem;
+  }
+  .kategori-baglanti[aria-current='page'] .kategori-adet {
+    color: var(--krem);
+    background: var(--kabuk);
+    border-color: var(--kabuk);
+  }
+</style>
