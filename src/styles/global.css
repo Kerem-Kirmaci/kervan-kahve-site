@@ -87,6 +87,79 @@ p.genis { max-width: none; }
 }
 
 /* --------------------------------------------------------------------------
+   Masaüstü: "Ürünlerimiz"in altında açılan kategori paneli
+
+   Bağlantı bağlantı olarak kalıyor; paneli yanındaki küçük ok açıyor
+   (klavye için) ve grup üstüne gelince de açılıyor (imleç için). Açma/
+   kapama ve aria-expanded src/scripts/urunler-menusu.js'te.
+   -------------------------------------------------------------------------- */
+.nav-grup {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav-grup--acilir .nav-link { padding-right: 0.5rem; }
+
+.nav-acici {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2.75rem;
+  border-radius: 6px;
+  color: var(--is);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.nav-acici:hover,
+.nav-acici[aria-expanded='true'] {
+  color: var(--murekkep);
+  background: var(--kum);
+}
+.nav-acici svg { transition: transform 0.2s ease; }
+.nav-acici[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+.nav-panel {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  min-width: 17rem;
+  padding: 0.4rem;
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 6px;
+  box-shadow: var(--golge-yuzen);
+  z-index: 60;
+}
+.nav-panel[hidden] { display: none; }
+
+.nav-panel-baglanti {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--murekkep);
+  transition: background-color 0.15s ease;
+}
+.nav-panel-baglanti:hover { background: var(--kum); }
+/* Bulunulan kategori — altın, bulunulan sayfa işareti kuralına göre */
+.nav-panel-baglanti[aria-current='page'] { color: var(--altin-koyu); }
+
+.nav-panel-adet {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--is);
+  background: var(--kum);
+  border: 1px solid var(--cizgi);
+  border-radius: 9999px;
+  padding: 0.1rem 0.45rem;
+}
+
+/* --------------------------------------------------------------------------
    Mobil menü — tam ekran
 
    Öncesinde sağdan kayan 320px'lik bir paneldi; kapalıyken ekranın dışında
@@ -173,8 +246,8 @@ p.genis { max-width: none; }
 
 /* Kısa ekranlarda (küçük telefon, yatay tutuş) liste kaydırmaya girmesin */
 @media (max-height: 660px) {
-  .mobil-menu-baglanti { font-size: 1.4rem; padding: 0.75rem 0; }
-  .mobil-menu-alt { gap: 0.6rem; padding-block: 0.9rem; }
+  .mobil-menu-baglanti { font-size: 1.4rem; }
+  .mobil-menu-kategori { min-height: 2rem; font-size: 0.875rem; }
 }
 
 .mobil-menu-adet {
@@ -188,6 +261,52 @@ p.genis { max-width: none; }
   border: 1px solid var(--cizgi-koyu);
   border-radius: 9999px;
   padding: 0.15rem 0.6rem;
+}
+
+/* Kategori çipleri — "Ürünlerimiz"in altında. Bağlantının alt çizgisi
+   çiplerin altına iniyor ki ikisi tek blok okunsun. */
+.mobil-menu-baglanti:has(+ .mobil-menu-kategoriler) { border-bottom: 0; }
+.mobil-menu-kategoriler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0 0 1.05rem;
+  border-bottom: 1px solid var(--cizgi-koyu);
+}
+.mobil-menu-kategori {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--krem-ikincil);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.mobil-menu-kategori:hover {
+  color: var(--krem);
+  border-color: var(--krem-ikincil);
+}
+/* Bulunulan kategori — altın, bulunulan sayfa işareti kuralına göre */
+.mobil-menu-kategori[aria-current='page'] {
+  color: var(--altin);
+  border-color: var(--altin);
+}
+.mobil-menu-kategori-adet {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+/* Çipler listeye ~150px ekledi; 667px'lik telefonda (iPhone SE/8) son
+   bağlantı ekran dışına taşıyordu. 700px'e kadar sıkı düzen. */
+@media (max-height: 700px) {
+  .mobil-menu-baglanti { padding: 0.6rem 0; }
+  .mobil-menu-kategoriler { gap: 0.4rem; padding-bottom: 0.75rem; }
+  .mobil-menu-kategori { min-height: 2.25rem; padding: 0.3rem 0.7rem; font-size: 0.9375rem; }
+  .mobil-menu-alt { gap: 0.6rem; padding-block: 0.9rem; }
 }
 
 .mobil-menu-alt {

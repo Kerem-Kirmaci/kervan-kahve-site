@@ -75,6 +75,34 @@ const yanlisAktif = await page.locator('nav.desktop-nav a.active').count();
 check('iletisim: menüde yanlış öğe vurgulanmıyor', yanlisAktif === 0,
   `${yanlisAktif} öğe vurgulu`);
 
+// ------------------------------------------------------ masaüstü kategori paneli
+console.log('\n[2b] Masaüstü menüsünde kategori paneli');
+await page.goto(`${BASE}/toptan-kahve.html`, { waitUntil: 'networkidle' });
+await page.mouse.move(700, 600); // imleç grubun dışında — hover devreye girmesin
+check('panel başlangıçta kapalı', !(await page.locator('#urunler-menusu').isVisible()));
+await page.focus('.nav-acici');
+await page.keyboard.press('Enter');
+await page.waitForTimeout(100);
+check('ok butonu paneli açıyor (klavye)', await page.locator('#urunler-menusu').isVisible());
+check('buton aria-expanded=true', (await page.locator('.nav-acici').getAttribute('aria-expanded')) === 'true');
+const panelLink = await page.locator('#urunler-menusu a').count();
+check('panelde 7 bağlantı (Tümü + 6)', panelLink === 7, `${panelLink}`);
+const panelAktif = await page.locator('#urunler-menusu a[aria-current="page"]').getAttribute('href');
+check('panelde bulunulan kategori işaretli', panelAktif === '/toptan-kahve.html', panelAktif ?? 'yok');
+await page.keyboard.press('Escape');
+await page.waitForTimeout(100);
+check('Escape kapatıyor', !(await page.locator('#urunler-menusu').isVisible()));
+check('Escape sonrası odak butonda', await page.evaluate(() => document.activeElement?.classList.contains('nav-acici')));
+await page.hover('.nav-grup--acilir');
+await page.waitForTimeout(100);
+check('imleçle üstüne gelince açılıyor', await page.locator('#urunler-menusu').isVisible());
+await page.click('.nav-acici');
+await page.waitForTimeout(100);
+check('imleç üstündeyken oka tıklamak kapatmıyor', await page.locator('#urunler-menusu').isVisible());
+await page.mouse.move(700, 600);
+await page.waitForTimeout(300);
+check('imleç ayrılınca kapanıyor', !(await page.locator('#urunler-menusu').isVisible()));
+
 // ------------------------------------------------------------------ mobil menü
 console.log('\n[3] Mobil menü (hamburger ikonu dahil)');
 const mobileCtx = await browser.newContext({ viewport: { width: 375, height: 760 } });
@@ -93,6 +121,20 @@ for (const p of ['index', 'shop', 'gizlilik-politikasi', 'kullanim-sartlari']) {
   await mpage.waitForTimeout(400);
   check(`${p}: ESC ile kapanıyor`, (await mpage.locator('#mobile-menu.active').count()) === 0);
 }
+// Kategori çipleri
+await mpage.goto(`${BASE}/toptan-kahve.html`, { waitUntil: 'domcontentloaded' });
+await mpage.click('#mobile-menu-btn');
+await mpage.waitForTimeout(400);
+const cipSayisi = await mpage.locator('.mobil-menu-kategori').count();
+check('mobil menüde 6 kategori çipi', cipSayisi === 6, `${cipSayisi}`);
+const cipAktif = await mpage.locator('.mobil-menu-kategori[aria-current="page"]').getAttribute('href');
+check('mobil menüde bulunulan kategori işaretli', cipAktif === '/toptan-kahve.html', cipAktif ?? 'yok');
+const cipTasma = await mpage.evaluate(() => {
+  const l = document.querySelector('.mobil-menu-baglantilar');
+  return l.scrollHeight - l.clientHeight;
+});
+check('375×760\'ta menü kaydırmasız sığıyor', cipTasma === 0, `${cipTasma}px taşma`);
+await mpage.keyboard.press('Escape');
 
 // ----------------------------------------------------------------- mağaza akışı
 console.log('\n[4] Mağaza: filtre, arama, sonsuz kaydırma');

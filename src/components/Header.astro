@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import logo from '../assets/images/logo.png';
 import { products } from '../data/products.js';
+import { kategoriler, kategoriYolu } from '../data/kategoriler.js';
 
 interface Props {
   /** Aktif sayfanın anahtarı: index | shop | ortaklik | hakkimizda | iletisim */
@@ -27,6 +28,20 @@ const mobilMenu = [
 ];
 
 const isContactActive = activePage === 'iletisim';
+
+// Ürün kategorileri: masaüstünde "Ürünlerimiz"in altında açılan panel, mobil
+// menüde bağlantının altındaki çip satırı. Footer'da da varlar; buradaki
+// sebep Google değil, telefonda kimsenin footer'a inmemesi ve şeridin ancak
+// mağazaya girince görünmesi.
+const kategoriBaglantilari = kategoriler.map((k) => ({
+  key: k.key,
+  href: kategoriYolu(k.key),
+  label: k.ad,
+  adet: products.filter((p) => p.category === k.key).length,
+}));
+
+// Bulunulan kategori adresten okunuyor; Base'e ayrıca prop taşımaya gerek yok.
+const aktifKategori = kategoriler.find((k) => Astro.url.pathname === kategoriYolu(k.key))?.key;
 import Ikon from './Ikon.astro';
 ---
 
@@ -52,16 +67,59 @@ import Ikon from './Ikon.astro';
     <nav class="hidden lg:flex items-center gap-2 desktop-nav" aria-label="Ana menü">
       {
         navItems.map((item) => (
-          <a
-            href={item.href}
-            class:list={[
-              'nav-link inline-flex items-center h-11 px-3 text-govde font-semibold text-murekkep hover:text-altin-koyu rounded hover:bg-kum transition-colors',
-              { active: activePage === item.key },
-            ]}
-            aria-current={activePage === item.key ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
+          <div class:list={['nav-grup', { 'nav-grup--acilir': item.key === 'shop' }]}>
+            <a
+              href={item.href}
+              class:list={[
+                'nav-link inline-flex items-center h-11 px-3 text-govde font-semibold text-murekkep hover:text-altin-koyu rounded hover:bg-kum transition-colors',
+                { active: activePage === item.key },
+              ]}
+              aria-current={activePage === item.key ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+
+            {/* Açılır kategori paneli. Bağlantı bağlantı olarak kalıyor
+                (tıklayan mağazaya gider); paneli yanındaki küçük ok açar,
+                imleçle üstüne gelince de açılır. Klavye: ok butonu Enter/
+                Space, Escape kapatır, odak dışarı çıkınca kapanır
+                (src/scripts/urunler-menusu.js). */}
+            {item.key === 'shop' && (
+              <>
+                <button
+                  type="button"
+                  class="nav-acici"
+                  aria-expanded="false"
+                  aria-controls="urunler-menusu"
+                  aria-label="Ürün kategorileri"
+                >
+                  <Ikon ad="chevron-asagi" boyut={16} />
+                </button>
+                <div id="urunler-menusu" class="nav-panel" hidden>
+                  <ul>
+                    <li>
+                      <a href="/shop.html" class="nav-panel-baglanti">
+                        <span>Tümü</span>
+                        <span class="nav-panel-adet">{products.length}</span>
+                      </a>
+                    </li>
+                    {kategoriBaglantilari.map((k) => (
+                      <li>
+                        <a
+                          href={k.href}
+                          class="nav-panel-baglanti"
+                          aria-current={aktifKategori === k.key ? 'page' : undefined}
+                        >
+                          <span>{k.label}</span>
+                          <span class="nav-panel-adet">{k.adet}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            )}
+          </div>
         ))
       }
     </nav>
@@ -150,14 +208,34 @@ import Ikon from './Ikon.astro';
   <nav class="mobil-menu-baglantilar" aria-label="Mobil menü">
     {
       mobilMenu.map((item) => (
-        <a
-          href={item.href}
-          class:list={['mobil-menu-baglanti', { aktif: activePage === item.key }]}
-          aria-current={activePage === item.key ? 'page' : undefined}
-        >
-          <span>{item.label}</span>
-          {item.adet && <span class="mobil-menu-adet">{item.adet}</span>}
-        </a>
+        <>
+          <a
+            href={item.href}
+            class:list={['mobil-menu-baglanti', { aktif: activePage === item.key }]}
+            aria-current={activePage === item.key ? 'page' : undefined}
+          >
+            <span>{item.label}</span>
+            {item.adet && <span class="mobil-menu-adet">{item.adet}</span>}
+          </a>
+          {/* Kategoriler "Ürünlerimiz"in hemen altında, çip olarak: alt alta
+              altı satır küçük telefonda menüyü kaydırmaya sokuyordu, çipler
+              üç satıra sığıyor. */}
+          {item.key === 'shop' && (
+            <ul class="mobil-menu-kategoriler" aria-label="Ürün kategorileri">
+              {kategoriBaglantilari.map((k) => (
+                <li>
+                  <a
+                    href={k.href}
+                    class="mobil-menu-kategori"
+                    aria-current={aktifKategori === k.key ? 'page' : undefined}
+                  >
+                    {k.label} <span class="mobil-menu-kategori-adet">{k.adet}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       ))
     }
   </nav>

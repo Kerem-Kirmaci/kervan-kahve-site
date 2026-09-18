@@ -83,6 +83,11 @@ Sebep: sekmeler JavaScript'le filtrelerken adres ve başlık değişmiyordu,
 dolayısıyla Google'ın "toptan şurup mersin" gibi bir aramada gösterebileceği
 tek konulu bir sayfa yoktu.
 
+Kategoriler üst menüde de var: masaüstünde "Ürünlerimiz"in yanındaki ok
+bir panel açar (`src/scripts/urunler-menusu.js`), mobil menüde bağlantının
+altında çip olarak dururlar. İkisi de `Header.astro`'da, veri yine
+`kategoriler.js`'ten.
+
 Eski `/shop.html?category=surup` bağlantıları `netlify.toml`'daki 301'lerle
 yeni adreslere gidiyor; yerelde aynı işi `shop.js` yapıyor. Kategori slug'ı
 değişirse üç yer birlikte güncellenmeli: `kategoriler.js`, `netlify.toml`,
@@ -186,7 +191,8 @@ npm run serve:dist        # ayrı bir terminalde
 npm test
 ```
 
-94 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, mobil menü, mağaza
+107 kontrol yapılır: sayfa başlıkları, aktif menü vurgusu, masaüstü kategori
+paneli (klavye, imleç, Escape), mobil menü ve kategori çipleri, mağaza
 şeridi ve arama, sonsuz kaydırma, lightbox, kategori sayfaları (ürün sayısı,
 canonical, başlık, yapısal veri), slider okları, ortaklık formu ve KVKK
 onayı, iletişim sayfası (gömülü harita yok), görsel öznitelikleri, yatay
