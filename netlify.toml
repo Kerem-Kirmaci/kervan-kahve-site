@@ -22,6 +22,54 @@
   to = "/sitemap-index.xml"
   status = 301
 
+# Netlify uzantısız adresleri de 200 ile sunuyor (/shop → shop.html içeriği).
+# Canonical .html'i gösterse de Google uzantısız hâlleri ayrıca buldu ve
+# Search Console'da gösterimi iki satıra böldü (Kas 2026: /shop ve /shop.html,
+# /hakkimizda ve /hakkimizda.html). Kalıcı yönlendirmeyle tek adrese
+# topluyoruz; sorgu dizesi (?category=surup) Netlify'da kendiliğinden taşınır.
+# /menu bilinçli olarak dışarıda: basılı QR kodları o adresi kullanıyor.
+[[redirects]]
+  from = "/hakkimizda"
+  to = "/hakkimizda.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/iletisim"
+  to = "/iletisim.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/shop"
+  to = "/shop.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ortaklik"
+  to = "/ortaklik.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/gizlilik-politikasi"
+  to = "/gizlilik-politikasi.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cerez-politikasi"
+  to = "/cerez-politikasi.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kullanim-sartlari"
+  to = "/kullanim-sartlari.html"
+  status = 301
+  force = true
+
 # Astro, işlediği dosyaların adına içerik özeti basıyor
 # (anasayfa.B6bm1AUo_1Faovd.webp). İçerik değişirse ad da değişir, bu yüzden
 # bu dosyalar süresiz önbelleklenebilir. Netlify varsayılanı her ziyarette
