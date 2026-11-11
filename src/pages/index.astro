@@ -57,6 +57,8 @@ const kategoriler = [
     ikon: 'kahve', kategoriParam: 'espresso', seritId: 'coffees', seritAnahtar: 'coffees' },
   { anahtar: 'cay', ad: 'Bitki Çayları', altyazi: 'Doğal ve aromalı bitki çayları.',
     ikon: 'cay', kategoriParam: 'cay', seritId: 'teas', seritAnahtar: 'teas' },
+  { anahtar: 'sicak-icecek', ad: 'Sıcak İçecek Tozları', altyazi: 'Sıcak çikolata, salep ve chai latte.',
+    ikon: 'sicak-icecek', kategoriParam: 'sicak-icecek', seritId: 'hot-drinks', seritAnahtar: 'hotDrinks' },
   { anahtar: 'aksesuar', ad: 'Ekipmanlar', altyazi: 'Profesyonel ekipmanlar.',
     ikon: 'ekipman', kategoriParam: 'aksesuar', seritId: 'accessories', seritAnahtar: 'accessories' },
 ];
@@ -64,7 +66,7 @@ const kategoriler = [
 // Yük manifestosu: gerçek envanter sayıları. Süs değil, sayfanın işi bu —
 //"her şeyi tek tedarikçiden alabilirsin" iddiasının kanıtı.
 const kategoriSayilari = {
-  espresso: 0, surup: 0, 'pure-tatlandirici': 0, tatli: 0, cay: 0, aksesuar: 0,
+  espresso: 0, surup: 0, 'pure-tatlandirici': 0, tatli: 0, cay: 0, 'sicak-icecek': 0, aksesuar: 0,
 };
 for (const u of products) {
   if (u.category in kategoriSayilari) kategoriSayilari[u.category] += 1;

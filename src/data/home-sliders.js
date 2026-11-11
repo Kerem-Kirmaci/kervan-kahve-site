@@ -45,6 +45,7 @@ const sliderConfig = {
     ],
   },
   teas: { categories: ['cay'], oneCikanlar: [] },
+  hotDrinks: { categories: ['sicak-icecek'], oneCikanlar: [] },
   accessories: { categories: ['aksesuar'], oneCikanlar: [] },
 };
 

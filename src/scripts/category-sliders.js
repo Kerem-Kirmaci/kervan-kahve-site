@@ -15,6 +15,11 @@ const sliders = [
   { container: 'coffees-container', left: 'scroll-left-coffees', right: 'scroll-right-coffees' },
   { container: 'teas-container', left: 'scroll-left-teas', right: 'scroll-right-teas' },
   {
+    container: 'hot-drinks-container',
+    left: 'scroll-left-hot-drinks',
+    right: 'scroll-right-hot-drinks',
+  },
+  {
     container: 'accessories-container',
     left: 'scroll-left-accessories',
     right: 'scroll-right-accessories',
