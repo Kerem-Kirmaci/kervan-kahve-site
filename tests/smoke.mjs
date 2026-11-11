@@ -8,6 +8,14 @@ import { chromium } from 'playwright';
 
 const BASE = process.argv[2] || 'http://127.0.0.1:8900';
 
+// Beklenen sayılar katalogdan okunuyor; ürün eklenince test elle güncellenmesin.
+const { products } = await import('../src/data/products.js');
+const adet = (k) => products.filter((p) => p.category === k).length;
+const TOPLAM = products.length;
+const CAY = adet('cay');
+const SURUP = adet('surup');
+const ILK_PARTI = 24;
+
 let pass = 0;
 let fail = 0;
 const consoleErrors = [];
@@ -87,7 +95,7 @@ const visible = () => page.locator('.urun-karti:not(.product-hidden)').count();
 const countText = () => page.locator('#product-count').textContent();
 
 check('başlangıçta 24 ürün görünür', (await visible()) === 24, `${await visible()}`);
-check('sayaç 100 ürün diyor', (await countText())?.includes('100'), await countText());
+check(`sayaç ${TOPLAM} ürün diyor`, (await countText())?.includes(String(TOPLAM)), await countText());
 
 await page.click('.kategori-sekme[data-category="espresso"]');
 await page.waitForTimeout(200);
@@ -96,7 +104,7 @@ check('sayaç sekmeyle güncelleniyor', (await countText())?.includes('8'), awai
 
 await page.click('.kategori-sekme[data-category="cay"]');
 await page.waitForTimeout(200);
-check('Bitki Çayları sekmesi 6 ürüne indiriyor', (await visible()) === 6, `${await visible()}`);
+check(`Bitki Çayları sekmesi ${Math.min(CAY, ILK_PARTI)} ürüne indiriyor`, (await visible()) === Math.min(CAY, ILK_PARTI), `${await visible()}`);
 
 const aktif = await page.locator('.kategori-sekme[aria-selected="true"]').count();
 check('tek sekme aktif kalıyor', aktif === 1, `${aktif} sekme aktif`);
@@ -130,7 +138,7 @@ check('ikinci kaydırmada 72', (await visible()) === 72, `${await visible()}`);
 
 // URL parametresi
 await page.goto(`${BASE}/shop.html?category=surup`, { waitUntil: 'networkidle' });
-check('?category=surup çalışıyor', (await visible()) === 15, `${await visible()}`);
+check('?category=surup çalışıyor', (await visible()) === Math.min(SURUP, ILK_PARTI), `${await visible()}`);
 await page.goto(`${BASE}/shop.html?search=kahve`, { waitUntil: 'networkidle' });
 check('?search=kahve çalışıyor', (await visible()) > 0, `${await visible()}`);
 
@@ -199,7 +207,7 @@ const delta = afterScroll - before;
 check('sağ ok tam 528px kaydırıyor (1056 değil)', Math.abs(delta - 528) < 5, `${delta}px kaydı`);
 
 const sliderCards = await page.locator('#syrups-container [data-product-id]').count();
-check('slider ürünleri HTML\'de basılı', sliderCards === 15, `${sliderCards} kart`);
+check('slider ürünleri HTML\'de basılı', sliderCards === SURUP, `${sliderCards} kart`);
 
 // ------------------------------------------------------------- ortaklık formu
 console.log('\n[7] Ortaklık formu ve KVKK onayı');
